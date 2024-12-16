@@ -12,7 +12,6 @@ export const Container = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 5px;
 `;
 
 export const LogoDiv = styled.div`
@@ -21,8 +20,7 @@ export const LogoDiv = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 5px;
-    padding: 5px;
+    gap: 3px;
 
 
     > h2 {

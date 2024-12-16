@@ -6,7 +6,6 @@
   --grayZaori: #AFAFAF;
   --primaryLightZaori: #FDF9E7;
   --buttonIconColor: #B5AFAF;
-  --font-caveat: 'Caveat', cursive;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -25,7 +24,6 @@ body {
   outline: none;
   max-width: 100vw;
   overflow-x: hidden;
-  font-family: var(--font-caveat);
   scroll-behavior: smooth !important;
 }
 
