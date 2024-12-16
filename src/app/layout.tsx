@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Caveat, Nunito_Sans } from "next/font/google";
+import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,12 +10,6 @@ const nunito_sans = Nunito_Sans({
   display: 'swap',
   weight: ['200', '300', '400', '600', '700', '800', '900'],
 });
-
-const caveat = Caveat({
-  subsets: ['latin'],
-  display: 'swap',
-  weight: ['400', '700']
-})
 
 export const metadata: Metadata = {
   title: "Gatherize",
@@ -29,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${nunito_sans.className, caveat.className}`}>
+      <body className={`${nunito_sans.className}`}>
         <StyledComponentsRegistry>
           <ToastContainer
             position="top-right"
