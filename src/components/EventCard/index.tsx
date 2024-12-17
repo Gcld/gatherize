@@ -1,5 +1,5 @@
 import { LuCircleUser, LuMapPin } from "react-icons/lu";
-import { Container, EventCardPicture, EventContent, EventDate, EventInfo, EventLocation, Participants, Users } from "./styled";
+import { Container, EventButton, EventCardPicture, EventContent, EventDate, EventInfo, EventLocation, Participants, Users } from "./styled";
 
 export default function EventCard() {
     return (
@@ -24,10 +24,13 @@ export default function EventCard() {
                         <LuCircleUser size={16} color="black"/>
                     </Users>
                     <Participants>
-                        <h2>6 participants</h2>
+                        <h3>6 participants</h3>
                     </Participants>
                 </EventInfo>
             </EventContent>
+            <EventButton>
+                <h2>Sign Up</h2>
+            </EventButton>
         </Container>
     )
 }

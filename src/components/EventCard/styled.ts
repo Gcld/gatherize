@@ -15,7 +15,7 @@ export const Container = styled.div`
 export const EventCardPicture = styled.div`
     width: 100%;
     height: 120px;
-    background-color: var(--primaryDarkZaori);
+    background-color: var(--darkZaori);
     padding: 2px;
     border-radius: 9px;
     align-items: right;
@@ -94,8 +94,25 @@ export const Participants = styled.div`
     display: flex;
     gap: 5px;
 
-    h2{
+    h3{
         font-size: 14px;
+        font-weight: bold;
+        line-height: 120%;
+        color: black;
+    }
+`;
+
+export const EventButton = styled.div`
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: var(--primaryDarkZaori);
+
+    h2{
+        font-size: 16px;
         font-weight: bold;
         line-height: 120%;
         color: black;
