@@ -25,4 +25,17 @@ export const Container = styled.div`
             line-height: 120%;
         }
     }
+
+    .sortButton{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        h3{
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 120%;
+            color: white;
+        }
+    }
 `;  
