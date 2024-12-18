@@ -2,12 +2,14 @@
 
 import React, { useState } from 'react';
 import { LuArrowLeft, LuCalendar, LuLock, LuMail, LuUser, LuUserPen, LuX } from "react-icons/lu";
-import { Container, InputBox, InputWrapper, SignInButton, SignInput, SignUpDiv, SignUpDivReturn, UserTypeButton, UserTypeButtonDiv, UserTypeDiv } from "./styled";
+import { Container, InputBox, InputWrapper, SignInButton, SignInput, SignUpDivReturn, UserTypeButton, UserTypeButtonDiv, UserTypeDiv } from "./styled";
+
+type UserType = 'user' | 'creator' | null;
 
 export default function Login() {
-    const [selectedUserType, setSelectedUserType] = useState(null);
+    const [selectedUserType, setSelectedUserType] = useState<UserType>(null);
 
-    const handleUserTypeClick = (type) => {
+    const handleUserTypeClick = (type: UserType) => {
         setSelectedUserType(type === selectedUserType ? null : type);
     };
 
@@ -37,39 +39,35 @@ export default function Login() {
                 </InputWrapper>
                 <InputWrapper>
                     <LuLock size={16} color="var(--primaryDarkZaori)" />
-                    <SignInput type="password" placeholder="Password"/>
+                    <SignInput type="password" placeholder="Password" />
                 </InputWrapper>
                 <InputWrapper>
                     <LuLock size={16} color="var(--primaryDarkZaori)" />
                     <SignInput type="password" placeholder="Confirm Password" />
                 </InputWrapper>
-                <SignInButton>
-                    <h3>Sign In</h3>
-                </SignInButton>
                 <UserTypeDiv>
                     <UserTypeButtonDiv>
-                        <UserTypeButton 
+                        <UserTypeButton
                             onClick={() => handleUserTypeClick('user')}
-                            isSelected={selectedUserType === 'user'}
+                            $isSelected={selectedUserType === 'user'}
                         >
                             {selectedUserType === 'user' && <LuX size={14} color="var(--primaryDarkZaori)" />}
                         </UserTypeButton>
                         <h4>User</h4>
                     </UserTypeButtonDiv>
                     <UserTypeButtonDiv>
-                        <UserTypeButton 
+                        <UserTypeButton
                             onClick={() => handleUserTypeClick('creator')}
-                            isSelected={selectedUserType === 'creator'}
+                            $isSelected={selectedUserType === 'creator'}
                         >
                             {selectedUserType === 'creator' && <LuX size={14} color="var(--primaryDarkZaori)" />}
                         </UserTypeButton>
                         <h4>Creator</h4>
                     </UserTypeButtonDiv>
                 </UserTypeDiv>
-                <SignUpDiv>
-                    <h4>New to Gatherize?</h4>
-                    <h4 className="signUp">Join Now</h4>
-                </SignUpDiv>
+                <SignInButton>
+                    <h3>Create Account</h3>
+                </SignInButton>
             </InputBox>
         </Container>
     );

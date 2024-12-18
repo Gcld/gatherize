@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface UserTypeButtonProps {
+    $isSelected?: boolean;
+}
+
 export const Container = styled.div`
     display: flex;
     align-items: center;
@@ -165,7 +169,7 @@ export const UserTypeButtonDiv = styled.div`
     }
 `;
 
-export const UserTypeButton = styled.button`
+export const UserTypeButton = styled.button<UserTypeButtonProps>`
     display: flex;
     width: 18px;
     height: 18px;
