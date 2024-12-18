@@ -1,7 +1,7 @@
 'use client'
 
 import { LuArrowLeft, LuCalendar, LuLock, LuMail, LuUser, LuUserPen } from "react-icons/lu";
-import { Container, InputBox, InputWrapper, SignInButton, SignInput, SignUpDiv, SignUpDivReturn } from "./styled";
+import { Container, InputBox, InputWrapper, SignInButton, SignInput, SignUpDiv, SignUpDivReturn, UserTypeButton, UserTypeButtonDiv, UserTypeDiv } from "./styled";
 
 
 export default function Login() {
@@ -40,6 +40,16 @@ export default function Login() {
                 <SignInButton>
                     <h3>Sign In</h3>
                 </SignInButton>
+                <UserTypeDiv>
+                    <UserTypeButtonDiv>
+                        <UserTypeButton/>
+                        <h4>User</h4>
+                    </UserTypeButtonDiv>
+                    <UserTypeButtonDiv>
+                        <UserTypeButton/>
+                        <h4>Creator</h4>
+                    </UserTypeButtonDiv>
+                </UserTypeDiv>
                 <SignUpDiv>
                     <h4>New to Gatherize?</h4>
                     <h4 className="signUp">Join Now</h4>

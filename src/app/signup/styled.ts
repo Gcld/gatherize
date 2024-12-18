@@ -143,3 +143,33 @@ export const SignUpDiv = styled.div`
         line-height: 130%;
     }
 `;
+
+export const UserTypeDiv = styled.div`
+    display: flex;
+    width: 100%;
+    padding: 5px 10px;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+export const UserTypeButtonDiv = styled.div`
+    display: flex;
+    gap: 3px;
+    align-items: center;
+    
+    h4{
+        font-size: 14px;
+        font-weight: normal;
+        color: white;
+        line-height: 24px;
+    }
+`;
+
+export const UserTypeButton = styled.button`
+    display: flex;
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 1.5px solid var(--primaryDarkZaori);
+    background-color: transparent;
+`;
