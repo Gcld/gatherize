@@ -1,6 +1,7 @@
 'use client'
 
-import { Container, InputBox, LoginInput } from "./styled";
+import { LuLock, LuMail } from "react-icons/lu";
+import { Container, InputBox, LoginInput, InputWrapper, SignInButton, SignUpDiv } from "./styled";
 
 export default function Login() {
     return (
@@ -8,7 +9,21 @@ export default function Login() {
             <InputBox>
                 <h2>Sign in</h2>
                 <h4>Let us help you gatherize with your friends</h4>
-                <LoginInput type="text" placeholder="Email" />
+                <InputWrapper>
+                    <LuMail size={16} color="var(--primaryDarkZaori)" />
+                    <LoginInput type="text" placeholder="Email" />
+                </InputWrapper>
+                <InputWrapper>
+                    <LuLock size={16} color="var(--primaryDarkZaori)" />
+                    <LoginInput type="text" placeholder="Password" />
+                </InputWrapper>
+                <SignInButton>
+                    <h3>Sign In</h3>
+                </SignInButton>
+                <SignUpDiv>
+                    <h4>New to Gatherize?</h4>
+                    <h4 className="signUp">Join Now</h4>
+                </SignUpDiv>
             </InputBox>
         </Container>
     );
