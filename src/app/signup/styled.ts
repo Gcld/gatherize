@@ -172,4 +172,8 @@ export const UserTypeButton = styled.button`
     border-radius: 5px;
     border: 1.5px solid var(--primaryDarkZaori);
     background-color: transparent;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
 `;

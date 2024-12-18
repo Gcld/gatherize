@@ -1,10 +1,16 @@
 'use client'
 
-import { LuArrowLeft, LuCalendar, LuLock, LuMail, LuUser, LuUserPen } from "react-icons/lu";
+import React, { useState } from 'react';
+import { LuArrowLeft, LuCalendar, LuLock, LuMail, LuUser, LuUserPen, LuX } from "react-icons/lu";
 import { Container, InputBox, InputWrapper, SignInButton, SignInput, SignUpDiv, SignUpDivReturn, UserTypeButton, UserTypeButtonDiv, UserTypeDiv } from "./styled";
 
-
 export default function Login() {
+    const [selectedUserType, setSelectedUserType] = useState(null);
+
+    const handleUserTypeClick = (type) => {
+        setSelectedUserType(type === selectedUserType ? null : type);
+    };
+
     return (
         <Container>
             <InputBox>
@@ -42,11 +48,21 @@ export default function Login() {
                 </SignInButton>
                 <UserTypeDiv>
                     <UserTypeButtonDiv>
-                        <UserTypeButton/>
+                        <UserTypeButton 
+                            onClick={() => handleUserTypeClick('user')}
+                            isSelected={selectedUserType === 'user'}
+                        >
+                            {selectedUserType === 'user' && <LuX size={14} color="var(--primaryDarkZaori)" />}
+                        </UserTypeButton>
                         <h4>User</h4>
                     </UserTypeButtonDiv>
                     <UserTypeButtonDiv>
-                        <UserTypeButton/>
+                        <UserTypeButton 
+                            onClick={() => handleUserTypeClick('creator')}
+                            isSelected={selectedUserType === 'creator'}
+                        >
+                            {selectedUserType === 'creator' && <LuX size={14} color="var(--primaryDarkZaori)" />}
+                        </UserTypeButton>
                         <h4>Creator</h4>
                     </UserTypeButtonDiv>
                 </UserTypeDiv>
