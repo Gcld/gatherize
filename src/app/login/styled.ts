@@ -5,8 +5,11 @@ export const Container = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 568px;
+    height: 568px; 
     background-image: url('/background.jpg');
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat; 
 `;
 
 export const InputBox = styled.div`
