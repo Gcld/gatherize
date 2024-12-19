@@ -7,8 +7,8 @@ export default function Logo() {
         <Container>
             <Link href="/" passHref>
                 <LogoDiv>
-                    <LuFan size={24}  color="var(--primaryDarkZaori)" strokeWidth={2.5}/>
-                    <h2>Gatherize</h2>
+                    <LuFan className="logoIcon"/>
+                    <h1>Gatherize</h1>
                 </LogoDiv>
             </Link>
         </Container>

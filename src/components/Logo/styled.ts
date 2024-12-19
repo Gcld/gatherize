@@ -22,11 +22,47 @@ export const LogoDiv = styled.div`
     align-items: center;
     gap: 3px;
 
+    .logoIcon {
+        width: 24px;
+        height: 24px;  
+        color: var(--primaryDarkZaori); 
+        stroke-width: 2.5px;
+    }
 
-    > h2 {
+
+    > h1 {
         color: var(--primaryLightZaori);
         font-family: ${caveat.style.fontFamily};
         font-size: 24px;
         font-weight: 700;
+        line-height: 120%;
+    }
+
+    @media (min-width: 768px) {
+        .logoIcon {
+            width: 48px;
+            height: 48px;  
+            color: var(--primaryDarkZaori); 
+            stroke-width: 2.5px;
+        }
+
+        > h1 {
+            font-size: 48px;
+            line-height: 110%;
+        }
+    }
+    
+    @media (min-width: 1440px) {
+        .logoIcon {
+            width: 56px;
+            height: 56px;  
+            color: var(--primaryDarkZaori); 
+            stroke-width: 2.5px;
+        }
+
+        > h1 {
+            font-size: 56px;
+            line-height: 110%;
+        }
     }
 `;
