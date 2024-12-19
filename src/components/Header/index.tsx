@@ -7,14 +7,14 @@ export default function Header() {
         <Container>
             <LogoAndMenu>
                 <Logo/>
-                <LuAlignJustify color="white" size={24}/>
+                <LuAlignJustify className="burguerIcon"/>
             </LogoAndMenu>
             <SearchAndFilter>
                 <SearchDiv>
-                    <LuSearch color="var(--primaryDarkZaori)" size={12}/>
+                    <LuSearch className="searchIcon"/>
                     <Searchbar type="text" id="searchbar" placeholder="Search event"></Searchbar>
                 </SearchDiv>
-                <FilterButton><LuFilter/></FilterButton>
+                <FilterButton><LuFilter className="filterIcon"/></FilterButton>
             </SearchAndFilter>
         </Container>
     );

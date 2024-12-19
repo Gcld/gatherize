@@ -11,6 +11,11 @@ export const Container = styled.div`
     gap: 8px;
     background-color: var(--darkZaori);
     border-radius: 0 0 15px 15px;
+
+    @media (min-width: 768px){
+        padding: 8px 8px;
+        gap: 8px;
+    }
 `;
 
 export const LogoAndMenu = styled.div`
@@ -20,6 +25,26 @@ export const LogoAndMenu = styled.div`
     align-items: center;
     height: 100%;
     width: 100%;
+
+    .burguerIcon{
+        color: white; 
+        height: 24px;
+        width: 24px;
+    }
+
+    @media (min-width: 768px){
+        .burguerIcon{
+            height: 32px;
+            width: 32px;
+        }
+    }
+
+    @media (min-width: 1440px){
+        .burguerIcon{
+            height: 48px;
+            width: 48px;
+        }
+    }
 `;
 
 export const SearchAndFilter = styled.div`
@@ -29,6 +54,14 @@ export const SearchAndFilter = styled.div`
     align-items: center;
     width: 100%;
     gap: 5px;
+
+    @media (min-width: 768px){
+        gap: 8px;
+    }
+
+    @media (min-width: 1440px){
+        gap: 10px;
+    }
 `;
 
 export const SearchDiv = styled.div`
@@ -41,6 +74,32 @@ export const SearchDiv = styled.div`
     border-radius: 9px;
     border: 1px solid var(--grayZaori);
     padding: 5px;
+
+    .searchIcon{
+            color: var(--primaryDarkZaori); 
+            height: 12px;
+            width: 12px;
+        }
+
+    @media (min-width: 768px){
+        border-radius: 12px;
+        gap: 10px;
+        .searchIcon{
+            color: "var(--primaryDarkZaori)"; 
+            height: 20px;
+            width: 20px;
+        }
+    }
+
+    @media (min-width: 1440px){
+        border-radius: 12px;
+        gap: 10px;
+        .searchIcon{
+            color: "var(--primaryDarkZaori)"; 
+            height: 24px;
+            width: 24px;
+        }
+    }
 `;
 
 export const Searchbar = styled.input`
@@ -51,7 +110,15 @@ export const Searchbar = styled.input`
     font-family: Arial, FontAwesome;
     border-radius: 9px;
     border: none;
-    font-size: 10px;
+    font-size: 12px;
+    justify-content: center;
+    @media (min-width: 768px){
+        font-size: 20px;
+    }
+
+    @media (min-width: 1440px){
+        font-size: 24px;
+    }
 `;
 
 export const FilterButton = styled.div`
@@ -63,4 +130,20 @@ export const FilterButton = styled.div`
     border-radius: 5px;
     border: 1px solid var(--grayZaori);
     color: var(--primaryDarkZaori);
+
+    @media (min-width: 768px){
+        border-radius: 8px;
+        .filterIcon{
+            height: 26px;
+            width: 26px;
+        }
+    }
+
+    @media (min-width: 1440px){
+        border-radius: 10px;
+        .filterIcon{
+            height: 31px;
+            width: 31px;
+        }
+    }
 `;
