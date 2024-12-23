@@ -57,6 +57,7 @@ export const InputBox = styled.div`
     @media (min-width: 1024px){
         width: 500px;
         height: 500px;
+        gap: 20px;
 
         h2{
             font-size: 56px;

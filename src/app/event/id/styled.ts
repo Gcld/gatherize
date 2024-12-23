@@ -10,8 +10,8 @@ export const Container = styled.div`
 
 export const EventPicture = styled.div`
     width: 100%;
-    height: 37vh;
-    background-color: var(--primaryDarkZaori);
+    height: 35vh;
+    background-color: var(--primaryLightZaori);
     align-items: top;
     padding: 10px 5px;
 `;

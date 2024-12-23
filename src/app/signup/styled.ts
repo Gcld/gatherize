@@ -173,7 +173,7 @@ export const SignInput = styled.input`
     }
 
     @media (min-width: 1024px){
-        padding: 5px 10px 5px 35px; 
+        padding: 5px 10px 5px 38px; 
         font-size: 18px;
     }
 `;
