@@ -11,11 +11,11 @@ export default function Login() {
                 <h4>Let us help you gatherize with your friends</h4>
                 <InputWrapper>
                     <LuMail className="icon" />
-                    <LoginInput type="text" placeholder="Email" />
+                    <LoginInput className="input" type="text" placeholder="Email"/>
                 </InputWrapper>
                 <InputWrapper>
                     <LuLock className="icon" />
-                    <LoginInput type="text" placeholder="Password" />
+                    <LoginInput className="input" type="text" placeholder="Password" />
                 </InputWrapper>
                 <SignInButton>
                     <h3>Sign In</h3>

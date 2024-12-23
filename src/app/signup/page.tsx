@@ -17,32 +17,32 @@ export default function Login() {
         <Container>
             <InputBox>
                 <SignUpDivReturn>
-                    <LuArrowLeft size={24} color="var(--primaryDarkZaori)" />
-                    <h2>Sign Up</h2>
+                    <LuArrowLeft className='arrowIcon' />
+                    <h1>Sign Up</h1>
                 </SignUpDivReturn>
                 <h4>Let us help you gatherize with your friends</h4>
                 <InputWrapper>
-                    <LuUserPen size={16} color="var(--primaryDarkZaori)" />
+                    <LuUserPen className='icon' />
                     <SignInput type="text" placeholder="Full Name" />
                 </InputWrapper>
                 <InputWrapper>
-                    <LuUser size={16} color="var(--primaryDarkZaori)" />
+                    <LuUser className='icon' />
                     <SignInput type="text" placeholder="Username" />
                 </InputWrapper>
                 <InputWrapper>
-                    <LuCalendar size={16} color="var(--primaryDarkZaori)" />
+                    <LuCalendar className='icon' />
                     <SignInput type="date" placeholder="dd/mm/aaaa" />
                 </InputWrapper>
                 <InputWrapper>
-                    <LuMail size={16} color="var(--primaryDarkZaori)" />
+                    <LuMail className='icon' />
                     <SignInput type="text" placeholder="Email" />
                 </InputWrapper>
                 <InputWrapper>
-                    <LuLock size={16} color="var(--primaryDarkZaori)" />
+                    <LuLock className='icon'/>
                     <SignInput type="password" placeholder="Password" />
                 </InputWrapper>
                 <InputWrapper>
-                    <LuLock size={16} color="var(--primaryDarkZaori)" />
+                    <LuLock className='icon' />
                     <SignInput type="password" placeholder="Confirm Password" />
                 </InputWrapper>
                 <UserTypeDiv>

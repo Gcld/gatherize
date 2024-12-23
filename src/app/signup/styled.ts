@@ -28,19 +28,32 @@ export const InputBox = styled.div`
     background-color: var(--darkZaori);
     border-radius: 30px;
 
-    h2{
-        width: 100%;
-        font-size: 24px;
-        font-weight: bold;
-        color: var(--primaryLightZaori);
-    }
-
     h4{
         font-size: 12px;
         font-weight: normal;
         color: var(--primaryLightZaori);
         line-height: 130%;
         letter-spacing: 0%;
+    }
+
+    @media (min-width: 768px){
+        width: 440px;
+        height: 440px;
+
+        h4{
+            font-size: 16px;
+            line-height: 120%;
+        }
+    }
+
+    @media (min-width: 1024px){
+        width: 500px;
+        height: 500px;
+
+        h4{
+            font-size: 18px;
+            line-height: 110%;
+        }
     }
 `;
 
@@ -51,11 +64,40 @@ export const SignUpDivReturn = styled.div`
     justify-content: center;
     gap: 10px;
 
-    h2{
+    h1{
         width: 100%;
         font-size: 24px;
         font-weight: bold;
-        color: var(--primaryLightZaori);
+    }
+
+    .arrowIcon{
+        width: 16px;
+        height: 16px;
+        color: var(--primaryDarkZaori);
+    }
+
+    @media (min-width: 768px){
+        h1{
+            font-size: 32px;
+            line-height: 110%;
+        }
+
+        .arrowIcon{
+            width: 32px;
+            height: 32px;
+        }
+    }
+
+    @media (min-width: 1024px){
+        h1{
+            font-size: 36px;
+            line-height: 110%;
+        }
+
+        .arrowIcon{
+            width: 36px;
+            height: 36px;
+        }
     }
 `;
 
@@ -70,6 +112,28 @@ export const InputWrapper = styled.div`
         left: 10px;
         top: 50%;
         transform: translateY(-50%);
+    }
+
+    .icon{
+        width: 16px;
+        height: 16px;
+        color: var(--primaryDarkZaori);
+    }
+
+    @media (min-width: 768px){
+        .icon{
+            width: 18px;
+            height: 18px;
+            color: var(--primaryDarkZaori);
+        }
+    }
+
+    @media (min-width: 1024px){
+        .icon{
+            width: 24px;
+            height: 24px;
+            color: var(--primaryDarkZaori);
+        }
     }
 `;
 
@@ -107,6 +171,11 @@ export const SignInput = styled.input`
     &[type="password"]::-ms-clear {
         display: none;
     }
+
+    @media (min-width: 1024px){
+        padding: 5px 10px 5px 35px; 
+        font-size: 18px;
+    }
 `;
 
 export const SignInButton = styled.div`
@@ -123,6 +192,18 @@ export const SignInButton = styled.div`
         align-items: center;
         justify-content: center;
         padding: 5px;
+    }
+
+    @media (min-width: 768px){
+        h3{
+            font-size: 18px;
+        }
+    }
+
+    @media (min-width: 1024px){
+        h3{
+            font-size: 24px;
+        }
     }
 `;
 
@@ -167,6 +248,13 @@ export const UserTypeButtonDiv = styled.div`
         color: white;
         line-height: 24px;
     }
+
+    @media (min-width: 1024px){
+        gap: 5px;
+        h4{
+            font-size: 18px;
+        }
+    }
 `;
 
 export const UserTypeButton = styled.button<UserTypeButtonProps>`
@@ -180,4 +268,9 @@ export const UserTypeButton = styled.button<UserTypeButtonProps>`
     align-items: center;
     justify-content: center;
     transition: background-color 0.3s ease;
+
+    @media (min-width: 1024px){
+        width: 20px;
+        height: 20px;
+    }
 `;

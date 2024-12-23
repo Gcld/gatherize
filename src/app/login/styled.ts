@@ -27,7 +27,7 @@ export const InputBox = styled.div`
     h2{
         width: 100%;
         font-size: 24px;
-        font-weight: bold;
+        font-weight: normal;
         color: var(--primaryLightZaori);
     }
 
@@ -41,7 +41,7 @@ export const InputBox = styled.div`
 
     @media (min-width: 768px){
         width: 400px;
-        height: 500px;
+        height: 400px;
 
         h2{
             font-size: 48px;
@@ -50,6 +50,21 @@ export const InputBox = styled.div`
 
         h4{
             font-size: 16px;
+            line-height: 120%;
+        }
+    }
+
+    @media (min-width: 1024px){
+        width: 500px;
+        height: 500px;
+
+        h2{
+            font-size: 56px;
+            line-height: 110%;
+        }
+
+        h4{
+            font-size: 18px;
             line-height: 120%;
         }
     }
@@ -73,6 +88,22 @@ export const InputWrapper = styled.div`
         width: 16px;
         color: var(--primaryDarkZaori); 
     }
+
+    @media (min-width: 768px){
+        .icon{
+            height: 18px;
+            width: 18px;
+            color: var(--primaryDarkZaori); 
+        }
+    }
+
+    @media (min-width: 1024px){
+        .icon{
+            height: 24px;
+            width: 24px;
+            color: var(--primaryDarkZaori); 
+        }
+    }
 `;
 
 export const LoginInput = styled.input`
@@ -92,6 +123,16 @@ export const LoginInput = styled.input`
     &:focus {
         outline: none;
         border-color: var(--primaryDarkZaori);
+    }
+
+    @media (min-width: 768px){
+        padding: 5px 10px 5px 32px; 
+        font-size: 16px;
+    }
+
+    @media (min-width: 1024px){
+        padding: 5px 10px 5px 38px; 
+        font-size: 18px;
     }
 `;
 
@@ -114,6 +155,12 @@ export const SignInButton = styled.div`
     @media (min-width: 768px){
         h3{
             font-size: 18px;
+        }
+    }
+
+    @media (min-width: 1024px){
+        h3{
+            font-size: 24px;
         }
     }
 `;
@@ -147,6 +194,18 @@ export const SignUpDiv = styled.div`
 
         .signUp{
             font-size: 16px;
+            line-height: 120%;
+        }
+    }
+
+    @media (min-width: 1024px){
+        h4{
+            font-size: 18px;
+            line-height: 120%;
+        }
+
+        .signUp{
+            font-size: 18px;
             line-height: 120%;
         }
     }
