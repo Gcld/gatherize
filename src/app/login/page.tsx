@@ -10,11 +10,11 @@ export default function Login() {
                 <h2>Sign in</h2>
                 <h4>Let us help you gatherize with your friends</h4>
                 <InputWrapper>
-                    <LuMail size={16} color="var(--primaryDarkZaori)" />
+                    <LuMail className="icon" />
                     <LoginInput type="text" placeholder="Email" />
                 </InputWrapper>
                 <InputWrapper>
-                    <LuLock size={16} color="var(--primaryDarkZaori)" />
+                    <LuLock className="icon" />
                     <LoginInput type="text" placeholder="Password" />
                 </InputWrapper>
                 <SignInButton>

@@ -38,6 +38,21 @@ export const InputBox = styled.div`
         line-height: 130%;
         letter-spacing: 0%;
     }
+
+    @media (min-width: 768px){
+        width: 400px;
+        height: 500px;
+
+        h2{
+            font-size: 48px;
+            line-height: 110%;
+        }
+
+        h4{
+            font-size: 16px;
+            line-height: 120%;
+        }
+    }
 `;
 
 export const InputWrapper = styled.div`
@@ -51,6 +66,12 @@ export const InputWrapper = styled.div`
         left: 10px;
         top: 50%;
         transform: translateY(-50%);
+    }
+
+    .icon{
+        height: 16px;
+        width: 16px;
+        color: var(--primaryDarkZaori); 
     }
 `;
 
@@ -89,6 +110,12 @@ export const SignInButton = styled.div`
         justify-content: center;
         padding: 5px;
     }
+
+    @media (min-width: 768px){
+        h3{
+            font-size: 18px;
+        }
+    }
 `;
 
 export const SignUpDiv = styled.div`
@@ -110,5 +137,17 @@ export const SignUpDiv = styled.div`
         font-weight: normal;
         color: var(--primaryDarkZaori);
         line-height: 130%;
+    }
+
+    @media (min-width: 768px){
+        h4{
+            font-size: 16px;
+            line-height: 120%;
+        }
+
+        .signUp{
+            font-size: 16px;
+            line-height: 120%;
+        }
     }
 `;
