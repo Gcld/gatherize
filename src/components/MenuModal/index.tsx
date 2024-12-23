@@ -14,11 +14,11 @@ const MenuModal: React.FC<MenuModalProps> = ({ isOpen, onClose }) => {
         <ModalContainer onClick={onClose}>
             <ModalContent onClick={(e) => e.stopPropagation()}>
                 <ModalButton>
-                    <LuUser />
+                    <LuUser className='icon'/>
                     <span>Profile</span>
                 </ModalButton>
                 <ModalButton>
-                    <LuSettings />
+                    <LuSettings className='icon'/>
                     <span>Settings</span>
                 </ModalButton>
             </ModalContent>

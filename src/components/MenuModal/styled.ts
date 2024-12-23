@@ -15,11 +15,21 @@ export const ModalContainer = styled.div`
 
 export const ModalContent = styled.div`
     background-color: var(--darkZaori);
-    padding: 20px;
+    padding: 5px;
     border-radius: 0 0 0 10px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
+
+    @media (min-width: 768px) {
+        padding: 12px;
+        gap: 12px;
+    }
+
+    @media (min-width: 1024px) {
+        padding: 14px;
+        gap: 14px;
+    }
 `;
 
 export const ModalButton = styled.button`
@@ -34,11 +44,33 @@ export const ModalButton = styled.button`
     padding: 10px;
     transition: background-color 0.3s;
 
+    .icon {
+        color: var(--primaryDarkZaori);
+    }
+
     &:hover {
         background-color: rgba(255, 255, 255, 0.1);
     }
 
     svg {
         font-size: 20px;
+    }
+
+    @media (min-width: 768px) {
+        font-size: 18px; // Tablet Headline 4
+        padding: 12px;
+
+        svg {
+        font-size: 22px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        font-size: 24px; // Desktop Headline 3
+        padding: 14px;
+
+        svg {
+        font-size: 24px;
+        }
     }
 `;
