@@ -3,28 +3,37 @@ import { LuAlignJustify, LuFilter, LuSearch } from "react-icons/lu";
 import Logo from "../Logo";
 import { Container, FilterButton, LogoAndMenu, SearchAndFilter, Searchbar, SearchDiv } from "./styled";
 import MenuModal from "../MenuModal";
+import FilterModal from "../FilterModal";
 
 export default function Header() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
+    const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
-    const toggleModal = () => {
-        setIsModalOpen(!isModalOpen);
+    const toggleMenuModal = () => {
+        setIsMenuModalOpen(!isMenuModalOpen);
+    };
+
+    const toggleFilterModal = () => {
+        setIsFilterModalOpen(!isFilterModalOpen);
     };
 
     return (
         <Container>
             <LogoAndMenu>
-                <Logo/>
-                <LuAlignJustify className="burguerIcon" onClick={toggleModal}/>
+                <Logo />
+                <LuAlignJustify className="burguerIcon" onClick={toggleMenuModal}/>
             </LogoAndMenu>
             <SearchAndFilter>
                 <SearchDiv>
                     <LuSearch className="searchIcon"/>
                     <Searchbar type="text" id="searchbar" placeholder="Search event"></Searchbar>
                 </SearchDiv>
-                <FilterButton><LuFilter className="filterIcon"/></FilterButton>
+                <FilterButton onClick={toggleFilterModal}>
+                    <LuFilter className="filterIcon"/>
+                </FilterButton>
             </SearchAndFilter>
-            <MenuModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            <MenuModal isOpen={isMenuModalOpen} onClose={() => setIsMenuModalOpen(false)} />
+            <FilterModal isOpen={isFilterModalOpen} onClose={() => setIsFilterModalOpen(false)} />
         </Container>
     );
 }

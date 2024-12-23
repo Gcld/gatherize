@@ -15,11 +15,11 @@ export const ModalContainer = styled.div`
 
 export const ModalContent = styled.div`
     background-color: var(--darkZaori);
-    padding: 5px;
+    padding: 10px;
     border-radius: 0 0 0 10px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
 
     @media (min-width: 768px) {
         padding: 12px;
@@ -57,7 +57,7 @@ export const ModalButton = styled.button`
     }
 
     @media (min-width: 768px) {
-        font-size: 18px; 
+        font-size: 18px;
         padding: 12px;
 
         svg {
