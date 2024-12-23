@@ -1,9 +1,16 @@
 'use client';
 
-import { LuArrowLeft, LuCircleCheck, LuShare } from "react-icons/lu";
+import React, { useState } from 'react';
+import { LuArrowLeft, LuCircleCheck, LuShare, LuX } from "react-icons/lu";
 import { Container, EventButton, EventButtonsDiv, EventDateAndLocationDiv, EventDescriptionAndButtonDiv, EventDescriptionDiv, EventPicture, SubscribeButton, TextBlock, TitleAndDescriptionDiv } from "./styled";
 
 export default function EventDetail(){
+    const [isSubscribed, setIsSubscribed] = useState(false);
+
+    const handleSubscribe = () => {
+        setIsSubscribed(!isSubscribed);
+    };
+
     return (
         <Container>
             <EventPicture>
@@ -28,16 +35,20 @@ export default function EventDetail(){
                     <h6>Zona Abissal</h6>
                 </TextBlock>
             </EventDateAndLocationDiv>
-            <EventDescriptionAndButtonDiv>
+            <EventDescriptionAndButtonDiv $isSubscribed={isSubscribed} onClick={handleSubscribe}>
                 <EventDescriptionDiv>
                     <TextBlock>
                         <h4>About event</h4>
                         <h6>Event description here, Lorem ipsum dolor sit amet, consectetur adipiscing elit. In molestie euismod interdum. Aenean vel est tellus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc scelerisque ut risus non... </h6>
                     </TextBlock>
                 </EventDescriptionDiv>
-                <SubscribeButton>
-                    <LuCircleCheck className="subscribeIcon"/>
-                    <h1>Subscribe</h1>
+                <SubscribeButton $isSubscribed={isSubscribed} onClick={handleSubscribe}>
+                    {isSubscribed ? (
+                        <LuX className="subscribeIcon"/>
+                    ) : (
+                        <LuCircleCheck className="subscribeIcon"/>
+                    )}
+                    <h1>{isSubscribed ? 'Cancel Subscription' : 'Subscribe'}</h1>
                 </SubscribeButton>
             </EventDescriptionAndButtonDiv>
         </Container>
