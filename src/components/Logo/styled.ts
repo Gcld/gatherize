@@ -52,7 +52,7 @@ export const LogoDiv = styled.div`
         }
     }
     
-    @media (min-width: 1440px) {
+    @media (min-width: 1024px) {
         .logoIcon {
             width: 56px;
             height: 56px;  

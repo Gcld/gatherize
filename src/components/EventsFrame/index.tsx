@@ -10,7 +10,7 @@ export default function EventsFrame() {
             </div>
             <div className="sortButton">
                 <h3>Sort by</h3>
-                <MdArrowDropDown size={12} color="var(--primaryDarkZaori)"/>
+                <MdArrowDropDown className="icon"/>
             </div>
         </Container>
     );

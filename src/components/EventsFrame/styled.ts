@@ -37,5 +37,59 @@ export const Container = styled.div`
             line-height: 120%;
             color: white;
         }
+
+        .icon{
+            width: 12px;
+            height: 12px; 
+            color: var(--primaryDarkZaori);
+        }
+    }
+
+    @media (min-width: 768px){
+        padding: 10px 7vh;
+        .availableEvents{
+            h2{
+                font-size: 18px;
+            }
+            
+            h5{
+                font-size: 12px;
+            }
+        }
+
+        .sortButton{
+            h3{
+                font-size: 16px;
+            }
+
+            .icon{
+                width: 16px;
+                height: 16px; 
+            }
+        }
+    }
+
+    @media (min-width: 1024px){
+        padding: 10px 6vh;
+        .availableEvents{
+            h2{
+                font-size: 24px;
+            }
+            
+            h5{
+                font-size: 16px;
+            }
+        }
+
+        .sortButton{
+            h3{
+                font-size: 18px;
+            }
+
+            .icon{
+                width: 20px;
+                height: 20px; 
+            }
+        }
     }
 `;  

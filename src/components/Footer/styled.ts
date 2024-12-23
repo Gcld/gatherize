@@ -15,4 +15,10 @@ export const Container = styled.div`
         line-height: 120%;
         color: var(--primaryLightZaori);
     }
+
+    @media (min-width: 768px){
+        h4{
+            font-size: 16px;
+        }
+    }
 `;

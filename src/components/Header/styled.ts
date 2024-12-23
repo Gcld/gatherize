@@ -4,7 +4,6 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
     height: 100%;
     width: 100%;
     padding: 8px 8px;
@@ -39,7 +38,7 @@ export const LogoAndMenu = styled.div`
         }
     }
 
-    @media (min-width: 1440px){
+    @media (min-width: 1024px){
         .burguerIcon{
             height: 48px;
             width: 48px;
@@ -59,7 +58,7 @@ export const SearchAndFilter = styled.div`
         gap: 8px;
     }
 
-    @media (min-width: 1440px){
+    @media (min-width: 1024px){
         gap: 10px;
     }
 `;
@@ -83,7 +82,6 @@ export const SearchDiv = styled.div`
 
     @media (min-width: 768px){
         border-radius: 12px;
-        gap: 10px;
         .searchIcon{
             color: "var(--primaryDarkZaori)"; 
             height: 20px;
@@ -91,13 +89,13 @@ export const SearchDiv = styled.div`
         }
     }
 
-    @media (min-width: 1440px){
+    @media (min-width: 1024px){
         border-radius: 12px;
         gap: 10px;
         .searchIcon{
             color: "var(--primaryDarkZaori)"; 
-            height: 24px;
-            width: 24px;
+            height: 22px;
+            width: 22px;
         }
     }
 `;
@@ -112,12 +110,13 @@ export const Searchbar = styled.input`
     border: none;
     font-size: 12px;
     justify-content: center;
+    
     @media (min-width: 768px){
-        font-size: 20px;
+        font-size: 16px;
     }
 
-    @media (min-width: 1440px){
-        font-size: 24px;
+    @media (min-width: 1024px){
+        font-size: 20px;
     }
 `;
 

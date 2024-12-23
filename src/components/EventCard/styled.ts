@@ -3,13 +3,17 @@ import styled from "styled-components";
 export const Container = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: top left;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     border-radius: 10px;
     padding: 2px;
     gap: 8px;
     background-color: white;
+
+    @media (min-width: 768px){
+        width: 80%;
+    }
 `;
 
 export const EventCardPicture = styled.div`
@@ -54,7 +58,6 @@ export const EventContent = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: left;
-    width: 100%;
     padding: 0px 5px;
     gap: 8px;
 
