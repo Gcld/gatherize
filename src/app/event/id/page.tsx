@@ -8,8 +8,8 @@ export default function EventDetail(){
         <Container>
             <EventPicture>
                 <EventButtonsDiv>
-                    <EventButton><LuArrowLeft color="var(--primaryDarkZaori)" size={19}/></EventButton>
-                    <EventButton><LuShare color="var(--primaryDarkZaori)" size={19}/></EventButton>
+                    <EventButton><LuArrowLeft className="icon"/></EventButton>
+                    <EventButton><LuShare className="icon"/></EventButton>
                 </EventButtonsDiv>
             </EventPicture>
             <TitleAndDescriptionDiv>
@@ -36,7 +36,7 @@ export default function EventDetail(){
                     </TextBlock>
                 </EventDescriptionDiv>
                 <SubscribeButton>
-                    <LuCircleCheck color="black" size={24}/>
+                    <LuCircleCheck className="subscribeIcon"/>
                     <h1>Subscribe</h1>
                 </SubscribeButton>
             </EventDescriptionAndButtonDiv>
