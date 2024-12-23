@@ -10,10 +10,6 @@ export const Container = styled.div`
     padding: 2px;
     gap: 8px;
     background-color: white;
-
-    @media (min-width: 768px){
-        width: 80%;
-    }
 `;
 
 export const EventCardPicture = styled.div`
@@ -50,6 +46,24 @@ export const EventDate = styled.div`
         line-height: 120%;
         color: black;
     }
+
+    @media (min-width: 768px){
+        h3{
+            font-size: 16px;
+        }
+        h5{
+            font-size: 10px;
+        }
+    }
+
+    @media (min-width: 1024px){
+        h3{
+            font-size: 18px;
+        }
+        h5{
+            font-size: 12px;
+        }
+    }
 `;
 
 export const EventContent = styled.div`
@@ -67,6 +81,24 @@ export const EventContent = styled.div`
         line-height: 120%;
         color: black;
     }
+
+    @media (min-width: 768px){
+        padding: 0px 8px;
+        gap: 15px;
+        h1{
+            font-size: 48px;
+            line-height: 110%;
+        }
+    }
+
+    @media (min-width: 768px){
+        padding: 0px 10px;
+        gap: 18px;
+        h1{
+            font-size: 48px;
+            line-height: 110%;
+        }
+    }
 `;
 
 export const EventLocation = styled.div`
@@ -77,6 +109,18 @@ export const EventLocation = styled.div`
         font-weight: normal;
         line-height: 120%;
         color: var(--darkZaori);
+    }
+
+    @media (min-width: 768px){
+        h4{
+            font-size: 14px;
+        }
+    }
+
+    @media (min-width: 1024px){
+        h4{
+            font-size: 18px;
+        }
     }
 `;
 
@@ -103,6 +147,18 @@ export const Participants = styled.div`
         line-height: 120%;
         color: black;
     }
+
+    @media (min-width: 768px){
+        h3{
+            font-size: 16px;
+        }
+    }
+
+    @media (min-width: 1024px){
+        h3{
+            font-size: 18px;
+        }
+    }
 `;
 
 export const EventButton = styled.div`
@@ -119,5 +175,17 @@ export const EventButton = styled.div`
         font-weight: bold;
         line-height: 120%;
         color: black;
+    }
+
+    @media (min-width: 768px){
+        h2{
+            font-size: 18px;
+        }
+    }
+
+    @media (min-width: 1024px){
+        h2{
+            font-size: 24px;
+        }
     }
 `;

@@ -46,7 +46,7 @@ export const Container = styled.div`
     }
 
     @media (min-width: 768px){
-        padding: 10px 7vh;
+        padding: 10px;
         .availableEvents{
             h2{
                 font-size: 18px;
@@ -70,7 +70,7 @@ export const Container = styled.div`
     }
 
     @media (min-width: 1024px){
-        padding: 10px 6vh;
+        padding: 10px 0px;
         .availableEvents{
             h2{
                 font-size: 24px;

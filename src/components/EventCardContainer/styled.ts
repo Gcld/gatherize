@@ -7,6 +7,7 @@ export const Container = styled.div`
     place-items: center;
 
     @media (min-width: 768px){
+        gap: 20px;
         grid-template-columns: repeat(2, 1fr);
         place-items: center;
     }
