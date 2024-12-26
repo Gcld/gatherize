@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { MdArrowDropDown } from "react-icons/md";
 import { Container } from "./styled";
 import SortModal from '../SortModal';
 
 export default function EventsFrame() {
     const [isSortModalOpen, setIsSortModalOpen] = useState(false);
+    const sortButtonRef = useRef<HTMLDivElement>(null);
 
     const toggleSortModal = () => {
         setIsSortModalOpen(!isSortModalOpen);
@@ -15,6 +16,25 @@ export default function EventsFrame() {
         console.log('Sorting by:', sortType);
     };
 
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                sortButtonRef.current && 
+                !sortButtonRef.current.contains(event.target as Node)
+            ) {
+                setIsSortModalOpen(false);
+            }
+        };
+
+        if (isSortModalOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isSortModalOpen]);
+
     return (
         <Container>
             <div className="availableEvents">
@@ -22,6 +42,7 @@ export default function EventsFrame() {
                 <h5>24</h5>
             </div>
             <div 
+                ref={sortButtonRef}
                 className="sortButton" 
                 onClick={toggleSortModal}
                 style={{ position: 'relative' }} 
