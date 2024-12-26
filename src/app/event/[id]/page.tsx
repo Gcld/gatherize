@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { LuArrowLeft, LuCircleCheck, LuShare, LuX } from "react-icons/lu";
 import { Container, EventButton, EventButtonsDiv, EventDateAndLocationDiv, EventDescriptionAndButtonDiv, EventDescriptionDiv, EventPicture, SubscribeButton, TextBlock, TitleAndDescriptionDiv } from "./styled";
+import Link from 'next/link';
 
 export default function EventDetail(){
     const [isSubscribed, setIsSubscribed] = useState(false);
@@ -15,7 +16,7 @@ export default function EventDetail(){
         <Container>
             <EventPicture>
                 <EventButtonsDiv>
-                    <EventButton><LuArrowLeft className="icon"/></EventButton>
+                    <Link href="/" passHref><EventButton><LuArrowLeft className="icon"/></EventButton></Link>
                     <EventButton><LuShare className="icon"/></EventButton>
                 </EventButtonsDiv>
             </EventPicture>
