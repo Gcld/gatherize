@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface EventButtonProps {
+    $isSubscribed: boolean;
+}
+
 export const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -161,25 +165,38 @@ export const Participants = styled.div`
     }
 `;
 
-export const EventButton = styled.div`
+export const EventButton = styled.div<EventButtonProps>`
     display: flex;
     width: 100%;
     align-items: center;
     justify-content: center;
     padding: 8px;
     border-radius: 8px;
-    background-color: var(--primaryDarkZaori);
+    gap: 4px; // Adiciona espaço entre o ícone e o texto
+    background-color: ${props => props.$isSubscribed ? 'red' : 'var(--primaryDarkZaori)'};
+    transition: background-color 0.3s ease;
+
+    .subscribeIcon {
+        height: 18px;
+        width: 18px;
+        color: ${props => props.$isSubscribed ? 'white' : 'black'};
+    }
 
     h2{
         font-size: 16px;
         font-weight: bold;
         line-height: 120%;
-        color: black;
+        color: ${props => props.$isSubscribed ? 'white' : 'black'};
     }
 
     @media (min-width: 768px){
         h2{
             font-size: 18px;
+        }
+
+        .subscribeIcon {
+            height: 32px;
+            width: 32px;
         }
     }
 

@@ -1,9 +1,19 @@
-import { LuCircleUser, LuMapPin } from "react-icons/lu";
+'use client';
+
+import { LuCircleUser, LuMapPin, LuCircleCheck, LuX } from "react-icons/lu";
 import Link from "next/link";
+import { useSubscription } from "@/contexts/SubscriptionContext";
 import { Container, EventButton, EventCardPicture, EventContent, EventDate, EventInfo, EventLocation, Participants, Users } from "./styled";
 
 export default function EventCard() {
     const temporaryEventId = 1; 
+    const { toggleSubscription, isSubscribed } = useSubscription();
+    const eventSubscribed = isSubscribed(temporaryEventId);
+
+    const handleSubscribe = (e: React.MouseEvent) => {
+        e.preventDefault(); 
+        toggleSubscription(temporaryEventId);
+    };
 
     return (
         <Link href={`/event/${temporaryEventId}`} passHref legacyBehavior>
@@ -32,8 +42,16 @@ export default function EventCard() {
                         </Participants>
                     </EventInfo>
                 </EventContent>
-                <EventButton>
-                    <h2>Sign Up</h2>
+                <EventButton 
+                    onClick={handleSubscribe} 
+                    $isSubscribed={eventSubscribed}
+                >
+                    {eventSubscribed ? (
+                        <LuX className="subscribeIcon"/>
+                    ) : (
+                        <LuCircleCheck className="subscribeIcon"/>
+                    )}
+                    <h2>{eventSubscribed ? 'Cancel Subscription' : 'Sign Up'}</h2>
                 </EventButton>
             </Container>
         </Link>

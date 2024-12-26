@@ -4,6 +4,7 @@ import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import StyledComponentsRegistry from "./registry";
+import { SubscriptionProvider } from "@/contexts/SubscriptionContext";
 
 const nunito_sans = Nunito_Sans({
   subsets: ['latin'],
@@ -25,23 +26,28 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${nunito_sans.className}`}>
         <StyledComponentsRegistry>
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
+          <SubscriptionProvider>
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
             <main className="main">
               {children}
             </main>
+          </SubscriptionProvider>
         </StyledComponentsRegistry>
       </body>
     </html>
   );
 }
+
+
+
