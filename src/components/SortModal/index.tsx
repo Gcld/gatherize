@@ -20,15 +20,15 @@ const SortModal: React.FC<SortModalProps> = ({ isOpen, onClose, onSort }) => {
         <ModalContainer>
             <ModalContent>
                 <ModalButton onClick={() => handleSort('alphabetical')}>
-                    <LuAlignLeft className='icon'/>
+                    <LuAlignLeft className="modalIcon"/>
                     <span>Alphabetical</span>
                 </ModalButton>
                 <ModalButton onClick={() => handleSort('recent')}>
-                    <LuClock className='icon'/>
+                    <LuClock className="modalIcon"/>
                     <span>Recently Created</span>
                 </ModalButton>
                 <ModalButton onClick={() => handleSort('participants')}>
-                    <LuUsers className='icon'/>
+                    <LuUsers className="modalIcon"/>
                     <span>Participants</span>
                 </ModalButton>
             </ModalContent>
