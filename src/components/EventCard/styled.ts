@@ -14,6 +14,15 @@ export const Container = styled.div`
     padding: 2px;
     gap: 8px;
     background-color: white;
+    max-width: 400px;
+
+    @media (min-width: 376px) and (max-width: 767.5px){
+        width: 70%;
+    }
+
+    @media (min-width: 880px) and (max-width: 1023.5px){
+        width: 70%;
+    }
 `;
 
 export const EventCardPicture = styled.div`
