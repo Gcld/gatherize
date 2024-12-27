@@ -1,8 +1,5 @@
 import styled from "styled-components";
 
-interface SubscribeButtonProps {
-    $isSubscribed: boolean;
-}
 
 export const Container = styled.div`
     display: flex;
@@ -144,11 +141,11 @@ export const EventDateAndLocationDiv = styled.div`
     padding: 0 8px;
 `;
 
-export const EventDescriptionAndButtonDiv = styled.div<SubscribeButtonProps>`
+export const EventDescriptionAndButtonDiv = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    background-color: ${props => props.$isSubscribed ? 'red' : 'var(--primaryDarkZaori)'};
+    background-color: var(--primaryDarkZaori);
 `;
 
 export const EventDescriptionDiv = styled.div`
@@ -160,33 +157,28 @@ export const EventDescriptionDiv = styled.div`
     border-radius: 0 0 10px 10px;
 `;
 
-export const SubscribeButton = styled.div<SubscribeButtonProps>`
+export const SubscribeButton = styled.div`
     display: flex;
     flex-direction: row;
     width: 100%;
     height: 10vh;
-    background-color: ${props => props.$isSubscribed ? 'red' : 'var(--primaryDarkZaori)'};
+    background-color: var(--primaryDarkZaori);
     justify-content: center;
     align-items: center;
     gap: 4px;
     padding: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 
-    &:hover {
-        background-color: ${props => props.$isSubscribed ? 'red' : 'var(--primaryZaori)'};
-    }
-
-    .subscribeIcon{
+    .participantsIcon{
         height: 24px;
         width: 24px;
-        color: ${props => props.$isSubscribed ? 'white' : 'black'};
+        color: black;
     }
 
     h1{
         font-size: 24px;
         font-weight: bold;
-        color: ${props => props.$isSubscribed ? 'white' : 'black'};
+        color: black;
         line-height: 120%;
     }
 

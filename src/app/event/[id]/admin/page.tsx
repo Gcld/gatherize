@@ -1,24 +1,13 @@
 'use client';
 
 import React from 'react';
-import { LuArrowLeft, LuCircleCheck, LuClipboardPen, LuShare, LuTrash2, LuX } from "react-icons/lu";
-import { useSubscription } from "@/contexts/SubscriptionContext";
+import { LuArrowLeft, LuClipboardPen, LuShare, LuTrash2, LuUsers} from "react-icons/lu";
 import Link from 'next/link';
 import { Container, EventButton, EventButtonsDiv, EventDateAndLocationDiv, EventDescriptionAndButtonDiv, EventDescriptionDiv, EventPicture, SubscribeButton, TextBlock, TitleAndDescriptionDiv } from './styled';
 
 
 export default function EventDetailAdmin(){
-    const temporaryEventId = 1;
-    const { toggleSubscription, isSubscribed } = useSubscription();
-    const eventSubscribed = isSubscribed(temporaryEventId);
 
-    const handleSubscribe = (e?: React.MouseEvent) => {
-        // Previne a propagação do evento se for um evento de clique
-        if (e) {
-            e.stopPropagation();
-        }
-        toggleSubscription(temporaryEventId);
-    };
 
     return (
         <Container>
@@ -52,23 +41,16 @@ export default function EventDetailAdmin(){
                     <h6>Zona Abissal</h6>
                 </TextBlock>
             </EventDateAndLocationDiv>
-            <EventDescriptionAndButtonDiv $isSubscribed={eventSubscribed} onClick={(e) => handleSubscribe(e)}>
+            <EventDescriptionAndButtonDiv>
                 <EventDescriptionDiv>
                     <TextBlock>
                         <h4>About event</h4>
                         <h6>Event description here, Lorem ipsum dolor sit amet, consectetur adipiscing elit. In molestie euismod interdum. Aenean vel est tellus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc scelerisque ut risus non... </h6>
                     </TextBlock>
                 </EventDescriptionDiv>
-                <SubscribeButton 
-                    $isSubscribed={eventSubscribed} 
-                    onClick={(e) => handleSubscribe(e)}
-                >
-                    {eventSubscribed ? (
-                        <LuX className="subscribeIcon"/>
-                    ) : (
-                        <LuCircleCheck className="subscribeIcon"/>
-                    )}
-                    <h1>{eventSubscribed ? 'Cancel Subscription' : 'Subscribe'}</h1>
+                <SubscribeButton>
+                    <LuUsers className='participantsIcon'/>
+                    <h1>View Participants</h1>
                 </SubscribeButton>
             </EventDescriptionAndButtonDiv>
         </Container>
