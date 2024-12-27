@@ -34,15 +34,29 @@ export const EventButton = styled.div`
     background-color: var(--darkZaori);
     padding: 5px;
     justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.3s ease;
 
-    .icon{
+    .icon {
         height: 19px;
         width: 19px;
         color: var(--primaryDarkZaori);
+        transition: all 0.3s ease;
     }
 
-    @media (min-width: 768px){
-        .icon{
+    &:hover {
+        background-color: var(--primaryDarkZaori);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+        .icon {
+            color: var(--darkZaori);
+            transform: scale(1.1);
+        }
+    }
+
+    @media (min-width: 768px) {
+        .icon {
             height: 22px;
             width: 22px;
         }
@@ -163,33 +177,42 @@ export const SubscribeButton = styled.div<SubscribeButtonProps>`
     gap: 4px;
     padding: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 
-    &:hover {
-        background-color: ${props => props.$isSubscribed ? 'red' : 'var(--primaryZaori)'};
-    }
-
-    .subscribeIcon{
+    .subscribeIcon {
         height: 24px;
         width: 24px;
         color: ${props => props.$isSubscribed ? 'white' : 'black'};
+        transition: all 0.3s ease;
     }
 
-    h1{
+    h1 {
         font-size: 24px;
         font-weight: bold;
         color: ${props => props.$isSubscribed ? 'white' : 'black'};
         line-height: 120%;
+        transition: all 0.3s ease;
     }
 
-    @media (min-width: 768px){
+    &:hover {
+
+        .subscribeIcon {
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        h1 {
+            transform: scale(1.05);
+        }
+    }
+
+    @media (min-width: 768px) {
         height: 10vh;
-        .subscribeIcon{
+        .subscribeIcon {
             height: 32px;
             width: 32px;
         }
 
-        h1{
+        h1 {
             font-size: 32px;
             line-height: 110%;
         }

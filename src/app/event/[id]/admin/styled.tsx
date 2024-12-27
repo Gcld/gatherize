@@ -33,23 +33,42 @@ export const EventButton = styled.div`
     justify-content: center;
     align-items: center;
     gap: 2px;
+    transition: all 0.3s ease;
+    cursor: pointer;
 
-    .icon{
+    .icon {
         height: 18px;
         width: 18px;
         color: var(--primaryDarkZaori);
+        transition: all 0.3s ease;
     }
 
-    h3{
+    h3 {
         font-size: 14px;
         font-weight: bold;
         line-height: 120%;
+        transition: all 0.3s ease;
     }
 
-    @media (min-width: 768px){
-        .icon{
-            height: 22px;
-            width: 22px;
+    &:hover {
+        background-color: var(--primaryDarkZaori);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+        .icon {
+        color: var(--darkZaori);
+        transform: scale(1.1);
+        }
+
+        h3 {
+        color: var(--darkZaori);
+        }
+    }
+
+    @media (min-width: 768px) {
+        .icon {
+        height: 22px;
+        width: 22px;
         }
     }
 `;
@@ -168,30 +187,47 @@ export const SubscribeButton = styled.div`
     gap: 4px;
     padding: 8px;
     cursor: pointer;
+    transition: all 0.3s ease;
 
-    .participantsIcon{
+    .participantsIcon {
         height: 24px;
         width: 24px;
         color: black;
+        transition: all 0.3s ease;
     }
 
-    h1{
+    h1 {
         font-size: 24px;
         font-weight: bold;
         color: black;
         line-height: 120%;
+        transition: all 0.3s ease;
     }
 
-    @media (min-width: 768px){
-        height: 10vh;
-        .subscribeIcon{
-            height: 32px;
-            width: 32px;
+    &:hover {
+        background-color: var(--darkZaori);
+
+        .participantsIcon {
+        color: var(--primaryDarkZaori);
+        transform: rotate(15deg) scale(1.1);
         }
 
-        h1{
-            font-size: 32px;
-            line-height: 110%;
+        h1 {
+        color: var(--primaryDarkZaori);
+        transform: scale(1.05);
+        }
+    }
+
+    @media (min-width: 768px) {
+        height: 10vh;
+        .subscribeIcon {
+        height: 32px;
+        width: 32px;
+        }
+
+        h1 {
+        font-size: 32px;
+        line-height: 110%;
         }
     }
 `;
