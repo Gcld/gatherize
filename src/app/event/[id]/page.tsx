@@ -23,7 +23,6 @@ export default function EventDetail(){
     const eventSubscribed = isSubscribed(temporaryEventId);
 
     const handleSubscribe = (e?: React.MouseEvent) => {
-        // Previne a propagação do evento se for um evento de clique
         if (e) {
             e.stopPropagation();
         }

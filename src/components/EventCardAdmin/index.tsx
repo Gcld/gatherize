@@ -3,7 +3,8 @@
 import { LuCircleUser, LuMapPin, LuEye } from "react-icons/lu";
 import Link from "next/link";
 
-import { Container, EventButton, EventCardPicture, EventContent, EventDate, EventInfo, EventLocation, Participants, Users } from "./styled";
+import { EventButton } from "./styled";
+import { Container, EventCardPicture, EventContent, EventDate, EventInfo, EventLocation, Participants, Users } from "../EventCard/styled";
 
 export default function EventCardAdmin() {
     const temporaryEventId = 1; 

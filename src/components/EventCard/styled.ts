@@ -181,7 +181,7 @@ export const EventButton = styled.div<EventButtonProps>`
     justify-content: center;
     padding: 8px;
     border-radius: 8px;
-    gap: 4px; // Adiciona espaço entre o ícone e o texto
+    gap: 4px;
     background-color: ${props => props.$isSubscribed ? 'red' : 'var(--primaryDarkZaori)'};
     transition: background-color 0.3s ease;
 
