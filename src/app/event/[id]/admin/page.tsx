@@ -3,7 +3,8 @@
 import React from 'react';
 import { LuArrowLeft, LuClipboardPen, LuShare, LuTrash2, LuUsers} from "react-icons/lu";
 import Link from 'next/link';
-import { Container, EventButton, EventButtonsDiv, EventDateAndLocationDiv, EventDescriptionAndButtonDiv, EventDescriptionDiv, EventPicture, SubscribeButton, TextBlock, TitleAndDescriptionDiv } from './styled';
+import { EventButton, EventDescriptionAndButtonDiv, SubscribeButton } from './styled';
+import { Container, EventButtonsDiv, EventDateAndLocationDiv, EventDescriptionDiv, EventPicture, TextBlock, TitleAndDescriptionDiv } from '../styled';
 
 
 export default function EventDetailAdmin(){
