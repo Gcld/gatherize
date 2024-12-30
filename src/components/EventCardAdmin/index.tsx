@@ -11,7 +11,7 @@ export default function EventCardAdmin() {
 
 
     return (
-        <Link href={`/event/${temporaryEventId}`} passHref legacyBehavior>
+        <Link href={`/event/${temporaryEventId}/admin`} passHref legacyBehavior>
             <Container as="a">
                 <EventCardPicture>
                     <EventDate>

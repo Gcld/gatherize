@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
-import { LuAlignJustify, LuFilter, LuSearch } from "react-icons/lu";
-import Logo from "../Logo";
-import { Container, FilterButton, LogoAndMenu, SearchAndFilter, Searchbar, SearchDiv } from "./styled";
-import MenuModal from "../MenuModal";
-import FilterModal from "../FilterModal";
+import { LuAlignJustify, LuFilter, LuSearch } from 'react-icons/lu';
+import Logo from '../Logo';
+import MenuModal from '../MenuModal';
+import FilterModal from '../FilterModal';
+import {
+    Container,
+    FilterButton,
+    LogoAndMenu,
+    SearchAndFilter,
+    Searchbar,
+    SearchDiv
+} from './styled';
 
 export default function Header() {
     const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
@@ -21,15 +28,28 @@ export default function Header() {
         <Container>
             <LogoAndMenu>
                 <Logo />
-                <LuAlignJustify className="burguerIcon" onClick={toggleMenuModal}/>
+                <button
+                    aria-label='Open menu'
+                    onClick={toggleMenuModal}
+                >
+                    <LuAlignJustify className='burguerIcon' />
+                </button>
             </LogoAndMenu>
             <SearchAndFilter>
                 <SearchDiv>
-                    <LuSearch className="searchIcon"/>
-                    <Searchbar type="text" id="searchbar" placeholder="Search event"></Searchbar>
+                    <LuSearch className='searchIcon' />
+                    <Searchbar
+                        type='text'
+                        id='searchbar'
+                        placeholder='Search event'
+                        aria-label='Search for events'
+                    />
                 </SearchDiv>
-                <FilterButton onClick={toggleFilterModal}>
-                    <LuFilter className="filterIcon"/>
+                <FilterButton
+                    onClick={toggleFilterModal}
+                    aria-label='Open filters'
+                >
+                    <LuFilter className='filterIcon' />
                 </FilterButton>
             </SearchAndFilter>
             <MenuModal isOpen={isMenuModalOpen} onClose={() => setIsMenuModalOpen(false)} />

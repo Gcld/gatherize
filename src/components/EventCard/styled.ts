@@ -23,6 +23,15 @@ export const Container = styled.div`
     @media (min-width: 880px) and (max-width: 1023.5px){
         width: 70%;
     }
+
+    @media (min-width: 768px) {
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+
+        &:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+    }
 `;
 
 export const EventCardPicture = styled.div`
@@ -186,20 +195,26 @@ export const EventButton = styled.div<EventButtonProps>`
     transition: background-color 0.3s ease;
 
     .subscribeIcon {
+        flex-shrink: 0; 
         height: 18px;
         width: 18px;
         color: ${props => props.$isSubscribed ? 'white' : 'black'};
     }
 
-    h2{
+    h2 {
         font-size: 16px;
         font-weight: bold;
         line-height: 120%;
         color: ${props => props.$isSubscribed ? 'white' : 'black'};
+        white-space: nowrap;
     }
 
-    @media (min-width: 768px){
-        h2{
+    @media (min-width: 768px) {
+        &:hover {
+            transform: translateY(-2px);
+        }
+
+        h2 {
             font-size: 18px;
         }
 
@@ -209,9 +224,14 @@ export const EventButton = styled.div<EventButtonProps>`
         }
     }
 
-    @media (min-width: 1024px){
-        h2{
+    @media (min-width: 1024px) {
+        h2 {
             font-size: 24px;
         }
+    }
+
+    @media (max-width: 767px) {
+        touch-action: manipulation; 
+        -webkit-tap-highlight-color: transparent; 
     }
 `;
