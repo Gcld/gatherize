@@ -204,8 +204,8 @@ export const EventButton = styled.div<EventButtonProps>`
         }
 
         .subscribeIcon {
-            height: 32px;
-            width: 32px;
+            height: 24px;
+            width: 24px;
         }
     }
 
