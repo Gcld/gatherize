@@ -2,6 +2,7 @@
 
 import { LuLock, LuMail } from "react-icons/lu";
 import { Container, InputBox, LoginInput, InputWrapper, SignInButton, SignUpDiv } from "./styled";
+import Link from "next/link";
 
 export default function Login() {
     return (
@@ -22,7 +23,7 @@ export default function Login() {
                 </SignInButton>
                 <SignUpDiv>
                     <h4>New to Gatherize?</h4>
-                    <h4 className="signUp">Join Now</h4>
+                    <Link href="/signup"><h4 className="signUp">Join Now</h4></Link>
                 </SignUpDiv>
             </InputBox>
         </Container>

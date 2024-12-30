@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { LuArrowLeft, LuCalendar, LuLock, LuMail, LuUser, LuUserPen, LuX } from "react-icons/lu";
 import { Container, InputBox, InputWrapper, SignInButton, SignInput, SignUpDivReturn, UserTypeButton, UserTypeButtonDiv, UserTypeDiv } from "./styled";
+import Link from 'next/link';
 
 type UserType = 'user' | 'creator' | null;
 
@@ -17,7 +18,7 @@ export default function Login() {
         <Container>
             <InputBox>
                 <SignUpDivReturn>
-                    <LuArrowLeft className='arrowIcon' />
+                    <Link href="/login"><LuArrowLeft className='arrowIcon' /></Link>
                     <h1>Sign Up</h1>
                 </SignUpDivReturn>
                 <h4>Let us help you gatherize with your friends</h4>
