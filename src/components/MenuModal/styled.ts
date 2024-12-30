@@ -20,10 +20,19 @@ export const ModalContent = styled.div`
     display: flex;
     flex-direction: column;
     gap: 5px;
+    align-items: flex-end;
+
+    .closeIcon {
+        color: var(--primaryDarkZaori);
+    }
 
     @media (min-width: 768px) {
         padding: 12px;
         gap: 12px;
+
+        .closeIcon {
+            font-size: 24px;
+        }
     }
 
     @media (min-width: 1024px) {
@@ -52,25 +61,18 @@ export const ModalButton = styled.button`
         background-color: rgba(255, 255, 255, 0.1);
     }
 
-    svg {
-        font-size: 20px;
-    }
-
     @media (min-width: 768px) {
         font-size: 18px; 
         padding: 12px;
 
-        svg {
-        font-size: 22px;
+        .icon{
+            height: 24px;
+            width: 24px;
         }
     }
 
     @media (min-width: 1024px) {
         font-size: 24px; 
         padding: 14px;
-
-        svg {
-        font-size: 24px;
-        }
     }
 `;

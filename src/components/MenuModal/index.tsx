@@ -1,5 +1,5 @@
 import React from 'react';
-import { LuUser, LuSettings } from "react-icons/lu";
+import { LuUser, LuSettings, LuX } from "react-icons/lu";
 import { ModalContainer, ModalContent, ModalButton } from './styled';
 
 interface MenuModalProps {
@@ -13,6 +13,7 @@ const MenuModal: React.FC<MenuModalProps> = ({ isOpen, onClose }) => {
     return (
         <ModalContainer onClick={onClose}>
             <ModalContent onClick={(e) => e.stopPropagation()}>
+                <LuX className="closeIcon" onClick={onClose}/>
                 <ModalButton>
                     <LuUser className='icon'/>
                     <span>Profile</span>

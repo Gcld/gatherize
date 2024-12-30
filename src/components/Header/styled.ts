@@ -75,6 +75,14 @@ export const SearchDiv = styled.div`
     border: 1px solid var(--grayZaori);
     padding: 5px;
 
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+
+    &:focus-within {
+        background-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 0 2px var(--primaryDarkZaori);
+    }
+
     .searchIcon{
             color: var(--primaryDarkZaori); 
             height: 12px;
@@ -111,6 +119,12 @@ export const Searchbar = styled.input`
     border: none;
     font-size: 12px;
     justify-content: center;
+    outline: none;
+    color: white;
+    
+    &::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+    }
     
     @media (min-width: 768px){
         font-size: 16px;
