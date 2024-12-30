@@ -20,17 +20,37 @@ export const ModalContent = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
+    align-items: flex-end;
+
+    .buttons{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        align-items: center;
+    }
+
+    .closeIcon {
+        color: var(--primaryDarkZaori);
+        height: 24px;
+        width: 20px;
+    }
 
     @media (min-width: 768px) {
         padding: 12px;
         gap: 12px;
+        
+        .closeIcon{
+            height: 28px;
+            width: 28px;
+        }
     }
 
     @media (min-width: 1024px) {
         padding: 14px;
-        gap: 14px;
+        gap: 10px;
     }
 `;
+
 
 export const ModalButton = styled.button`
     display: flex;
@@ -59,18 +79,10 @@ export const ModalButton = styled.button`
     @media (min-width: 768px) {
         font-size: 18px;
         padding: 12px;
-
-        svg {
-        font-size: 22px;
-        }
     }
 
     @media (min-width: 1024px) {
         font-size: 24px; 
         padding: 14px;
-
-        svg {
-        font-size: 24px;
-        }
     }
 `;
