@@ -37,7 +37,11 @@ export const EventButtonsDiv = styled.div`
 `;
 
 export const EventContent = styled.div`
-    height: 30vh;
+    height: 100%;
+
+    @media (min-width: 600px) {
+        min-height: 150px;
+    }
 `;
 
 export const EventButton = styled.div`
@@ -172,11 +176,16 @@ export const EventDescriptionAndButtonDiv = styled.div<SubscribeButtonProps>`
 
 export const EventDescriptionDiv = styled.div`
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     padding: 8px 8px;
     background-color: black;
     border-radius: 0 0 10px 10px;
+
+    @media (min-width: 768px) {
+        padding: 24px 8px;
+    }
 `;
 
 export const SubscribeButton = styled.div<SubscribeButtonProps>`
