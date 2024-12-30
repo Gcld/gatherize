@@ -10,6 +10,7 @@ export const Container = styled.div`
     width: 100%;
     min-height: 100vh;
     justify-content: space-between;
+    gap: 24px;
 `;
 
 export const DesktopOnly = styled.div`
@@ -33,6 +34,10 @@ export const EventButtonsDiv = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+`;
+
+export const EventContent = styled.div`
+    height: 30vh;
 `;
 
 export const EventButton = styled.div`
@@ -76,7 +81,7 @@ export const TitleAndDescriptionDiv = styled.div`
     flex-direction: column;
     width: 100%;
     gap: 8px;
-    padding: 0 16px;
+    padding: 8px 16px;
     align-items: top center;
 
     h1{
