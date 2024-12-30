@@ -31,6 +31,7 @@ export default function Header() {
                 <button
                     aria-label='Open menu'
                     onClick={toggleMenuModal}
+                    className='burguerButton'
                 >
                     <LuAlignJustify className='burguerIcon' />
                 </button>

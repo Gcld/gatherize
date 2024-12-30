@@ -4,20 +4,22 @@ import React from 'react';
 import { LuArrowLeft, LuCircleCheck, LuShare, LuX } from "react-icons/lu";
 import { useSubscription } from "@/contexts/SubscriptionContext";
 import Link from 'next/link';
-import { 
-    Container, 
-    EventButton, 
-    EventButtonsDiv, 
-    EventDateAndLocationDiv, 
-    EventDescriptionAndButtonDiv, 
-    EventDescriptionDiv, 
-    EventPicture, 
-    SubscribeButton, 
-    TextBlock, 
-    TitleAndDescriptionDiv 
+import Header from "@/components/Header";
+import {
+    Container,
+    EventButton,
+    EventButtonsDiv,
+    EventDateAndLocationDiv,
+    EventDescriptionAndButtonDiv,
+    EventDescriptionDiv,
+    EventPicture,
+    SubscribeButton,
+    TextBlock,
+    TitleAndDescriptionDiv,
+    DesktopOnly
 } from "./styled";
 
-export default function EventDetail(){
+export default function EventDetail() {
     const temporaryEventId = 1;
     const { toggleSubscription, isSubscribed } = useSubscription();
     const eventSubscribed = isSubscribed(temporaryEventId);
@@ -29,12 +31,16 @@ export default function EventDetail(){
         toggleSubscription(temporaryEventId);
     };
 
+
     return (
         <Container>
+            <DesktopOnly>
+                <Header />
+            </DesktopOnly>
             <EventPicture>
                 <EventButtonsDiv>
-                    <Link href="/" passHref><EventButton><LuArrowLeft className="icon"/></EventButton></Link>
-                    <EventButton><LuShare className="icon"/></EventButton>
+                    <Link href="/" passHref><EventButton><LuArrowLeft className="icon" /></EventButton></Link>
+                    <EventButton><LuShare className="icon" /></EventButton>
                 </EventButtonsDiv>
             </EventPicture>
             <TitleAndDescriptionDiv>
@@ -60,14 +66,14 @@ export default function EventDetail(){
                         <h6>Event description here, Lorem ipsum dolor sit amet, consectetur adipiscing elit. In molestie euismod interdum. Aenean vel est tellus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc scelerisque ut risus non... </h6>
                     </TextBlock>
                 </EventDescriptionDiv>
-                <SubscribeButton 
-                    $isSubscribed={eventSubscribed} 
+                <SubscribeButton
+                    $isSubscribed={eventSubscribed}
                     onClick={(e) => handleSubscribe(e)}
                 >
                     {eventSubscribed ? (
-                        <LuX className="subscribeIcon"/>
+                        <LuX className="subscribeIcon" />
                     ) : (
-                        <LuCircleCheck className="subscribeIcon"/>
+                        <LuCircleCheck className="subscribeIcon" />
                     )}
                     <h1>{eventSubscribed ? 'Cancel Subscription' : 'Subscribe'}</h1>
                 </SubscribeButton>

@@ -26,6 +26,12 @@ export const LogoAndMenu = styled.div`
     height: 100%;
     width: 100%;
 
+    .burguerButton{
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
     .burguerIcon{
         color: white; 
         height: 24px;
@@ -121,7 +127,7 @@ export const Searchbar = styled.input`
     justify-content: center;
     outline: none;
     color: white;
-    
+
     &::placeholder {
         color: rgba(255, 255, 255, 0.6);
     }

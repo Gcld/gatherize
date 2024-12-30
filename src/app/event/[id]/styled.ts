@@ -12,6 +12,14 @@ export const Container = styled.div`
     justify-content: space-between;
 `;
 
+export const DesktopOnly = styled.div`
+    display: none;
+
+    @media (min-width: 1024px) {
+        display: block;
+    }
+`;
+
 export const EventPicture = styled.div`
     width: 100%;
     height: 35vh;
