@@ -118,7 +118,7 @@ export const TitleAndDescriptionDiv = styled.div`
 export const TextBlock = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
 
     h4{
         font-size: 16px;
