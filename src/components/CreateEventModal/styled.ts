@@ -19,6 +19,7 @@ export const ModalContent = styled.div`
     border-radius: 10px;
     width: 90%;
     max-width: 500px;
+    position: relative;
 
     h2 {
         color: var(--primaryLightZaori);
@@ -43,12 +44,38 @@ export const CloseButton = styled.button`
     right: 10px;
 `;
 
+export const InputGroup = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+`;
+
+export const Label = styled.label`
+    color: var(--primaryLightZaori);
+    margin-bottom: 5px;
+    font-weight: bold;
+`;
+
+export const IconWrapper = styled.div`
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    svg {
+        position: absolute;
+        left: 10px;
+        color: var(--darkZaori);
+    }
+`;
+
 export const Input = styled.input`
-    padding: 10px;
+    padding: 10px 10px 10px 35px;
     border-radius: 5px;
     border: 1px solid var(--grayZaori);
     background-color: var(--primaryLightZaori);
     color: var(--darkZaori);
+    font-size: 16px;
+    width: 100%;
 `;
 
 export const TextArea = styled.textarea`
@@ -59,12 +86,23 @@ export const TextArea = styled.textarea`
     color: var(--darkZaori);
     resize: vertical;
     min-height: 100px;
+    font-size: 16px;
+    width: 100%;
 `;
 
 export const NumberInputWrapper = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
+    width: 100%;
+    padding: 5px 10px;
+    background-color: var(--primaryLightZaori);
+    border-radius: 5px;
+    border: 1px solid var(--grayZaori);
+
+    svg {
+        color: var(--darkZaori);
+    }
 
     button {
         background-color: var(--primaryDarkZaori);
@@ -78,28 +116,46 @@ export const NumberInputWrapper = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: var(--grayZaori);
+        }
+    }
+
+    input {
+        flex-grow: 1;
+        text-align: center;
+        padding: 5px;
+        font-size: 16px;
+        border: none;
+        background-color: transparent;
+        color: var(--darkZaori);
+        width: 50px;
+
+        &::-webkit-inner-spin-button,
+        &::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        &[type=number] {
+            -moz-appearance: textfield;
+        }
     }
 `;
 
-export const NumberInput = styled.input`
-    width: 60px;
-    text-align: center;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid var(--grayZaori);
-    background-color: var(--primaryLightZaori);
-    color: var(--darkZaori);
-`;
-
 export const SubmitButton = styled.button`
-    padding: 10px;
+    padding: 12px;
     background-color: var(--primaryDarkZaori);
     color: var(--darkZaori);
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
+    font-size: 16px;
     transition: background-color 0.3s;
+    width: 100%;
 
     &:hover {
         background-color: var(--grayZaori);

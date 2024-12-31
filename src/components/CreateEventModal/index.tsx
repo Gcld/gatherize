@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { LuX, LuPlus, LuMinus } from "react-icons/lu";
+import { LuX, LuPlus, LuMinus, LuUser, LuCalendar, LuMapPin, LuPenTool } from "react-icons/lu";
 import { 
     ModalOverlay, 
     ModalContent, 
     CloseButton, 
+    InputGroup,
     Input, 
     TextArea, 
-    NumberInput, 
     NumberInputWrapper,
-    SubmitButton
+    SubmitButton,
+    Label,
+    IconWrapper
 } from './styled';
 
 interface CreateEventModalProps {
@@ -27,7 +29,6 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose }) 
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        //  Adicionar futuramente a lógica para criar o evento quando eu conseguir acesso à API
         console.log({ name, description, date, address, maxPeople });
         onClose();
     };
@@ -43,47 +44,74 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose }) 
                 </CloseButton>
                 <h2>Create Event</h2>
                 <form onSubmit={handleSubmit}>
-                    <Input 
-                        type="text" 
-                        placeholder="Name" 
-                        value={name} 
-                        onChange={e => setName(e.target.value)}
-                        required
-                    />
-                    <TextArea 
-                        placeholder="Description" 
-                        value={description} 
-                        onChange={e => setDescription(e.target.value)}
-                        required
-                    />
-                    <Input 
-                        type="date" 
-                        value={date} 
-                        onChange={e => setDate(e.target.value)}
-                        required
-                    />
-                    <Input 
-                        type="text" 
-                        placeholder="Address" 
-                        value={address} 
-                        onChange={e => setAddress(e.target.value)}
-                        required
-                    />
-                    <NumberInputWrapper>
-                        <button type="button" onClick={handleDecrement}>
-                            <LuMinus />
-                        </button>
-                        <NumberInput 
-                            type="number" 
-                            value={maxPeople} 
-                            onChange={e => setMaxPeople(Math.max(1, parseInt(e.target.value) || 1))}
-                            min="1"
+                    <InputGroup>
+                        <Label htmlFor="name">Event Name</Label>
+                        <IconWrapper>
+                            <LuPenTool />
+                            <Input 
+                                id="name"
+                                type="text" 
+                                value={name} 
+                                onChange={e => setName(e.target.value)}
+                                required
+                            />
+                        </IconWrapper>
+                    </InputGroup>
+                    <InputGroup>
+                        <Label htmlFor="description">Description</Label>
+                        <TextArea 
+                            id="description"
+                            value={description} 
+                            onChange={e => setDescription(e.target.value)}
                             required
                         />
-                        <button type="button" onClick={handleIncrement}>
-                            <LuPlus />
-                        </button>
-                    </NumberInputWrapper>
+                    </InputGroup>
+                    <InputGroup>
+                        <Label htmlFor="date">Date</Label>
+                        <IconWrapper>
+                            <LuCalendar />
+                            <Input 
+                                id="date"
+                                type="date" 
+                                value={date} 
+                                onChange={e => setDate(e.target.value)}
+                                required
+                            />
+                        </IconWrapper>
+                    </InputGroup>
+                    <InputGroup>
+                        <Label htmlFor="address">Address</Label>
+                        <IconWrapper>
+                            <LuMapPin />
+                            <Input 
+                                id="address"
+                                type="text" 
+                                value={address} 
+                                onChange={e => setAddress(e.target.value)}
+                                required
+                            />
+                        </IconWrapper>
+                    </InputGroup>
+                    <InputGroup>
+                        <Label htmlFor="maxPeople">Maximum number of people</Label>
+                        <NumberInputWrapper>
+                            <LuUser />
+                            <button type="button" onClick={handleDecrement}>
+                                <LuMinus />
+                            </button>
+                            <Input 
+                                id="maxPeople"
+                                type="number" 
+                                value={maxPeople} 
+                                onChange={e => setMaxPeople(Math.max(1, parseInt(e.target.value) || 1))}
+                                min="1"
+                                required
+                            />
+                            <button type="button" onClick={handleIncrement}>
+                                <LuPlus />
+                            </button>
+                        </NumberInputWrapper>
+                    </InputGroup>
                     <SubmitButton type="submit">Create Event</SubmitButton>
                 </form>
             </ModalContent>
