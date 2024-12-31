@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MdArrowDropDown } from "react-icons/md";
-import { LuPlus } from "react-icons/lu"; 
+import { LuPlus} from "react-icons/lu"; 
 import SortModal from '../SortModal';
+
 import { Container, CreateEventButton } from './styled'; 
+import CreateEventModal from '../CreateEventModal';
 
 export default function EventsFrameAdmin() {
     const [isSortModalOpen, setIsSortModalOpen] = useState(false);
+    const [isCreateEventModalOpen, setIsCreateEventModalOpen] = useState(false);
     const sortButtonRef = useRef<HTMLDivElement>(null);
 
     const toggleSortModal = () => {
@@ -18,8 +21,7 @@ export default function EventsFrameAdmin() {
     };
 
     const handleCreateEvent = () => {
-        // Lógica para criar um novo evento
-        console.log('Create new event');
+        setIsCreateEventModalOpen(true);
     };
 
     useEffect(() => {
@@ -69,6 +71,10 @@ export default function EventsFrameAdmin() {
                     )}
                 </div>
             </div>
+            <CreateEventModal 
+                isOpen={isCreateEventModalOpen}
+                onClose={() => setIsCreateEventModalOpen(false)}
+            />
         </Container>
     );
 }
