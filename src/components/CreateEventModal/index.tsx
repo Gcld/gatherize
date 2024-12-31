@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { LuX, LuPlus, LuMinus, LuUser, LuCalendar, LuMapPin, LuPenTool } from "react-icons/lu";
-import { 
-    ModalOverlay, 
-    ModalContent, 
-    CloseButton, 
+import {
+    ModalOverlay,
+    ModalContent,
+    CloseButton,
     InputGroup,
-    Input, 
-    TextArea, 
+    Input,
+    TextArea,
     NumberInputWrapper,
     SubmitButton,
     Label,
@@ -40,18 +40,18 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose }) 
         <ModalOverlay onClick={onClose}>
             <ModalContent onClick={e => e.stopPropagation()}>
                 <CloseButton onClick={onClose}>
-                    <LuX />
+                    <LuX className="closeIcon" />
                 </CloseButton>
                 <h2>Create Event</h2>
                 <form onSubmit={handleSubmit}>
                     <InputGroup>
                         <Label htmlFor="name">Event Name</Label>
                         <IconWrapper>
-                            <LuPenTool />
-                            <Input 
+                            <LuPenTool className="inputIcon" />
+                            <Input
                                 id="name"
-                                type="text" 
-                                value={name} 
+                                type="text"
+                                value={name}
                                 onChange={e => setName(e.target.value)}
                                 required
                             />
@@ -59,9 +59,9 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose }) 
                     </InputGroup>
                     <InputGroup>
                         <Label htmlFor="description">Description</Label>
-                        <TextArea 
+                        <TextArea
                             id="description"
-                            value={description} 
+                            value={description}
                             onChange={e => setDescription(e.target.value)}
                             required
                         />
@@ -69,11 +69,11 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose }) 
                     <InputGroup>
                         <Label htmlFor="date">Date</Label>
                         <IconWrapper>
-                            <LuCalendar />
-                            <Input 
+                            <LuCalendar className="inputIcon" />
+                            <Input
                                 id="date"
-                                type="date" 
-                                value={date} 
+                                type="date"
+                                value={date}
                                 onChange={e => setDate(e.target.value)}
                                 required
                             />
@@ -82,11 +82,11 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose }) 
                     <InputGroup>
                         <Label htmlFor="address">Address</Label>
                         <IconWrapper>
-                            <LuMapPin />
-                            <Input 
+                            <LuMapPin className="inputIcon" />
+                            <Input
                                 id="address"
-                                type="text" 
-                                value={address} 
+                                type="text"
+                                value={address}
                                 onChange={e => setAddress(e.target.value)}
                                 required
                             />
@@ -95,20 +95,20 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose }) 
                     <InputGroup>
                         <Label htmlFor="maxPeople">Maximum number of people</Label>
                         <NumberInputWrapper>
-                            <LuUser />
+                            <LuUser className="inputIcon" />
                             <button type="button" onClick={handleDecrement}>
-                                <LuMinus />
+                                <LuMinus className="buttonIcon" />
                             </button>
-                            <Input 
+                            <Input
                                 id="maxPeople"
-                                type="number" 
-                                value={maxPeople} 
+                                type="number"
+                                value={maxPeople}
                                 onChange={e => setMaxPeople(Math.max(1, parseInt(e.target.value) || 1))}
                                 min="1"
                                 required
                             />
                             <button type="button" onClick={handleIncrement}>
-                                <LuPlus />
+                                <LuPlus className="buttonIcon" />
                             </button>
                         </NumberInputWrapper>
                     </InputGroup>
