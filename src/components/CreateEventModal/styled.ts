@@ -147,8 +147,30 @@ export const Input = styled.input`
     }
 `;
 
+export const TextAreaWrapper = styled.div`
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+
+    .inputIcon {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        color: var(--darkZaori);
+        width: 18px;
+        height: 18px;
+    }
+
+    @media (min-width: 768px) {
+        .inputIcon {
+            width: 22px;
+            height: 22px;
+        }
+    }
+`;
+
 export const TextArea = styled.textarea`
-    padding: 10px;
+    padding: 10px 10px 10px 35px;
     border-radius: 5px;
     border: 1px solid var(--grayZaori);
     background-color: var(--primaryLightZaori);
@@ -159,7 +181,7 @@ export const TextArea = styled.textarea`
     width: 100%;
 
     @media (min-width: 768px) {
-        padding: 12px;
+        padding: 12px 12px 12px 40px;
         font-size: 16px;
         min-height: 120px;
     }

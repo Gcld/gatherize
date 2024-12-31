@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LuX, LuPlus, LuMinus, LuUser, LuCalendar, LuMapPin, LuPenTool } from "react-icons/lu";
+import { LuX, LuPlus, LuMinus, LuUser, LuCalendar, LuMapPin, LuPenTool, LuFileText } from "react-icons/lu";
 import {
     ModalOverlay,
     ModalContent,
@@ -10,7 +10,8 @@ import {
     NumberInputWrapper,
     SubmitButton,
     Label,
-    IconWrapper
+    IconWrapper,
+    TextAreaWrapper
 } from './styled';
 
 interface CreateEventModalProps {
@@ -59,12 +60,15 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose }) 
                     </InputGroup>
                     <InputGroup>
                         <Label htmlFor="description">Description</Label>
-                        <TextArea
-                            id="description"
-                            value={description}
-                            onChange={e => setDescription(e.target.value)}
-                            required
-                        />
+                        <TextAreaWrapper>
+                            <LuFileText className="inputIcon" />
+                            <TextArea
+                                id="description"
+                                value={description}
+                                onChange={e => setDescription(e.target.value)}
+                                required
+                            />
+                        </TextAreaWrapper>
                     </InputGroup>
                     <InputGroup>
                         <Label htmlFor="date">Date</Label>
