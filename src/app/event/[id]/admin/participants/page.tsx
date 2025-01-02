@@ -38,7 +38,7 @@ export default function EventParticipants() {
         <Container>
             <EventPicture>
                 <EventButtonsDiv>
-                    <Link href="/" passHref>
+                    <Link href="/event/1/admin" passHref>
                         <EventButton>
                             <LuArrowLeft className="icon" />
                         </EventButton>

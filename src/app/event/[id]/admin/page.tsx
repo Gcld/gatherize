@@ -60,10 +60,12 @@ export default function EventDetailAdmin(){
                         <h6>{eventData.description}</h6>
                     </TextBlock>
                 </EventDescriptionDiv>
-                <SubscribeButton>
-                    <LuUsers className='participantsIcon'/>
-                    <h1>View Participants</h1>
-                </SubscribeButton>
+                <Link href="/event/1/admin/participants" passHref style={{ textDecoration: 'none' }}>
+                    <SubscribeButton>
+                        <LuUsers className='participantsIcon'/>
+                        <h1>View Participants</h1>
+                    </SubscribeButton>
+                </Link>
             </EventDescriptionAndButtonDiv>
             <EditEventModal 
                 isOpen={isEditModalOpen} 
