@@ -24,13 +24,28 @@ export const ModalContent = styled.div`
     h2 {
         color: var(--primaryLightZaori);
         margin-bottom: 20px;
-        font-size: 18px;
+        font-size: 16px;
     }
 
     div {
         display: flex;
-        justify-content: space-evenly;
+        flex-direction: column;
+        gap: 10px;
         margin-top: 20px;
+    }
+
+    @media (min-width: 768px) {
+        padding: 30px;
+        max-width: 500px;
+
+        h2 {
+            font-size: 22px;
+        }
+
+        div {
+            flex-direction: row;
+            justify-content: space-evenly;
+        }
     }
 `;
 
@@ -44,10 +59,16 @@ export const ModalButton = styled.button<{ $confirm?: string }>`
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
+    width: 100%;
 
     &:hover {
         background-color: ${({ $confirm }) => ($confirm === "true" ? 'darkred' : 'var(--grayZaori)')};
         color: ${({ $confirm }) => ($confirm === "true" ? 'white' : 'var(--darkZaori)')};
+    }
+
+    @media (min-width: 768px) {
+        width: auto;
+        font-size: 22px;
     }
 `;
 
@@ -57,10 +78,10 @@ export const EventButton = styled.div`
     flex-direction: row;
     border-radius: 5px;
     background-color: var(--darkZaori);
-    padding: 3px;
+    padding: 5px;
     justify-content: center;
     align-items: center;
-    gap: 2px;
+    gap: 5px;
     transition: all 0.3s ease;
     cursor: pointer;
 
@@ -72,6 +93,7 @@ export const EventButton = styled.div`
     }
 
     h3 {
+        display: none;
         font-size: 14px;
         font-weight: bold;
         line-height: 120%;
@@ -84,19 +106,41 @@ export const EventButton = styled.div`
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
         .icon {
-        color: var(--darkZaori);
-        transform: scale(1.1);
+            color: var(--darkZaori);
+            transform: scale(1.1);
         }
 
         h3 {
-        color: var(--darkZaori);
+            color: var(--darkZaori);
         }
     }
 
     @media (min-width: 768px) {
+        padding: 8px;
+        gap: 8px;
+
         .icon {
-        height: 22px;
-        width: 22px;
+            height: 22px;
+            width: 22px;
+        }
+
+        h3 {
+            display: block;
+            font-size: 16px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        padding: 10px;
+        gap: 10px;
+
+        .icon {
+            height: 24px;
+            width: 24px;
+        }
+
+        h3 {
+            font-size: 18px;
         }
     }
 `;
@@ -168,11 +212,12 @@ export const DashboardContainer = styled.div`
     padding: 16px;
     background-color: var(--darkZaori);
     border-radius: 10px;
-    margin: 16px;
+    margin: 16px 0;
 
     @media (min-width: 768px) {
         flex-direction: row;
         justify-content: space-between;
+        margin: 16px;
     }
 `;
 
@@ -184,22 +229,34 @@ export const DashboardItem = styled.div`
     gap: 4px;
 
     h4 {
-        font-size: 16px;
+        font-size: 14px;
         font-weight: bold;
         color: var(--primaryLightZaori);
     }
 
     p {
-        font-size: 14px;
+        font-size: 12px;
         font-weight: normal;
         color: var(--grayZaori);
+    }
 
-        @media (min-width: 768px) {
+    @media (min-width: 768px) {
+        h4 {
             font-size: 16px;
         }
 
-        @media (min-width: 1024px) {
+        p {
+            font-size: 14px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        h4 {
             font-size: 18px;
+        }
+
+        p {
+            font-size: 16px;
         }
     }
 `;
