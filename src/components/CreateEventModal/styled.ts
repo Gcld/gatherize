@@ -9,14 +9,14 @@ export const ModalOverlay = styled.div`
     background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
-    align-items: flex-start; 
-    padding-top: 20px; 
-    overflow-y: auto; 
+    align-items: flex-start;
+    overflow-y: auto;
     z-index: 1000;
+    padding: 20px;
 
     @media (min-width: 768px) {
-        align-items: center; 
-        padding-top: 0; 
+        align-items: center;
+        padding: 40px;
     }
 `;
 
@@ -24,10 +24,12 @@ export const ModalContent = styled.div`
     background-color: var(--darkZaori);
     padding: 20px;
     border-radius: 10px;
-    width: 90%;
+    width: 100%;
     max-width: 500px;
     position: relative;
-    margin-bottom: 20px;
+    margin: auto;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
 
     h2 {
         color: var(--primaryLightZaori);
