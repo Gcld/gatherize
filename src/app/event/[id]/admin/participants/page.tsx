@@ -3,14 +3,12 @@
 import React from 'react';
 import { LuArrowLeft, LuShare } from 'react-icons/lu';
 import Link from 'next/link';
-import Header from '@/components/Header';
 import {
     Container,
     EventButton,
     EventButtonsDiv,
     EventPicture,
     TitleAndDescriptionDiv,
-    DesktopOnly,
     EventContent,
     ParticipantsList,
     Participant,
@@ -38,9 +36,6 @@ export default function EventParticipants() {
 
     return (
         <Container>
-            <DesktopOnly>
-                <Header />
-            </DesktopOnly>
             <EventPicture>
                 <EventButtonsDiv>
                     <Link href="/" passHref>
