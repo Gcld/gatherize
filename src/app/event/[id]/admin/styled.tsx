@@ -108,3 +108,46 @@ export const SubscribeButton = styled.div`
         }
     }
 `;
+
+export const DashboardContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    background-color: var(--darkZaori);
+    border-radius: 10px;
+    margin: 16px;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+`;
+
+export const DashboardItem = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+
+    h4 {
+        font-size: 16px;
+        font-weight: bold;
+        color: var(--primaryLightZaori);
+    }
+
+    p {
+        font-size: 14px;
+        font-weight: normal;
+        color: var(--grayZaori);
+
+        @media (min-width: 768px) {
+            font-size: 16px;
+        }
+
+        @media (min-width: 1024px) {
+            font-size: 18px;
+        }
+    }
+`;
