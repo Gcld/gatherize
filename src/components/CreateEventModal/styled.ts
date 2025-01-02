@@ -248,10 +248,6 @@ export const NumberInputWrapper = styled.div`
             -webkit-appearance: none;
             margin: 0;
         }
-
-        &[type=number] {
-            -moz-appearance: textfield;
-        }
     }
 
     @media (min-width: 768px) {

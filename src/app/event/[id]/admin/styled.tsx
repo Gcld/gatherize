@@ -1,5 +1,57 @@
 import styled from "styled-components";
 
+export const ModalOverlay = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+`;
+
+export const ModalContent = styled.div`
+    background-color: var(--darkZaori);
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+
+    h2 {
+        color: var(--primaryLightZaori);
+        margin-bottom: 20px;
+        font-size: 18px;
+    }
+
+    div {
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 20px;
+    }
+`;
+
+export const ModalButton = styled.button<{ $confirm?: string }>`
+    background-color: ${({ $confirm }) => ($confirm === "true" ? 'var(--primaryDarkZaori)' : 'red')};
+    color: ${({ $confirm }) => ($confirm === "true" ? 'black' : 'var(--darkZaori)')};
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background-color: ${({ $confirm }) => ($confirm === "true" ? 'darkred' : 'var(--grayZaori)')};
+        color: ${({ $confirm }) => ($confirm === "true" ? 'white' : 'var(--darkZaori)')};
+    }
+`;
+
+
 export const EventButton = styled.div`
     display: flex;
     flex-direction: row;

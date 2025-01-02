@@ -3,12 +3,22 @@
 import React, { useState } from 'react';
 import { LuArrowLeft, LuClipboardPen, LuShare, LuTrash2, LuUsers } from "react-icons/lu";
 import Link from 'next/link';
-import { EventButton, EventDescriptionAndButtonDiv, SubscribeButton, DashboardContainer, DashboardItem } from './styled';
+import {
+    EventButton,
+    EventDescriptionAndButtonDiv,
+    SubscribeButton,
+    DashboardContainer,
+    DashboardItem,
+    ModalOverlay,
+    ModalContent,
+    ModalButton
+} from './styled';
 import { Container, EventButtonsDiv, EventDateAndLocationDiv, EventDescriptionDiv, EventPicture, TextBlock, TitleAndDescriptionDiv } from '../styled';
 import EditEventModal from '@/components/EditEventModal';
 
 export default function EventDetailAdmin() {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [eventData] = useState({
         name: "Headline 1",
         description: "Event description here, Lorem ipsum dolor sit amet, consectetur adipiscing elit. In molestie euismod interdum. Aenean vel est tellus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc scelerisque ut risus non...",
@@ -24,6 +34,16 @@ export default function EventDetailAdmin() {
         setIsEditModalOpen(true);
     };
 
+    const handleDeleteClick = () => {
+        setIsDeleteModalOpen(true);
+    };
+
+    const handleConfirmDelete = () => {
+        setIsDeleteModalOpen(false);
+        console.log('Event deleted');
+        // Implementação futura para deletar o evento
+    };
+
     return (
         <Container>
             <EventPicture>
@@ -35,7 +55,7 @@ export default function EventDetailAdmin() {
                         <LuClipboardPen className="icon" />
                         <h3>Edit Event</h3>
                     </EventButton>
-                    <EventButton>
+                    <EventButton onClick={handleDeleteClick}>
                         <LuTrash2 className="icon" />
                         <h3>Delete Event</h3>
                     </EventButton>
@@ -90,6 +110,21 @@ export default function EventDetailAdmin() {
                 onClose={() => setIsEditModalOpen(false)}
                 eventData={eventData}
             />
+            {isDeleteModalOpen && (
+                <ModalOverlay>
+                    <ModalContent>
+                        <h2>Are you sure you want to delete this event?</h2>
+                        <div>
+                            <ModalButton onClick={handleConfirmDelete} $confirm="true">
+                                Confirm
+                            </ModalButton>
+                            <ModalButton onClick={() => setIsDeleteModalOpen(false)}>
+                                Cancel
+                            </ModalButton>
+                        </div>
+                    </ModalContent>
+                </ModalOverlay>
+            )}
         </Container>
     );
 }
