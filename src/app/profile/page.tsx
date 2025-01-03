@@ -5,7 +5,6 @@ import { LuArrowLeft, LuCalendar, LuMail, LuLock, LuUser, LuPenTool, LuCircleUse
 import Link from 'next/link';
 import { BackButton, Container, EditButton, Header, InfoInput, InputsDiv, InputWrapper, ProfileHeader } from './styled';
 
-
 export default function Profile() {
     return (
         <Container>
@@ -38,10 +37,12 @@ export default function Profile() {
                     <InfoInput type="password" defaultValue="***********" readOnly />
                 </InputWrapper>
             </InputsDiv>
-            <EditButton>
-                <LuPenTool className="icon" />
-                <h3>Edit Info</h3>
-            </EditButton>
+            <Link href="/profile/edit" passHref style={{ textDecoration: 'none', width: '100%', maxWidth: '600px' }}>
+                <EditButton>
+                    <LuPenTool className="icon" />
+                    <h3>Edit Info</h3>
+                </EditButton>
+            </Link>
         </Container>
     );
 }
