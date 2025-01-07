@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 const middleware = (request: NextRequestWithAuth) => {
 
-    const isPrivateRoutes = request.nextUrl.pathname.startsWith("/private");
+    const isPrivateRoutes = request.nextUrl.pathname.startsWith("/login");
     const isAdminUser = request.nextauth.token?.role === "admin";
 
     if (isPrivateRoutes && !isAdminUser) {

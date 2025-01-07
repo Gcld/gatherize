@@ -23,7 +23,7 @@ export default function Login() {
 
             if(response?.ok){
                 router.refresh();
-                router.push('/private');
+                router.push('/admin');
             } else{
                 setError('Invalid credentials');
             }
