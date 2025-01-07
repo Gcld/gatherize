@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import StyledComponentsRegistry from "./registry";
 import { SubscriptionProvider } from "@/contexts/SubscriptionContext";
+import { AuthProvider } from "@/providers/auth-providers";
 
 const nunito_sans = Nunito_Sans({
   subsets: ['latin'],
@@ -23,29 +24,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${nunito_sans.className}`}>
-        <StyledComponentsRegistry>
-          <SubscriptionProvider>
-            <ToastContainer
-              position="top-right"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-            />
-            <main className="main">
-              {children}
-            </main>
-          </SubscriptionProvider>
-        </StyledComponentsRegistry>
-      </body>
-    </html>
+    <AuthProvider>
+      <html lang="en">
+        <body className={`${nunito_sans.className}`}>
+          <StyledComponentsRegistry>
+            <SubscriptionProvider>
+              <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+              />
+              <main className="main">
+                {children}
+              </main>
+            </SubscriptionProvider>
+          </StyledComponentsRegistry>
+        </body>
+      </html>
+    </AuthProvider>
   );
 }
 
