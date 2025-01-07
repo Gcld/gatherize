@@ -3,11 +3,11 @@ import { NextResponse } from "next/server";
 
 const middleware = (request: NextRequestWithAuth) => {
 
-    const isPrivateRoutes = request.nextUrl.pathname.startsWith("/admin");
-    //const isAdminUser = request.nextauth.token?.role === "admin";
+    const isPrivateRoutes = request.nextUrl.pathname.startsWith("/login");
+    const isAdminUser = request.nextauth.token?.role === "admin";
 
-    if (isPrivateRoutes) {
-        return NextResponse.rewrite(new URL('/login', request.url));
+    if (isPrivateRoutes && !isAdminUser) {
+        return NextResponse.rewrite(new URL('/denied', request.url));
     }
 }
 const callbackOptions: NextAuthMiddlewareOptions = {};
