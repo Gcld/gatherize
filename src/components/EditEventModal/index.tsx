@@ -13,6 +13,7 @@ import {
     IconWrapper,
     TextAreaWrapper
 } from '../CreateEventModal/styled';
+import { fetchCepData } from '@/utils/cepUtils';
 
 interface EditEventModalProps {
     isOpen: boolean;
@@ -30,7 +31,10 @@ const EditEventModal: React.FC<EditEventModalProps> = ({ isOpen, onClose, eventD
     const [name, setName] = useState(eventData.name);
     const [description, setDescription] = useState(eventData.description);
     const [date, setDate] = useState(eventData.date);
+    const [cep, setCep] = useState('');
     const [address, setAddress] = useState(eventData.address);
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
     const [maxPeople, setMaxPeople] = useState(eventData.maxPeople);
 
     useEffect(() => {
@@ -45,12 +49,26 @@ const EditEventModal: React.FC<EditEventModalProps> = ({ isOpen, onClose, eventD
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Updated event data:', { name, description, date, address, maxPeople });
+        console.log('Updated event data:', { name, description, date, cep, address, city, state, maxPeople });
         onClose();
     };
 
     const handleIncrement = () => setMaxPeople(prev => prev + 1);
     const handleDecrement = () => setMaxPeople(prev => Math.max(1, prev - 1));
+
+    const handleCepChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newCep = e.target.value.replace(/\D/g, '');
+        setCep(newCep);
+
+        if (newCep.length === 8) {
+            const cepData = await fetchCepData(newCep);
+            if (cepData) {
+                setAddress(cepData.logradouro);
+                setCity(cepData.localidade);
+                setState(cepData.uf);
+            }
+        }
+    };
 
     return (
         <ModalOverlay onClick={onClose}>
@@ -99,6 +117,20 @@ const EditEventModal: React.FC<EditEventModalProps> = ({ isOpen, onClose, eventD
                         </IconWrapper>
                     </InputGroup>
                     <InputGroup>
+                        <Label htmlFor="cep">CEP</Label>
+                        <IconWrapper>
+                            <LuMapPin className="inputIcon" />
+                            <Input
+                                id="cep"
+                                type="text"
+                                value={cep}
+                                onChange={handleCepChange}
+                                maxLength={8}
+                                required
+                            />
+                        </IconWrapper>
+                    </InputGroup>
+                    <InputGroup>
                         <Label htmlFor="address">Address</Label>
                         <IconWrapper>
                             <LuMapPin className="inputIcon" />
@@ -107,6 +139,32 @@ const EditEventModal: React.FC<EditEventModalProps> = ({ isOpen, onClose, eventD
                                 type="text"
                                 value={address}
                                 onChange={e => setAddress(e.target.value)}
+                                required
+                            />
+                        </IconWrapper>
+                    </InputGroup>
+                    <InputGroup>
+                        <Label htmlFor="city">City</Label>
+                        <IconWrapper>
+                            <LuMapPin className="inputIcon" />
+                            <Input
+                                id="city"
+                                type="text"
+                                value={city}
+                                onChange={e => setCity(e.target.value)}
+                                required
+                            />
+                        </IconWrapper>
+                    </InputGroup>
+                    <InputGroup>
+                        <Label htmlFor="state">State</Label>
+                        <IconWrapper>
+                            <LuMapPin className="inputIcon" />
+                            <Input
+                                id="state"
+                                type="text"
+                                value={state}
+                                onChange={e => setState(e.target.value)}
                                 required
                             />
                         </IconWrapper>

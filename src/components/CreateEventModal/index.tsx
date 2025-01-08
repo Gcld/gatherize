@@ -13,6 +13,7 @@ import {
     IconWrapper,
     TextAreaWrapper
 } from './styled';
+import { fetchCepData } from '@/utils/cepUtils';
 
 interface CreateEventModalProps {
     isOpen: boolean;
@@ -23,19 +24,36 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose }) 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [date, setDate] = useState('');
+    const [cep, setCep] = useState('');
     const [address, setAddress] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
     const [maxPeople, setMaxPeople] = useState(1);
 
     if (!isOpen) return null;
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log({ name, description, date, address, maxPeople });
+        console.log({ name, description, date, cep, address, city, state, maxPeople });
         onClose();
     };
 
     const handleIncrement = () => setMaxPeople(prev => prev + 1);
     const handleDecrement = () => setMaxPeople(prev => Math.max(1, prev - 1));
+
+    const handleCepChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newCep = e.target.value.replace(/\D/g, '');
+        setCep(newCep);
+
+        if (newCep.length === 8) {
+            const cepData = await fetchCepData(newCep);
+            if (cepData) {
+                setAddress(cepData.logradouro);
+                setCity(cepData.localidade);
+                setState(cepData.uf);
+            }
+        } 
+    };
 
     return (
         <ModalOverlay onClick={onClose}>
@@ -84,6 +102,20 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose }) 
                         </IconWrapper>
                     </InputGroup>
                     <InputGroup>
+                        <Label htmlFor="cep">CEP</Label>
+                        <IconWrapper>
+                            <LuMapPin className="inputIcon" />
+                            <Input
+                                id="cep"
+                                type="text"
+                                value={cep}
+                                onChange={handleCepChange}
+                                maxLength={8}
+                                required
+                            />
+                        </IconWrapper>
+                    </InputGroup>
+                    <InputGroup>
                         <Label htmlFor="address">Address</Label>
                         <IconWrapper>
                             <LuMapPin className="inputIcon" />
@@ -92,6 +124,32 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose }) 
                                 type="text"
                                 value={address}
                                 onChange={e => setAddress(e.target.value)}
+                                required
+                            />
+                        </IconWrapper>
+                    </InputGroup>
+                    <InputGroup>
+                        <Label htmlFor="city">City</Label>
+                        <IconWrapper>
+                            <LuMapPin className="inputIcon" />
+                            <Input
+                                id="city"
+                                type="text"
+                                value={city}
+                                onChange={e => setCity(e.target.value)}
+                                required
+                            />
+                        </IconWrapper>
+                    </InputGroup>
+                    <InputGroup>
+                        <Label htmlFor="state">State</Label>
+                        <IconWrapper>
+                            <LuMapPin className="inputIcon" />
+                            <Input
+                                id="state"
+                                type="text"
+                                value={state}
+                                onChange={e => setState(e.target.value)}
                                 required
                             />
                         </IconWrapper>
