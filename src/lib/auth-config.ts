@@ -25,16 +25,25 @@ export const auth: NextAuthOptions = {
         })
     ],
     callbacks: {
-        session: async ({ session }) => {
+
+        jwt: ({ token, user }) => {
+            const customUser = user as User;
+            if (user){
+                return { ...token, user: customUser };
+            }
+            return token;
+        },
+        session: async ({ session, token }) => {
             
+            console.log("SESSION CALLBACK: ", session);
             const customSession: Session = {
                 expires: session?.expires,
                 user: {
-                    id: session?.user.id,
-                    name: session?.user.name,
-                    email: session?.user.email,
-                    password: session?.user.password,
-                    role: session?.user.role,
+                    id: '1',
+                    name: token.name || '',
+                    email: token.email || '',
+                    password: '123',
+                    role: 'admin',
                 }
             }
             return customSession;

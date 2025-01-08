@@ -1,7 +1,8 @@
 import React from 'react';
-import { LuUser, LuSettings, LuX } from "react-icons/lu";
+import { LuUser, LuSettings, LuX, LuLogOut } from "react-icons/lu";
 import { ModalContainer, ModalContent, ModalButton } from './styled';
 import Link from 'next/link';
+import { signOut } from 'next-auth/react';
 
 interface MenuModalProps {
     isOpen: boolean;
@@ -20,6 +21,10 @@ const MenuModal: React.FC<MenuModalProps> = ({ isOpen, onClose }) => {
                     <span>Profile</span>
                 </ModalButton>
                 </Link>
+                <ModalButton onClick={() => signOut()}>
+                    <LuLogOut className='icon'/>
+                    <span>Logout</span>
+                </ModalButton>
                 <ModalButton>
                     <LuSettings className='icon'/>
                     <span>Settings</span>

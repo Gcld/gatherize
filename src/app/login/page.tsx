@@ -21,7 +21,7 @@ export default function Login() {
                 password,
             });
 
-            if(response?.ok){
+            if(!response?.error){
                 router.refresh();
                 router.push('/admin');
             } else{

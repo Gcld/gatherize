@@ -10,5 +10,19 @@ declare module 'next-auth' {
 
     interface Session {
         user: User;
+        events?: Event[];
+    }
+
+    interface Event{
+        id: number | undefined;
+        name: string | undefined;
+        description: string | undefined;
+        date: Date | undefined;
+        time: string | undefined;
+        cep: string | undefined;
+        address: string | undefined;
+        city: string | undefined;
+        state: string | undefined;
+        maxPeople: number | undefined;
     }
 }
