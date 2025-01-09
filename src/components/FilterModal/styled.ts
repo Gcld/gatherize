@@ -1,88 +1,79 @@
 import styled from "styled-components";
 
 export const ModalContainer = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: absolute;
+    top: 100%; 
     right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-    z-index: 1000;
+    z-index: 10;
+    background-color: var(--darkZaori);
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    max-height: calc(100vh - 100%); // Limita a altura máxima
+    overflow-y: auto; // Adiciona scroll apenas se necessário
 `;
 
 export const ModalContent = styled.div`
-    background-color: var(--darkZaori);
-    padding: 10px;
-    border-radius: 0 0 0 10px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    align-items: flex-end;
-
-    .buttons{
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        align-items: center;
-    }
-
-    .closeIcon {
-        color: var(--primaryDarkZaori);
-        height: 24px;
-        width: 20px;
-    }
+    padding: 8px;
+    gap: 8px;
+    width: max-content; // Ajusta a largura ao conteúdo
 
     @media (min-width: 768px) {
-        padding: 12px;
-        gap: 12px;
-        
-        .closeIcon{
-            height: 28px;
-            width: 28px;
-        }
+        padding: 10px;
+        gap: 10px;
     }
 
     @media (min-width: 1024px) {
-        padding: 14px;
-        gap: 10px;
+        padding: 12px;
+        gap: 12px;
     }
 `;
-
 
 export const ModalButton = styled.button`
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     background-color: transparent;
     border: none;
     color: var(--primaryLightZaori);
-    font-size: 16px;
+    font-size: 12px;
     cursor: pointer;
-    padding: 10px;
+    padding: 8px;
     transition: background-color 0.3s;
+    text-align: left;
+    white-space: nowrap; // Impede quebra de linha no texto
 
     .icon {
         color: var(--primaryDarkZaori);
+        height: 16px;
+        width: 16px;
+        flex-shrink: 0; // Impede que o ícone encolha
     }
 
     &:hover {
         background-color: rgba(255, 255, 255, 0.1);
     }
 
-    svg {
-        font-size: 20px;
-    }
-
     @media (min-width: 768px) {
         font-size: 18px;
-        padding: 12px;
+        padding: 10px;
+        gap: 10px;
+
+        .icon {
+            height: 20px;
+            width: 20px;
+        }
     }
 
     @media (min-width: 1024px) {
-        font-size: 24px; 
-        padding: 14px;
+        font-size: 24px;
+        padding: 12px;
+        gap: 12px;
+
+        .icon {
+            height: 24px;
+            width: 24px;
+        }
     }
 `;

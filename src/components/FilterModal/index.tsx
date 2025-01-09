@@ -1,5 +1,5 @@
 import React from 'react';
-import { LuCalendar, LuMapPin, LuClipboardList, LuX } from "react-icons/lu";
+import { LuCalendar, LuMapPin, LuClipboardList } from "react-icons/lu";
 import { ModalContainer, ModalContent, ModalButton } from './styled';
 
 interface FilterModalProps {
@@ -13,7 +13,6 @@ const FilterModal: React.FC<FilterModalProps> = ({ isOpen, onClose }) => {
     return (
         <ModalContainer onClick={onClose}>
             <ModalContent onClick={(e) => e.stopPropagation()}>
-                <LuX className='closeIcon' onClick={onClose}/>
                 <div className='buttons'>
                     <ModalButton>
                         <LuCalendar className='icon'/>

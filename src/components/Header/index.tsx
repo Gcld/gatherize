@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { LuAlignJustify, LuFilter, LuSearch, LuUser, LuSettings, LuLogOut } from 'react-icons/lu';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
@@ -21,12 +21,32 @@ export default function Header() {
     const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
     const { width } = useWindowSize();
+    const filterButtonRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (width && width >= 1024) {
             setIsMenuModalOpen(false);
         }
     }, [width]);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                filterButtonRef.current && 
+                !filterButtonRef.current.contains(event.target as Node)
+            ) {
+                setIsFilterModalOpen(false);
+            }
+        };
+    
+        if (isFilterModalOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+    
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isFilterModalOpen]);
 
     const toggleMenuModal = () => {
         setIsMenuModalOpen(!isMenuModalOpen);
@@ -75,10 +95,18 @@ export default function Header() {
                     />
                 </SearchDiv>
                 <FilterButton
+                    ref={filterButtonRef}
                     onClick={toggleFilterModal}
                     aria-label="Open filters"
+                    style={{ position: 'relative' }}
                 >
                     <LuFilter className="filterIcon" />
+                    {isFilterModalOpen && (
+                        <FilterModal
+                            isOpen={true}
+                            onClose={() => setIsFilterModalOpen(false)}
+                        />
+                    )}
                 </FilterButton>
             </SearchAndFilter>
             <MenuModal isOpen={isMenuModalOpen} onClose={() => setIsMenuModalOpen(false)} />
