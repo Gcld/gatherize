@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LuAlignJustify, LuFilter, LuSearch, LuUser, LuSettings, LuLogOut } from 'react-icons/lu';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 import Logo from '../Logo';
 import MenuModal from '../MenuModal';
 import FilterModal from '../FilterModal';
+import { useWindowSize } from '@/hooks/useWindowSize';
 import {
     Container,
     FilterButton,
@@ -19,6 +20,13 @@ import {
 export default function Header() {
     const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+    const { width } = useWindowSize();
+
+    useEffect(() => {
+        if (width && width >= 1024) {
+            setIsMenuModalOpen(false);
+        }
+    }, [width]);
 
     const toggleMenuModal = () => {
         setIsMenuModalOpen(!isMenuModalOpen);
