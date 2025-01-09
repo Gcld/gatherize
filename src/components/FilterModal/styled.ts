@@ -8,8 +8,8 @@ export const ModalContainer = styled.div`
     background-color: var(--darkZaori);
     border-radius: 0 0 10px 10px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    max-height: calc(100vh - 100%); // Limita a altura máxima
-    overflow-y: auto; // Adiciona scroll apenas se necessário
+    max-height: calc(100vh - 100%); 
+    overflow-y: auto; 
 `;
 
 export const ModalContent = styled.div`
@@ -17,7 +17,7 @@ export const ModalContent = styled.div`
     flex-direction: column;
     padding: 8px;
     gap: 8px;
-    width: max-content; // Ajusta a largura ao conteúdo
+    width: max-content; 
 
     @media (min-width: 768px) {
         padding: 10px;
@@ -42,13 +42,13 @@ export const ModalButton = styled.button`
     padding: 8px;
     transition: background-color 0.3s;
     text-align: left;
-    white-space: nowrap; // Impede quebra de linha no texto
+    white-space: nowrap; 
 
     .icon {
         color: var(--primaryDarkZaori);
         height: 16px;
         width: 16px;
-        flex-shrink: 0; // Impede que o ícone encolha
+        flex-shrink: 0; 
     }
 
     &:hover {
