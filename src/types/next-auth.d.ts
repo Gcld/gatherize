@@ -6,6 +6,7 @@ declare module 'next-auth' {
         email: string | undefined;
         password: string | undefined;
         role: string | undefined;
+        events?: Event[];
     }
 
     interface Session {
@@ -13,16 +14,16 @@ declare module 'next-auth' {
         events?: Event[];
     }
 
-    interface Event{
+    export interface Event{
         id: number | undefined;
         name: string | undefined;
         description: string | undefined;
         date: Date | undefined;
-        time: string | undefined;
         cep: string | undefined;
         address: string | undefined;
         city: string | undefined;
         state: string | undefined;
+        participants: number | undefined;
         maxPeople: number | undefined;
     }
 }

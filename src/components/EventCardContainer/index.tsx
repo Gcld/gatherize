@@ -10,7 +10,14 @@ export default function EventCardContainer() {
 
     return (
         <Container>
-            {session && session.user?.name}
+            <ul>
+            {session && session.events?.map(event => (
+                <>
+                    <li>{event.name}</li>
+                    <li>{`${event.date?.getDate()}/${event.date?.getMonth()}/${event.date?.getFullYear()}`}</li>
+                </>
+            ))}
+            </ul>
             <EventCardAdmin/>
             <EventCard/>
             <EventCard/>

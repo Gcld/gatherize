@@ -12,9 +12,9 @@ export const Container = styled.div`
     background-color: var(--darkZaori);
     border-radius: 0 0 15px 15px;
 
-    @media (min-width: 768px){
-        padding: 8px 8px;
-        gap: 8px;
+    @media (min-width: 768px) {
+        padding: 16px;
+        gap: 16px;
     }
 `;
 
@@ -26,32 +26,78 @@ export const LogoAndMenu = styled.div`
     height: 100%;
     width: 100%;
 
-    .burguerButton{
+    .burguerButton {
         background-color: transparent;
         border: none;
         cursor: pointer;
+
+        @media (min-width: 1024px) {
+            display: none;
+        }
     }
 
-    .burguerIcon{
-        color: white; 
+    .burguerIcon {
+        color: white;
         height: 24px;
         width: 24px;
-    }
 
-    @media (min-width: 768px){
-        .burguerIcon{
+        @media (min-width: 768px) {
             height: 32px;
             width: 32px;
         }
     }
+`;
 
-    @media (min-width: 1024px){
-        .burguerIcon{
-            height: 48px;
-            width: 48px;
-        }
+export const DesktopMenu = styled.div`
+    display: none;
+
+    @media (min-width: 1024px) {
+        display: flex;
+        align-items: center;
+        gap: 32px;
     }
 `;
+
+export const MenuButton = styled.button`
+    background: none;
+    border: none;
+    color: var(--primaryLightZaori);
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 8px;
+    transition: all 0.3s ease;
+
+    .icon {
+        color: var(--primaryDarkZaori);
+        width: 20px;
+        height: 20px;
+    }
+
+    &:hover {
+        transform: translateY(-2px);
+        color: var(--primaryDarkZaori);
+
+        .icon {
+            transform: scale(1.1);
+        }
+    }
+
+    @media (min-width: 1024px) {
+        font-size: 20px; 
+        gap: 12px; 
+        padding: 12px; 
+
+        .icon {
+            width: 28px; 
+            height: 28px;
+        }
+    }
+
+`;
+
 
 export const SearchAndFilter = styled.div`
     display: flex;
