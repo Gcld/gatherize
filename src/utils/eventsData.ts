@@ -1,6 +1,6 @@
-import { Event } from "next-auth"
+import { GatherizeEvent } from "next-auth"
 
-export const eventsUser1: Event[] = [
+export const eventsUser1: GatherizeEvent[] = [
     {
         id: 1,
         name: 'Headline 1',
@@ -15,7 +15,7 @@ export const eventsUser1: Event[] = [
     }
 ]
 
-export const eventsUser2: Event[] = [
+export const eventsUser2: GatherizeEvent[] = [
     {
         id: 2,
         name: 'Headline 2',

@@ -1,5 +1,5 @@
 import { eventsUser1, eventsUser2 } from "@/utils/eventsData";
-import { NextAuthOptions, Session, User } from "next-auth";
+import { GatherizeEvent, NextAuthOptions, User } from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
 
 export const auth: NextAuthOptions = {
@@ -38,35 +38,33 @@ export const auth: NextAuthOptions = {
         })
     ],
     callbacks: {
-
         jwt: ({ token, user }) => {
-            console.log("JWT CALLBACK: ", user);
-            console.log("JWT CALLBACK TOKEN: ", token);
-            const customUser = user as User;
-            if (user){
-                return { ...token, user: customUser, events: customUser.events };
+            if (user) {
+                token.id = user.id;
+                token.email = user.email;
+                token.name = user.name;
+                token.role = user.role;
+                token.events = user.events;
             }
             return token;
         },
-        session: async ({ session, token }) => {
-            
-            console.log("SESSION CALLBACK: ", session);
-            const customSession: Session = {
-                expires: session?.expires,
-                user: {
-                    id: '1',
-                    name: token.name || '',
-                    email: token.email || '',
-                    password: '123',
-                    role: 'admin',
-                },
+        session: ({ session, token }) => {
+            if (token && session.user) {
+                session.user.id = token.id as string;
+                session.user.email = token.email as string;
+                session.user.name = token.name as string;
+                session.user.role = token.role as string;
+                session.user.events = token.events as GatherizeEvent[]; 
             }
-            return customSession;
+            return session;
         }
     },
-
     pages: {
         signIn: '/login',
         newUser: '/signup',
-    }
+    },
+    session: {
+        strategy: "jwt",
+    },
+    secret: process.env.NEXTAUTH_SECRET,
 }
