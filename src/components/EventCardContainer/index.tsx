@@ -5,7 +5,6 @@ import { useSession } from "next-auth/react";
 
 export default function EventCardContainer() {
     const { data: session, status } = useSession();
-    console.log("SESSION: ", session);
 
     if (status === "loading") {
         return <div>Loading...</div>;
@@ -21,26 +20,30 @@ export default function EventCardContainer() {
                     <p>Role: {session.user.role}</p>
                 </div>
             )}
-            <h2>Events:</h2>
-            <ul>
-                {session && session.user.events?.map((event, index) => (
-                    <li key={event.id || index}>
-                        <p>Name: {event.name}</p>
-                        {event.date && (
-                            <p>Date: {new Date(event.date).toLocaleDateString()}</p>
-                        )}
-                        <p>Description: {event.description}</p>
-                        <p>Address: {event.address}</p>
-                        <p>Participants: {event.participants}/{event.maxPeople}</p>
-                    </li>
-                ))}
-            </ul>
-            <EventCardAdmin/>
-            <EventCard/>
-            <EventCard/>
-            <EventCard/>
-            <EventCard/>
-            <EventCard/>
+            {session && session.user.events && (
+                <>
+                    <h2>Events:</h2>
+                    <ul>
+                        {session.user.events.map((event, index) => (
+                            <li key={event.id || index}>
+                                <p>Name: {event.name}</p>
+                                {event.date && (
+                                    <p>Date: {new Date(event.date).toLocaleDateString()}</p>
+                                )}
+                                <p>Description: {event.description}</p>
+                                <p>Address: {event.address}</p>
+                                <p>Participants: {event.participants}/{event.maxPeople}</p>
+                            </li>
+                        ))}
+                    </ul>
+                </>
+            )}
+            {session && session.user.role === 'admin' && <EventCardAdmin />}
+            <EventCard />
+            <EventCard />
+            <EventCard />
+            <EventCard />
+            <EventCard />
         </Container>
     );
 }

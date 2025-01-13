@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { LuAlignJustify, LuFilter, LuSearch, LuUser, LuSettings, LuLogOut } from 'react-icons/lu';
+import { LuAlignJustify, LuFilter, LuSearch, LuUser, LuSettings, LuLogOut, LuLogIn } from 'react-icons/lu';
 import Link from 'next/link';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Logo from '../Logo';
 import MenuModal from '../MenuModal';
 import FilterModal from '../FilterModal';
@@ -18,6 +18,7 @@ import {
 } from './styled';
 
 export default function Header() {
+    const { data: session } = useSession();
     const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
     const { width } = useWindowSize();
@@ -61,20 +62,31 @@ export default function Header() {
             <LogoAndMenu>
                 <Logo />
                 <DesktopMenu>
-                    <Link href="/profile" passHref>
-                        <MenuButton>
-                            <LuUser className="icon" />
-                            Profile
-                        </MenuButton>
-                    </Link>
-                    <MenuButton onClick={() => signOut()}>
-                        <LuLogOut className="icon" />
-                        Logout
-                    </MenuButton>
-                    <MenuButton>
-                        <LuSettings className="icon" />
-                        Settings
-                    </MenuButton>
+                    {session ? (
+                        <>
+                            <Link href="/profile" passHref>
+                                <MenuButton>
+                                    <LuUser className="icon" />
+                                    Profile
+                                </MenuButton>
+                            </Link>
+                            <MenuButton onClick={() => signOut()}>
+                                <LuLogOut className="icon" />
+                                Logout
+                            </MenuButton>
+                            <MenuButton>
+                                <LuSettings className="icon" />
+                                Settings
+                            </MenuButton>
+                        </>
+                    ) : (
+                        <Link href="/login" passHref>
+                            <MenuButton>
+                                <LuLogIn className="icon" />
+                                Login
+                            </MenuButton>
+                        </Link>
+                    )}
                 </DesktopMenu>
                 <button
                     aria-label="Open menu"
