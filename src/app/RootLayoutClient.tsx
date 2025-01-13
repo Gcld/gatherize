@@ -27,9 +27,7 @@ export default function RootLayoutClient({
                         pauseOnHover
                         theme="light"
                     />
-                    <main className="main">
-                        {children}
-                    </main>
+                    {children}
                 </SubscriptionProvider>
             </StyledComponentsRegistry>
         </SessionProvider>

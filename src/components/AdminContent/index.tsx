@@ -7,7 +7,11 @@ import { Container } from "@/app/styled";
 import HeaderAdmin from "../HeaderAdmin";
 
 export default function AdminContent() {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
+
+    if (status === "loading") {
+        return <div>Loading...</div>;
+    }
 
     if (!session) {
         return null;

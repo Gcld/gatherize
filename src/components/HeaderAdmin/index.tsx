@@ -52,15 +52,15 @@ export default function HeaderAdmin() {
 
     const handleSignOut = async () => {
         await signOut({ redirect: false });
-        router.push('/');
+        router.push('/login');
     };
 
-    if (!session) {
+    if (typeof window === 'undefined' || !session) {
         return null;
     }
 
     return (
-        <Container>
+        <Container suppressHydrationWarning={true}>
             <LogoAndMenu>
                 <LogoAdmin />
                 <DesktopMenu>

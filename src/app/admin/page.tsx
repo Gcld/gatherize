@@ -3,24 +3,37 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import AdminContent from '@/components/AdminContent';
+import { signOut } from "next-auth/react";
 
 export default function AdminPage() {
-    const { status } = useSession();
+    const { data: session, status } = useSession();
     const router = useRouter();
-    const [isLoading, setIsLoading] = useState(true);
+    const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
+        setIsClient(true);
         if (status === "unauthenticated") {
             router.push("/login");
-        } else if (status === "authenticated") {
-            setIsLoading(false);
         }
     }, [status, router]);
 
-    if (isLoading) {
+    if (!isClient) {
+        return null;
+    }
+
+    if (status === "loading") {
         return <div>Loading...</div>;
     }
 
-    return <AdminContent />;
+    if (!session) {
+        return null;
+    }
+
+    return (
+        <div>
+            <h1>Admin Page</h1>
+            <p>Welcome, {session.user.name}</p>
+            <button onClick={() => signOut({ callbackUrl: '/' })}>Logout</button>
+        </div>
+    );
 }
