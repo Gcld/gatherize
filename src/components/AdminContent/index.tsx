@@ -3,11 +3,11 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import Header from "@/components/Header";
 
 import ContentAdmin from "@/components/ContentAdmin";
 import Footer from "@/components/Footer";
 import { Container } from "@/app/styled";
+import HeaderAdmin from "../HeaderAdmin";
 
 export default function AdminContent() {
     const { data: session, status } = useSession();
@@ -29,7 +29,7 @@ export default function AdminContent() {
 
     return (
         <Container>
-            <Header />
+            <HeaderAdmin />
             <ContentAdmin />
             <Footer />
         </Container>
