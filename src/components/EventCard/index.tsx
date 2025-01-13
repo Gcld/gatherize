@@ -2,6 +2,8 @@ import React from 'react';
 import { LuCircleUser, LuMapPin, LuCircleCheck, LuX } from 'react-icons/lu';
 import Link from 'next/link';
 import { useSubscription } from '@/contexts/SubscriptionContext';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import {
     Container,
     EventButton,
@@ -18,10 +20,16 @@ export default function EventCard() {
     const temporaryEventId = 1;
     const { toggleSubscription, isSubscribed } = useSubscription();
     const eventSubscribed = isSubscribed(temporaryEventId);
+    const { data: session } = useSession();
+    const router = useRouter();
 
     const handleSubscribe = (e: React.MouseEvent) => {
         e.preventDefault();
-        toggleSubscription(temporaryEventId);
+        if (!session) {
+            router.push('/login');
+        } else {
+            toggleSubscription(temporaryEventId);
+        }
     };
 
     return (

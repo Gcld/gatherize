@@ -1,7 +1,7 @@
 'use client'
 
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { LuLock, LuMail } from "react-icons/lu";
 import { Container, InputBox, LoginInput, InputWrapper, SignInButton, SignUpDiv } from "./styled";
 import Link from "next/link";
@@ -9,28 +9,29 @@ import { useCallback, useState } from "react";
 
 export default function Login() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get('callbackUrl') || '/';
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
     const handleLogin = useCallback(async () => {
-        try{
+        try {
             const response = await signIn('credentials', {
                 redirect: false,
                 email,
                 password,
             });
 
-            if(!response?.error){
-                router.refresh();
-                router.push('/admin');
-            } else{
+            if (!response?.error) {
+                router.push(callbackUrl);
+            } else {
                 setError('Invalid credentials');
             }
-        } catch(error){
+        } catch (error) {
             console.log('[LOGIN ERROR]: ', error);
         }
-    }, [email, password, router])
+    }, [email, password, router, callbackUrl])
 
     return (
         <Container>

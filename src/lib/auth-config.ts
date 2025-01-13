@@ -22,7 +22,7 @@ export const auth: NextAuthOptions = {
                 const user2: User = {
                     id: '2',
                     name: 'Monkey D. Luffy',
-                    email: 'kingmeat123@email.com',
+                    email: 'kingofthepiratesmeat123@email.com',
                     password: '123',
                     role: 'user',
                     events: eventsUser2,
