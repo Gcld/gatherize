@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { LuAlignJustify, LuFilter, LuSearch, LuUser, LuSettings, LuLogOut } from 'react-icons/lu';
 import Link from 'next/link';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import MenuModal from '../MenuModal';
 import FilterModal from '../FilterModal';
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { Container, DesktopMenu, FilterButton, LogoAndMenu, MenuButton, SearchAndFilter, Searchbar, SearchDiv } from '../Header/styled';
 import LogoAdmin from '../LogoAdmin';
 
-
 export default function HeaderAdmin() {
+    const { data: session } = useSession();
+    const router = useRouter();
     const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
     const { width } = useWindowSize();
@@ -24,17 +26,17 @@ export default function HeaderAdmin() {
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
-                filterButtonRef.current && 
+                filterButtonRef.current &&
                 !filterButtonRef.current.contains(event.target as Node)
             ) {
                 setIsFilterModalOpen(false);
             }
         };
-    
+
         if (isFilterModalOpen) {
             document.addEventListener('mousedown', handleClickOutside);
         }
-    
+
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
@@ -48,6 +50,15 @@ export default function HeaderAdmin() {
         setIsFilterModalOpen(!isFilterModalOpen);
     };
 
+    const handleSignOut = async () => {
+        await signOut({ redirect: false });
+        router.push('/');
+    };
+
+    if (!session) {
+        return null;
+    }
+
     return (
         <Container>
             <LogoAndMenu>
@@ -59,7 +70,7 @@ export default function HeaderAdmin() {
                             Profile
                         </MenuButton>
                     </Link>
-                    <MenuButton onClick={() => signOut()}>
+                    <MenuButton onClick={handleSignOut}>
                         <LuLogOut className="icon" />
                         Logout
                     </MenuButton>

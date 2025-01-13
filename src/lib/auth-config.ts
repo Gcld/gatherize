@@ -66,5 +66,9 @@ export const auth: NextAuthOptions = {
     session: {
         strategy: "jwt",
     },
+    events: {
+        signOut: async () => {
+        },
+    },
     secret: process.env.NEXTAUTH_SECRET,
 }
