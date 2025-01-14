@@ -10,7 +10,7 @@ import { Container, DesktopMenu, FilterButton, LogoAndMenu, MenuButton, SearchAn
 import LogoAdmin from '../LogoAdmin';
 
 export default function HeaderAdmin() {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     const router = useRouter();
     const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
@@ -55,29 +55,33 @@ export default function HeaderAdmin() {
         router.push('/login');
     };
 
-    if (typeof window === 'undefined' || !session) {
+    if (status === 'loading') {
         return null;
     }
 
     return (
-        <Container suppressHydrationWarning={true}>
+        <Container>
             <LogoAndMenu>
                 <LogoAdmin />
                 <DesktopMenu>
-                    <Link href="/profile" passHref>
-                        <MenuButton>
-                            <LuUser className="icon" />
-                            Profile
-                        </MenuButton>
-                    </Link>
-                    <MenuButton onClick={handleSignOut}>
-                        <LuLogOut className="icon" />
-                        Logout
-                    </MenuButton>
-                    <MenuButton>
-                        <LuSettings className="icon" />
-                        Settings
-                    </MenuButton>
+                    {session && (
+                        <>
+                            <Link href="/profile" passHref>
+                                <MenuButton>
+                                    <LuUser className="icon" />
+                                    Profile
+                                </MenuButton>
+                            </Link>
+                            <MenuButton onClick={handleSignOut}>
+                                <LuLogOut className="icon" />
+                                Logout
+                            </MenuButton>
+                            <MenuButton>
+                                <LuSettings className="icon" />
+                                Settings
+                            </MenuButton>
+                        </>
+                    )}
                 </DesktopMenu>
                 <button
                     aria-label="Open menu"
