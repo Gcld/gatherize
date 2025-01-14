@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { LuAlignJustify, LuFilter, LuSearch, LuUser, LuSettings, LuLogOut } from 'react-icons/lu';
+import { LuAlignJustify, LuFilter, LuSearch, LuUser, LuLogOut, LuHouse} from 'react-icons/lu';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -66,6 +66,12 @@ export default function HeaderAdmin() {
                 <DesktopMenu>
                     {session && (
                         <>
+                            <Link href="/" passHref>
+                                <MenuButton>
+                                    <LuHouse className="icon" />
+                                    Home
+                                </MenuButton>
+                            </Link>
                             <Link href="/profile" passHref>
                                 <MenuButton>
                                     <LuUser className="icon" />
@@ -75,10 +81,6 @@ export default function HeaderAdmin() {
                             <MenuButton onClick={handleSignOut}>
                                 <LuLogOut className="icon" />
                                 Logout
-                            </MenuButton>
-                            <MenuButton>
-                                <LuSettings className="icon" />
-                                Settings
                             </MenuButton>
                         </>
                     )}

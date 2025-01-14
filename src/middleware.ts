@@ -1,19 +1,22 @@
-import { NextAuthMiddlewareOptions, NextRequestWithAuth, withAuth } from "next-auth/middleware";
-// import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
+import { withAuth } from 'next-auth/middleware';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const middleware = (request: NextRequestWithAuth) => {
+export default withAuth(
+    function middleware(req) {
+        const token = req.nextauth.token;
+        const isAdminRoute = req.nextUrl.pathname.startsWith('/admin');
 
-    // const isPrivateRoutes = request.nextUrl.pathname.startsWith("/admin");
-    // const isAdminUser = request.nextauth.token?.role === "admin";
+        if (isAdminRoute && token?.role !== 'admin') {
+            return NextResponse.redirect(new URL('/denied', req.url));
+        }
+    },
+    {
+        callbacks: {
+            authorized: ({ token }) => !!token,
+        },
+    }
+);
 
-    // if (isPrivateRoutes && isAdminUser) {
-    //     return NextResponse.rewrite(new URL('/denied', request.url));
-    // }
-}
-const callbackOptions: NextAuthMiddlewareOptions = {};
-
-export default withAuth(middleware, callbackOptions);
 export const config = {
-    matcher: '/admin'
-}
+    matcher: ['/admin/:path*'],
+};

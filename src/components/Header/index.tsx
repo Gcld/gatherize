@@ -70,13 +70,17 @@ export default function Header() {
                                     Profile
                                 </MenuButton>
                             </Link>
+                            {session.user.role === 'admin' && (
+                                <Link href="/admin" passHref>
+                                    <MenuButton>
+                                        <LuSettings className="icon" />
+                                        Admin
+                                    </MenuButton>
+                                </Link>
+                            )}
                             <MenuButton onClick={() => signOut()}>
                                 <LuLogOut className="icon" />
                                 Logout
-                            </MenuButton>
-                            <MenuButton>
-                                <LuSettings className="icon" />
-                                Settings
                             </MenuButton>
                         </>
                     ) : (
