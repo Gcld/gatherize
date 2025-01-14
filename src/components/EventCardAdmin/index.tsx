@@ -9,7 +9,6 @@ import { Container, EventCardPicture, EventContent, EventDate, EventInfo, EventL
 export default function EventCardAdmin() {
     const temporaryEventId = 1; 
 
-
     return (
         <Link href={`/event/${temporaryEventId}/admin`} passHref legacyBehavior>
             <Container as="a">
@@ -20,7 +19,7 @@ export default function EventCardAdmin() {
                     </EventDate>
                 </EventCardPicture>
                 <EventContent>
-                    <h1>Headline 1</h1>
+                    <h1>Admin Event</h1>
                     <EventLocation>
                         <LuMapPin size={14} color="var(--darkZaori)"/>
                         <h4>Nova Parnamirim, RN</h4>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { LuUser, LuSettings, LuX, LuLogOut, LuLogIn, LuHouse } from "react-icons/lu";
+import { LuUser, LuX, LuLogOut, LuLogIn, LuHouse } from "react-icons/lu";
 import { ModalContainer, ModalContent, ModalButton } from './styled';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
@@ -32,14 +32,6 @@ const MenuModal: React.FC<MenuModalProps> = ({ isOpen, onClose }) => {
                                 <span>Profile</span>
                             </ModalButton>
                         </Link>
-                        {session.user.role === 'admin' && (
-                            <Link href='/admin' passHref>
-                                <ModalButton onClick={onClose}>
-                                    <LuSettings className='icon'/>
-                                    <span>Admin</span>
-                                </ModalButton>
-                            </Link>
-                        )}
                         <ModalButton onClick={() => signOut()}>
                             <LuLogOut className='icon'/>
                             <span>Logout</span>

@@ -10,9 +10,9 @@ export default function Home() {
   return (
     <SessionProvider>
       <Container>
-        <Header/>
-        <Content/>
-        <Footer/>
+        <Header />
+        <Content />
+        <Footer />
       </Container>
     </SessionProvider>
   );

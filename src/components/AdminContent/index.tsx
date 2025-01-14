@@ -1,7 +1,7 @@
 'use client'
 
 import { useSession } from "next-auth/react";
-import ContentAdmin from "@/components/ContentAdmin";
+// import ContentAdmin from "@/components/ContentAdmin";
 import Footer from "@/components/Footer";
 import { Container } from "@/app/styled";
 import HeaderAdmin from "../HeaderAdmin";
@@ -20,7 +20,7 @@ export default function AdminContent() {
     return (
         <Container>
             <HeaderAdmin />
-            <ContentAdmin />
+            {/* <ContentAdmin /> */}
             <Footer />
         </Container>
     );

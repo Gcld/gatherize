@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { LuAlignJustify, LuFilter, LuSearch, LuUser, LuSettings, LuLogOut, LuLogIn } from 'react-icons/lu';
+import { LuAlignJustify, LuFilter, LuSearch, LuUser, LuLogOut, LuLogIn } from 'react-icons/lu';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
 import Logo from '../Logo';
@@ -70,14 +70,6 @@ export default function Header() {
                                     Profile
                                 </MenuButton>
                             </Link>
-                            {session.user.role === 'admin' && (
-                                <Link href="/admin" passHref>
-                                    <MenuButton>
-                                        <LuSettings className="icon" />
-                                        Admin
-                                    </MenuButton>
-                                </Link>
-                            )}
                             <MenuButton onClick={() => signOut()}>
                                 <LuLogOut className="icon" />
                                 Logout

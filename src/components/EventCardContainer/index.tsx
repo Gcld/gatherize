@@ -3,7 +3,11 @@ import EventCardAdmin from "../EventCardAdmin";
 import { Container } from "./styled";
 import { useSession } from "next-auth/react";
 
-export default function EventCardContainer() {
+interface EventCardContainerProps {
+    isAdmin: boolean;
+}
+
+export default function EventCardContainer({ isAdmin }: EventCardContainerProps) {
     const { data: session, status } = useSession();
 
     if (status === "loading") {
@@ -38,7 +42,7 @@ export default function EventCardContainer() {
                     </ul>
                 </>
             )}
-            {session && session.user.role === 'admin' && <EventCardAdmin />}
+            {isAdmin && <EventCardAdmin />}
             <EventCard />
             <EventCard />
             <EventCard />
