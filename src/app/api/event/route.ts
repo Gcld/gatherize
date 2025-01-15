@@ -23,8 +23,8 @@ export function GET() {
             address: 'Rua Ipê Caboclo',
             city: 'Parnamirim',
             state: 'RN',
-            maxPeople: 100,
-            participants: 50,
+            maxPeople: 70,
+            participants: 20,
         }]
 
     return new Response(
