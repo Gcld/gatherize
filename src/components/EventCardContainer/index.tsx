@@ -1,14 +1,47 @@
+import React, { useEffect, useState } from 'react';
 import EventCard from "../EventCard";
 import EventCardAdmin from "../EventCardAdmin";
 import { Container } from "./styled";
 import { useSession } from "next-auth/react";
+import { fetchEvents } from '@/utils/api';
 
 interface EventCardContainerProps {
     isAdmin: boolean;
 }
 
+interface Event {
+    id: number;
+    name: string;
+    description: string;
+    date: string;
+    cep: string;
+    address: string;
+    city: string;
+    state: string;
+    maxPeople: number;
+    participants: number;
+}
+
 export default function EventCardContainer({ isAdmin }: EventCardContainerProps) {
     const { data: session, status } = useSession();
+    const [events, setEvents] = useState<Event[]>([]);
+
+    useEffect(() => {
+        async function loadEvents() {
+            try {
+                const fetchedEvents = await fetchEvents();
+                console.log('Fetched events in component:', fetchedEvents);
+                setEvents(fetchedEvents);
+            } catch (error) {
+                console.error('Failed to load events:', error);
+            }
+        }
+        loadEvents();
+    }, []);
+
+    useEffect(() => {
+        console.log('Current events state:', events);
+    }, [events]);
 
     if (status === "loading") {
         return <div>Loading...</div>;
@@ -24,30 +57,10 @@ export default function EventCardContainer({ isAdmin }: EventCardContainerProps)
                     <p>Role: {session.user.role}</p>
                 </div>
             )}
-            {session && session.user.events && (
-                <>
-                    <h2>Events:</h2>
-                    <ul>
-                        {session.user.events.map((event, index) => (
-                            <li key={event.id || index}>
-                                <p>Name: {event.name}</p>
-                                {event.date && (
-                                    <p>Date: {new Date(event.date).toLocaleDateString()}</p>
-                                )}
-                                <p>Description: {event.description}</p>
-                                <p>Address: {event.address}</p>
-                                <p>Participants: {event.participants}/{event.maxPeople}</p>
-                            </li>
-                        ))}
-                    </ul>
-                </>
-            )}
             {isAdmin && <EventCardAdmin />}
-            <EventCard />
-            <EventCard />
-            <EventCard />
-            <EventCard />
-            <EventCard />
+            {events.map((event) => (
+                <EventCard key={event.id} event={event} />
+            ))}
         </Container>
     );
 }

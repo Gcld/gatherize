@@ -16,10 +16,26 @@ import {
     Users
 } from './styled';
 
-export default function EventCard() {
-    const temporaryEventId = 1;
+interface Event {
+    id: number;
+    name: string;
+    description: string;
+    date: string;
+    cep: string;
+    address: string;
+    city: string;
+    state: string;
+    maxPeople: number;
+    participants: number;
+}
+
+interface EventCardProps {
+    event: Event;
+}
+
+export default function EventCard({ event }: EventCardProps) {
+    console.log('Event data in EventCard:', event);
     const { toggleSubscription, isSubscribed } = useSubscription();
-    const eventSubscribed = isSubscribed(temporaryEventId);
     const { data: session } = useSession();
     const router = useRouter();
 
@@ -28,24 +44,27 @@ export default function EventCard() {
         if (!session) {
             router.push('/login');
         } else {
-            toggleSubscription(temporaryEventId);
+            toggleSubscription(event.id);
         }
     };
 
+    const eventSubscribed = isSubscribed(event.id);
+    const eventDate = new Date(event.date);
+
     return (
-        <Link href={`/event/${temporaryEventId}`} passHref legacyBehavior>
+        <Link href={`/event/${event?.id || ''}`} passHref legacyBehavior>
             <Container as='a'>
                 <EventCardPicture>
                     <EventDate>
-                        <h3>19</h3>
-                        <h5>Dec</h5>
+                        <h3>{eventDate?.getDate()}</h3>
+                        <h5>{eventDate?.toLocaleString('default', { month: 'short' })}</h5>
                     </EventDate>
                 </EventCardPicture>
                 <EventContent>
-                    <h1>Headline 1</h1>
+                    <h1>{event?.name}</h1>
                     <EventLocation>
                         <LuMapPin size={14} color='var(--darkZaori)' aria-hidden='true' />
-                        <h4>Nova Parnamirim, RN</h4>
+                        <h4>{`${event?.address || ''}, ${event?.city || ''}, ${event?.state || ''}`}</h4>
                     </EventLocation>
                     <EventInfo>
                         <Users>
@@ -55,7 +74,7 @@ export default function EventCard() {
                             <LuCircleUser size={16} color='black' aria-hidden='true' />
                         </Users>
                         <Participants>
-                            <h3>6 participants</h3>
+                            <h3>{event?.participants || 0} participants</h3>
                         </Participants>
                     </EventInfo>
                 </EventContent>
