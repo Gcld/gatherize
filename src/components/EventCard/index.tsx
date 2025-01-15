@@ -52,7 +52,7 @@ export default function EventCard({ event }: EventCardProps) {
     const eventDate = new Date(event.date);
 
     return (
-        <Link href={`/event/${event?.id || ''}`} passHref legacyBehavior>
+        <Link href={`/event/${event.id}`} passHref legacyBehavior>
             <Container as='a'>
                 <EventCardPicture>
                     <EventDate>

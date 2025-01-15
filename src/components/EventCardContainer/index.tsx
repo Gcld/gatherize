@@ -25,27 +25,29 @@ interface Event {
 export default function EventCardContainer({ isAdmin }: EventCardContainerProps) {
     const { data: session, status } = useSession();
     const [events, setEvents] = useState<Event[]>([]);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         async function loadEvents() {
             try {
                 const fetchedEvents = await fetchEvents();
-                console.log('Fetched events in component:', fetchedEvents);
                 setEvents(fetchedEvents);
             } catch (error) {
                 console.error('Failed to load events:', error);
+                setError('Failed to load events. Please try again later.');
             }
         }
         loadEvents();
     }, []);
 
-    useEffect(() => {
-        console.log('Current events state:', events);
-    }, [events]);
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
 
     if (status === "loading") {
         return <div>Loading...</div>;
     }
+
 
     return (
         <Container>
