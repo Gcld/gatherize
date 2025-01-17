@@ -10,6 +10,7 @@ export const events = [
         state: 'RN',
         maxPeople: 1000,
         participants: 750,
+        creatorId: '1',
     },
     {
         id: 2,
@@ -22,6 +23,7 @@ export const events = [
         state: 'RN',
         maxPeople: 5000,
         participants: 4200,
+        creatorId: '3',
     },
     {
         id: 3,
@@ -34,6 +36,7 @@ export const events = [
         state: 'RN',
         maxPeople: 200,
         participants: 150,
+        creatorId: '1',
     },
     {
         id: 4,
@@ -46,6 +49,7 @@ export const events = [
         state: 'RN',
         maxPeople: 30,
         participants: 25,
+        creatorId: '5',
     },
     {
         id: 5,
@@ -58,6 +62,7 @@ export const events = [
         state: 'RN',
         maxPeople: 300,
         participants: 280,
+        creatorId: '6',
     },
     {
         id: 6,
@@ -70,6 +75,7 @@ export const events = [
         state: 'RN',
         maxPeople: 50,
         participants: 45,
+        creatorId: '1',
     },
     {
         id: 7,
@@ -82,6 +88,7 @@ export const events = [
         state: 'RN',
         maxPeople: 1000,
         participants: 800,
+        creatorId: '7',
     },
     {
         id: 8,
@@ -94,5 +101,6 @@ export const events = [
         state: 'RN',
         maxPeople: 100,
         participants: 95,
+        creatorId: '1',
     },
 ];

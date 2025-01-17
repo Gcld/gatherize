@@ -2,9 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { LuArrowLeft, LuCircleCheck, LuShare, LuX } from "react-icons/lu";
+import { LuArrowLeft, LuCircleCheck, LuShare, LuX, LuClipboardPen, LuTrash2, LuUsers } from "react-icons/lu";
 import { useSubscription } from "@/contexts/SubscriptionContext";
 import Link from 'next/link';
+import { useSession } from "next-auth/react";
 import Header from "@/components/Header";
 import { fetchEventById } from '@/utils/api';
 import {
@@ -19,7 +20,10 @@ import {
     TextBlock,
     TitleAndDescriptionDiv,
     DesktopOnly,
-    EventContent
+    EventContent,
+    DashboardContainer,
+    DashboardItem,
+    ViewParticipantsButton
 } from "./styled";
 
 interface Event {
@@ -32,9 +36,11 @@ interface Event {
     state: string;
     maxPeople: number;
     participants: number;
+    creatorId: string;
 }
 
 export default function EventDetail() {
+    const { data: session } = useSession();
     const params = useParams();
     const [event, setEvent] = useState<Event | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -64,6 +70,16 @@ export default function EventDetail() {
         toggleSubscription(eventId);
     };
 
+    const handleEditClick = () => {
+        // Implementação futura para editar o evento
+        console.log('Edit event clicked');
+    };
+
+    const handleDeleteClick = () => {
+        // Implementação futura para deletar o evento
+        console.log('Delete event clicked');
+    };
+
     if (error) {
         return <div>Error: {error}</div>;
     }
@@ -73,6 +89,7 @@ export default function EventDetail() {
     }
 
     const eventDate = new Date(event.date);
+    const isEventCreator = session?.user.id === event.creatorId;
 
     return (
         <Container>
@@ -82,6 +99,18 @@ export default function EventDetail() {
             <EventPicture>
                 <EventButtonsDiv>
                     <Link href="/" passHref><EventButton><LuArrowLeft className="icon" /></EventButton></Link>
+                    {isEventCreator && (
+                        <>
+                            <EventButton onClick={handleEditClick}>
+                                <LuClipboardPen className="icon" />
+                                <h3>Edit Event</h3>
+                            </EventButton>
+                            <EventButton onClick={handleDeleteClick}>
+                                <LuTrash2 className="icon" />
+                                <h3>Delete Event</h3>
+                            </EventButton>
+                        </>
+                    )}
                     <EventButton><LuShare className="icon" /></EventButton>
                 </EventButtonsDiv>
             </EventPicture>
@@ -109,18 +138,39 @@ export default function EventDetail() {
                         <h4>About event</h4>
                         <h6>{event.description}</h6>
                     </TextBlock>
-                </EventDescriptionDiv>
-                <SubscribeButton
-                    $isSubscribed={eventSubscribed}
-                    onClick={(e) => handleSubscribe(e)}
-                >
-                    {eventSubscribed ? (
-                        <LuX className="subscribeIcon" />
-                    ) : (
-                        <LuCircleCheck className="subscribeIcon" />
+                    {isEventCreator && (
+                        <DashboardContainer>
+                            <DashboardItem>
+                                <h4>Subscribed participants:</h4>
+                                <p>{event.participants}</p>
+                            </DashboardItem>
+                            <DashboardItem>
+                                <h4>Maximum capacity:</h4>
+                                <p>{event.maxPeople}</p>
+                            </DashboardItem>
+                        </DashboardContainer>
                     )}
-                    <h1>{eventSubscribed ? 'Cancel Subscription' : 'Subscribe'}</h1>
-                </SubscribeButton>
+                </EventDescriptionDiv>
+                {isEventCreator ? (
+                    <Link href={`/event/${event.id}/admin/participants`} passHref style={{ textDecoration: 'none' }}>
+                        <ViewParticipantsButton>
+                            <LuUsers className='participantsIcon' />
+                            <h1>View Participants</h1>
+                        </ViewParticipantsButton>
+                    </Link>
+                ) : (
+                    <SubscribeButton
+                        $isSubscribed={eventSubscribed}
+                        onClick={(e) => handleSubscribe(e)}
+                    >
+                        {eventSubscribed ? (
+                            <LuX className="subscribeIcon" />
+                        ) : (
+                            <LuCircleCheck className="subscribeIcon" />
+                        )}
+                        <h1>{eventSubscribed ? 'Cancel Subscription' : 'Subscribe'}</h1>
+                    </SubscribeButton>
+                )}
             </EventDescriptionAndButtonDiv>
         </Container>
     )
