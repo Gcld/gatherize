@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 interface EventButtonProps {
-    $isSubscribed: boolean;
+    $isSubscribed?: boolean;
+    $isCreator?: boolean;
 }
 
 export const Container = styled.div`
@@ -191,21 +192,31 @@ export const EventButton = styled.div<EventButtonProps>`
     padding: 8px;
     border-radius: 8px;
     gap: 4px;
-    background-color: ${props => props.$isSubscribed ? 'red' : 'var(--primaryDarkZaori)'};
+    background-color: ${props => 
+        props.$isCreator ? 'var(--primaryDarkZaori)' :
+        props.$isSubscribed ? 'red' : 'var(--primaryDarkZaori)'
+    };
     transition: background-color 0.3s ease;
+    text-decoration: none;
 
     .subscribeIcon {
         flex-shrink: 0; 
         height: 18px;
         width: 18px;
-        color: ${props => props.$isSubscribed ? 'white' : 'black'};
+        color: ${props => 
+            props.$isCreator ? 'black' :
+            props.$isSubscribed ? 'white' : 'black'
+        };
     }
 
     h2 {
         font-size: 16px;
         font-weight: bold;
         line-height: 120%;
-        color: ${props => props.$isSubscribed ? 'white' : 'black'};
+        color: ${props => 
+            props.$isCreator ? 'black' :
+            props.$isSubscribed ? 'white' : 'black'
+        };
         white-space: nowrap;
     }
 

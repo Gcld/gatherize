@@ -59,7 +59,6 @@ export default function EventCardContainer({ isAdmin }: EventCardContainerProps)
                     <p>Role: {session.user.role}</p>
                 </div>
             )}
-            {isAdmin && <EventCardAdmin />}
             {events.map((event) => (
                 <EventCard key={event.id} event={event} />
             ))}
