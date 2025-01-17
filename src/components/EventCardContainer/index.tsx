@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import EventCard from "../EventCard";
-import EventCardAdmin from "../EventCardAdmin";
 import { Container } from "./styled";
 import { useSession } from "next-auth/react";
 import { fetchEvents } from '@/utils/api';
-
-interface EventCardContainerProps {
-    isAdmin: boolean;
-}
 
 interface Event {
     id: number;
@@ -20,9 +15,10 @@ interface Event {
     state: string;
     maxPeople: number;
     participants: number;
+    creatorId: string;
 }
 
-export default function EventCardContainer({ isAdmin }: EventCardContainerProps) {
+export default function EventCardContainer() {
     const { data: session, status } = useSession();
     const [events, setEvents] = useState<Event[]>([]);
     const [error, setError] = useState<string | null>(null);
