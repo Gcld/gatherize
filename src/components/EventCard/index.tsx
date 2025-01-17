@@ -19,6 +19,7 @@ import {
 
 interface EventCardProps {
     event: Event;
+    isAdmin?: boolean;
 }
 
 export default function EventCard({ event }: EventCardProps) {

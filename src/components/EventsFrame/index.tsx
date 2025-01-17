@@ -1,58 +1,48 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { MdArrowDropDown } from "react-icons/md";
 import { Container } from "./styled";
 import SortModal from '../SortModal';
-import { fetchEvents } from '@/utils/api';
+import { Event } from '@/types/event';
 
-export default function EventsFrame() {
+interface EventsFrameProps {
+    events: Event[];
+    setEvents: React.Dispatch<React.SetStateAction<Event[]>>;
+}
+
+export default function EventsFrame({ events, setEvents }: EventsFrameProps) {
     const [isSortModalOpen, setIsSortModalOpen] = useState(false);
-    const [eventCount, setEventCount] = useState(0);
+    const [currentSort, setCurrentSort] = useState<'alphabetical' | 'recent' | 'participants'>('recent');
     const sortButtonRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        async function loadEventCount() {
-            try {
-                const events = await fetchEvents();
-                setEventCount(events.length);
-            } catch (error) {
-                console.error('Failed to load event count:', error);
-            }
-        }
-        loadEventCount();
-    }, []);
     const toggleSortModal = () => {
         setIsSortModalOpen(!isSortModalOpen);
     };
 
     const handleSort = (sortType: 'alphabetical' | 'recent' | 'participants') => {
-        // Implementação futura da lógica de ordenação
-        console.log('Sorting by:', sortType);
-    };
-
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (
-                sortButtonRef.current &&
-                !sortButtonRef.current.contains(event.target as Node)
-            ) {
-                setIsSortModalOpen(false);
-            }
-        };
-
-        if (isSortModalOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
+        let sorted: Event[];
+        switch (sortType) {
+            case 'alphabetical':
+                sorted = [...events].sort((a, b) => a.name.localeCompare(b.name));
+                break;
+            case 'recent':
+                sorted = [...events].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+                break;
+            case 'participants':
+                sorted = [...events].sort((a, b) => b.participants - a.participants);
+                break;
+            default:
+                sorted = events;
         }
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [isSortModalOpen]);
+        setEvents(sorted);
+        setCurrentSort(sortType);
+        setIsSortModalOpen(false);
+    };
 
     return (
         <Container>
             <div className="availableEvents">
                 <h2>Available Events</h2>
-                <h5>{eventCount}</h5>
+                <h5>{events.length}</h5>
             </div>
             <div
                 ref={sortButtonRef}
@@ -60,7 +50,7 @@ export default function EventsFrame() {
                 onClick={toggleSortModal}
                 style={{ position: 'relative' }}
             >
-                <h3>Sort by</h3>
+                <h3>Sort by: {currentSort}</h3>
                 <MdArrowDropDown className="icon" />
                 {isSortModalOpen && (
                     <SortModal
