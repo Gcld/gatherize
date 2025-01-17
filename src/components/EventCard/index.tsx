@@ -1,6 +1,7 @@
 import React from 'react';
 import { LuCircleUser, LuMapPin, LuCircleCheck, LuX, LuEye } from 'react-icons/lu';
 import Link from 'next/link';
+import { Event } from '@/types/event';
 import { useSubscription } from '@/contexts/SubscriptionContext';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -15,20 +16,6 @@ import {
     Participants,
     Users
 } from './styled';
-
-interface Event {
-    id: number;
-    name: string;
-    description: string;
-    date: string;
-    cep: string;
-    address: string;
-    city: string;
-    state: string;
-    maxPeople: number;
-    participants: number;
-    creatorId: string;
-}
 
 interface EventCardProps {
     event: Event;

@@ -1,22 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import EventCard from "../EventCard";
 import { Container } from "./styled";
+import { Event } from '@/types/event';
 import { useSession } from "next-auth/react";
 import { fetchEvents } from '@/utils/api';
-
-interface Event {
-    id: number;
-    name: string;
-    description: string;
-    date: string;
-    cep: string;
-    address: string;
-    city: string;
-    state: string;
-    maxPeople: number;
-    participants: number;
-    creatorId: string;
-}
 
 export default function EventCardContainer() {
     const { data: session, status } = useSession();

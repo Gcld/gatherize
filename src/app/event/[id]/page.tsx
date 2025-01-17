@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { LuArrowLeft, LuCircleCheck, LuShare, LuX, LuClipboardPen, LuTrash2, LuUsers } from "react-icons/lu";
 import { useSubscription } from "@/contexts/SubscriptionContext";
 import Link from 'next/link';
+import { Event } from '@/types/event';
 import { useSession } from "next-auth/react";
 import Header from "@/components/Header";
 import { fetchEventById } from '@/utils/api';
@@ -25,19 +26,6 @@ import {
     DashboardItem,
     ViewParticipantsButton
 } from "./styled";
-
-interface Event {
-    id: number;
-    name: string;
-    description: string;
-    date: string;
-    address: string;
-    city: string;
-    state: string;
-    maxPeople: number;
-    participants: number;
-    creatorId: string;
-}
 
 export default function EventDetail() {
     const { data: session } = useSession();
