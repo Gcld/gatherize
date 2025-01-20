@@ -19,12 +19,17 @@ import {
     MenuButton
 } from './styled';
 
-export default function Header() {
+interface HeaderProps {
+    showSearchAndFilter?: boolean;
+}
+
+export default function Header({ showSearchAndFilter = false }: HeaderProps) {
     const { data: session, status } = useSession();
     const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
     const { width } = useWindowSize();
     const filterButtonRef = useRef<HTMLDivElement>(null);
+
 
     useEffect(() => {
         if (width && width >= 1024) {
@@ -35,17 +40,17 @@ export default function Header() {
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
-                filterButtonRef.current && 
+                filterButtonRef.current &&
                 !filterButtonRef.current.contains(event.target as Node)
             ) {
                 setIsFilterModalOpen(false);
             }
         };
-    
+
         if (isFilterModalOpen) {
             document.addEventListener('mousedown', handleClickOutside);
         }
-    
+
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
@@ -94,31 +99,33 @@ export default function Header() {
                     <LuAlignJustify className="burguerIcon" />
                 </button>
             </LogoAndMenu>
-            <SearchAndFilter>
-                <SearchDiv>
-                    <LuSearch className="searchIcon" />
-                    <Searchbar
-                        type="text"
-                        id="searchbar"
-                        placeholder="Search event"
-                        aria-label="Search for events"
-                    />
-                </SearchDiv>
-                <FilterButton
-                    ref={filterButtonRef}
-                    onClick={toggleFilterModal}
-                    aria-label="Open filters"
-                    style={{ position: 'relative' }}
-                >
-                    <LuFilter className="filterIcon" />
-                    {isFilterModalOpen && (
-                        <FilterModal
-                            isOpen={true}
-                            onClose={() => setIsFilterModalOpen(false)}
+            {showSearchAndFilter && (
+                <SearchAndFilter>
+                    <SearchDiv>
+                        <LuSearch className="searchIcon" />
+                        <Searchbar
+                            type="text"
+                            id="searchbar"
+                            placeholder="Search event"
+                            aria-label="Search for events"
                         />
-                    )}
-                </FilterButton>
-            </SearchAndFilter>
+                    </SearchDiv>
+                    <FilterButton
+                        ref={filterButtonRef}
+                        onClick={toggleFilterModal}
+                        aria-label="Open filters"
+                        style={{ position: 'relative' }}
+                    >
+                        <LuFilter className="filterIcon" />
+                        {isFilterModalOpen && (
+                            <FilterModal
+                                isOpen={true}
+                                onClose={() => setIsFilterModalOpen(false)}
+                            />
+                        )}
+                    </FilterButton>
+                </SearchAndFilter>
+            )}
             <MenuModal isOpen={isMenuModalOpen} onClose={() => setIsMenuModalOpen(false)} />
             <FilterModal isOpen={isFilterModalOpen} onClose={() => setIsFilterModalOpen(false)} />
         </Container>

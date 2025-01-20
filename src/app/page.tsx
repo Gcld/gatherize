@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <SessionProvider>
       <Container>
-        <Header />
+        <Header showSearchAndFilter={true} />
         <Content />
         <Footer />
       </Container>
