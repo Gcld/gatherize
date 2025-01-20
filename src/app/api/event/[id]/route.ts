@@ -1,11 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { events } from '@/data/events';
 
-export async function GET(
-    request: NextRequest,
-    { params }: { params: { id: string } }
-) {
-    const id = parseInt(params.id);
+export async function GET(request: NextRequest) {
+    const id = parseInt(request.nextUrl.pathname.split('/').pop() || '');
     const event = events.find(e => e.id === id);
 
     if (!event) {
