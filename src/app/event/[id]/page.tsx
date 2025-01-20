@@ -28,7 +28,8 @@ import {
 } from "./styled";
 
 export default function EventDetail() {
-    const { data: session } = useSession();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { data: session, status } = useSession();
     const params = useParams();
     const [event, setEvent] = useState<Event | null>(null);
     const [error, setError] = useState<string | null>(null);

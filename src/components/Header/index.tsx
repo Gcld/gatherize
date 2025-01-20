@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { LuAlignJustify, LuFilter, LuSearch, LuUser, LuLogOut, LuLogIn } from 'react-icons/lu';
 import Link from 'next/link';
@@ -18,7 +20,7 @@ import {
 } from './styled';
 
 export default function Header() {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
     const { width } = useWindowSize();
@@ -62,7 +64,7 @@ export default function Header() {
             <LogoAndMenu>
                 <Logo />
                 <DesktopMenu>
-                    {session ? (
+                    {status === 'authenticated' && session ? (
                         <>
                             <Link href="/profile" passHref>
                                 <MenuButton>
