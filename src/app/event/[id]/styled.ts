@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 interface SubscribeButtonProps {
     $isSubscribed: boolean;
+    $disabled?: boolean;
 }
 
 export const Container = styled.div`
@@ -284,7 +285,8 @@ export const SubscribeButton = styled.div<SubscribeButtonProps>`
     align-items: center;
     gap: 4px;
     padding: 8px;
-    cursor: pointer;
+    cursor: ${props => props.$disabled ? 'not-allowed' : 'pointer'};
+    opacity: ${props => props.$disabled ? 0.6 : 1};
     transition: all 0.3s ease;
 
     .subscribeIcon {
@@ -303,14 +305,15 @@ export const SubscribeButton = styled.div<SubscribeButtonProps>`
     }
 
     &:hover {
+        ${props => !props.$disabled && `
+            .subscribeIcon {
+                transform: rotate(15deg) scale(1.1);
+            }
 
-        .subscribeIcon {
-            transform: rotate(15deg) scale(1.1);
-        }
-
-        h1 {
-            transform: scale(1.05);
-        }
+            h1 {
+                transform: scale(1.05);
+            }
+        `}
     }
 
     @media (min-width: 768px) {

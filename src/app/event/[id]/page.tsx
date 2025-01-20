@@ -27,10 +27,12 @@ import {
     ViewParticipantsButton,
     UserInfoContainer
 } from "./styled";
+import { useRouter } from 'next/navigation';
 
 export default function EventDetail() {
     const { data: session, status } = useSession();
     const params = useParams();
+    const router = useRouter();
     const [event, setEvent] = useState<Event | null>(null);
     const [error, setError] = useState<string | null>(null);
     const { toggleSubscription, isSubscribed } = useSubscription();
@@ -56,9 +58,12 @@ export default function EventDetail() {
         if (e) {
             e.stopPropagation();
         }
-        toggleSubscription(eventId);
+        if (status === "authenticated") {
+            toggleSubscription(eventId);
+        } else {
+            router.push('/login');
+        }
     };
-
     const handleEditClick = () => {
         console.log('Edit event clicked');
     };
@@ -98,6 +103,7 @@ export default function EventDetail() {
                 );
         }
     };
+
 
     const eventDate = new Date(event.date);
     const isEventCreator = session?.user.id === event.creatorId;
@@ -143,7 +149,7 @@ export default function EventDetail() {
                     </TextBlock>
                 </EventDateAndLocationDiv>
             </EventContent>
-            <EventDescriptionAndButtonDiv $isSubscribed={eventSubscribed} onClick={(e) => handleSubscribe(e)}>
+            <EventDescriptionAndButtonDiv $isSubscribed={eventSubscribed}>
                 <EventDescriptionDiv>
                     <TextBlock>
                         <h4>About event</h4>
@@ -172,22 +178,29 @@ export default function EventDetail() {
                 ) : (
                     <SubscribeButton
                         $isSubscribed={eventSubscribed}
-                        onClick={(e) => handleSubscribe(e)}
+                        onClick={handleSubscribe}
+                        $disabled={status !== "authenticated"}
                     >
-                        {eventSubscribed ? (
-                            <LuX className="subscribeIcon" />
+                        {status === "authenticated" ? (
+                            eventSubscribed ? (
+                                <LuX className="subscribeIcon" />
+                            ) : (
+                                <LuCircleCheck className="subscribeIcon" />
+                            )
                         ) : (
                             <LuCircleCheck className="subscribeIcon" />
                         )}
-                        <h1>{eventSubscribed ? 'Cancel Subscription' : 'Subscribe'}</h1>
+                        <h1>
+                            {status === "authenticated"
+                                ? (eventSubscribed ? 'Cancel Subscription' : 'Subscribe')
+                                : 'Log in to Subscribe'}
+                        </h1>
                     </SubscribeButton>
                 )}
             </EventDescriptionAndButtonDiv>
-            {session && session.user && (
-                <UserInfoContainer>
-                    {renderUserInfo()}
-                </UserInfoContainer>
-            )}
+            <UserInfoContainer>
+                {renderUserInfo()}
+            </UserInfoContainer>
         </Container>
     )
 }
