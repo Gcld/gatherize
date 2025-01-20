@@ -28,8 +28,7 @@ import {
 } from "./styled";
 
 export default function EventDetail() {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
     const params = useParams();
     const [event, setEvent] = useState<Event | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -60,12 +59,10 @@ export default function EventDetail() {
     };
 
     const handleEditClick = () => {
-        // Implementação futura para editar o evento
         console.log('Edit event clicked');
     };
 
     const handleDeleteClick = () => {
-        // Implementação futura para deletar o evento
         console.log('Delete event clicked');
     };
 

@@ -16,6 +16,7 @@ export async function fetchEvents() {
         throw error;
     }
 }
+
 export async function fetchEventById(id: number) {
     try {
         console.log(`Fetching event with id: ${id}`);
