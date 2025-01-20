@@ -24,11 +24,12 @@ import {
     EventContent,
     DashboardContainer,
     DashboardItem,
-    ViewParticipantsButton
+    ViewParticipantsButton,
+    UserInfoContainer
 } from "./styled";
 
 export default function EventDetail() {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     const params = useParams();
     const [event, setEvent] = useState<Event | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -73,6 +74,30 @@ export default function EventDetail() {
     if (!event) {
         return <div>Loading...</div>;
     }
+
+    const renderUserInfo = () => {
+        switch (status) {
+            case "authenticated":
+                return session?.user ? (
+                    <>
+                        <h2>User Information:</h2>
+                        <p>Name: {session.user.name}</p>
+                        <p>Email: {session.user.email}</p>
+                        <p>Role: {session.user.role}</p>
+                    </>
+                ) : null;
+            case "loading":
+                return <p>Loading user information...</p>;
+            case "unauthenticated":
+            default:
+                return (
+                    <>
+                        <h2>Not Logged In</h2>
+                        <p>Please <Link href="/login">log in</Link> to see your user information and interact with events.</p>
+                    </>
+                );
+        }
+    };
 
     const eventDate = new Date(event.date);
     const isEventCreator = session?.user.id === event.creatorId;
@@ -158,6 +183,11 @@ export default function EventDetail() {
                     </SubscribeButton>
                 )}
             </EventDescriptionAndButtonDiv>
+            {session && session.user && (
+                <UserInfoContainer>
+                    {renderUserInfo()}
+                </UserInfoContainer>
+            )}
         </Container>
     )
 }

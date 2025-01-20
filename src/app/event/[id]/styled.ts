@@ -13,6 +13,36 @@ export const Container = styled.div`
     gap: 24px;
 `;
 
+export const UserInfoContainer = styled.div`
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 400px;
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    h2 {
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    p {
+        margin: 5px 0;
+        color: #666;
+    }
+
+    a {
+        color: #0070f3;
+        text-decoration: none;
+        font-weight: 600;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+`;
+
 export const DesktopOnly = styled.div`
     display: none;
 
