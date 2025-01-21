@@ -14,6 +14,7 @@ export default function Content() {
     const [isAdmin, setIsAdmin] = useState(false);
     const [isCreateEventModalOpen, setIsCreateEventModalOpen] = useState(false);
     const [events, setEvents] = useState<Event[]>([]);
+    const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
 
     useEffect(() => {
         if (session?.user.role === 'admin') {
@@ -28,12 +29,44 @@ export default function Content() {
             try {
                 const fetchedEvents = await fetchEvents();
                 setEvents(fetchedEvents);
+                setFilteredEvents(fetchedEvents);
             } catch (error) {
                 console.error('Failed to load events:', error);
             }
         }
         loadEvents();
     }, []);
+
+    useEffect(() => {
+        const handleFilter = (event: CustomEvent<'upcoming' | 'availableSpots' | 'myEvents'>) => {
+            const filterType = event.detail;
+            let filtered: Event[];
+
+            switch (filterType) {
+                case 'upcoming':
+                    const now = new Date();
+                    filtered = events.filter(event => new Date(event.date) > now)
+                        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+                    break;
+                case 'availableSpots':
+                    filtered = events.filter(event => event.participants < event.maxPeople);
+                    break;
+                case 'myEvents':
+                    filtered = events.filter(event => event.creatorId === session?.user.id);
+                    break;
+                default:
+                    filtered = events;
+            }
+
+            setFilteredEvents(filtered);
+        };
+
+        window.addEventListener('filterEvents', handleFilter as EventListener);
+
+        return () => {
+            window.removeEventListener('filterEvents', handleFilter as EventListener);
+        };
+    }, [events, session]);
 
     const handleCreateEvent = () => {
         setIsCreateEventModalOpen(true);
@@ -45,7 +78,7 @@ export default function Content() {
 
     return (
         <Container>
-            <EventsFrame events={events} setEvents={setEvents} />
+            <EventsFrame events={filteredEvents} setEvents={setFilteredEvents} />
             {session && session.user && (
                 <UserInfoContainer>
                     <h2>User Information:</h2>
@@ -60,7 +93,7 @@ export default function Content() {
                     <span>Create Event</span>
                 </CreateEventButton>
             )}
-            <EventCardContainer isAdmin={isAdmin} events={events} />
+            <EventCardContainer isAdmin={isAdmin} events={filteredEvents} />
             {isAdmin && (
                 <CreateEventModal
                     isOpen={isCreateEventModalOpen}

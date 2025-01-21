@@ -30,7 +30,6 @@ export default function Header({ showSearchAndFilter = false }: HeaderProps) {
     const { width } = useWindowSize();
     const filterButtonRef = useRef<HTMLDivElement>(null);
 
-
     useEffect(() => {
         if (width && width >= 1024) {
             setIsMenuModalOpen(false);
@@ -62,6 +61,13 @@ export default function Header({ showSearchAndFilter = false }: HeaderProps) {
 
     const toggleFilterModal = () => {
         setIsFilterModalOpen(!isFilterModalOpen);
+    };
+
+    const handleFilter = (filterType: 'upcoming' | 'availableSpots' | 'myEvents') => {
+        if (typeof window !== 'undefined') {
+            window.dispatchEvent(new CustomEvent('filterEvents', { detail: filterType }));
+        }
+        setIsFilterModalOpen(false);
     };
 
     return (
@@ -121,13 +127,13 @@ export default function Header({ showSearchAndFilter = false }: HeaderProps) {
                             <FilterModal
                                 isOpen={true}
                                 onClose={() => setIsFilterModalOpen(false)}
+                                onFilter={handleFilter}
                             />
                         )}
                     </FilterButton>
                 </SearchAndFilter>
             )}
             <MenuModal isOpen={isMenuModalOpen} onClose={() => setIsMenuModalOpen(false)} />
-            <FilterModal isOpen={isFilterModalOpen} onClose={() => setIsFilterModalOpen(false)} />
         </Container>
     );
 }
