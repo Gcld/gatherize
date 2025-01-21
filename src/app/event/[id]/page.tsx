@@ -6,7 +6,7 @@ import { LuArrowLeft, LuCircleCheck, LuShare, LuX, LuClipboardPen, LuTrash2, LuU
 import { useSubscription } from "@/contexts/SubscriptionContext";
 import Link from 'next/link';
 import { Event } from '@/types/event';
-import { useSession } from "next-auth/react";
+import { SessionProvider, useSession } from "next-auth/react";
 import Header from "@/components/Header";
 import { fetchEventById } from '@/utils/api';
 import {
@@ -29,7 +29,7 @@ import {
 } from "./styled";
 import { useRouter } from 'next/navigation';
 
-export default function EventDetail() {
+export function EventDetail() {
     const { data: session, status } = useSession();
     const params = useParams();
     const router = useRouter();
@@ -203,4 +203,12 @@ export default function EventDetail() {
             </UserInfoContainer>
         </Container>
     )
+}
+
+export default function EventDetailWrapper() {
+    return (
+        <SessionProvider>
+            <EventDetail />
+        </SessionProvider>
+    );
 }

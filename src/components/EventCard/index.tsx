@@ -94,8 +94,8 @@ export default function EventCard({ event }: EventCardProps) {
     );
 
     return (
-        <Link href={`/event/${event.id}`} passHref legacyBehavior>
-            <Container as='a'>
+        <Link href={`/event/${event.id}`} passHref>
+            <Container>
                 {cardContent}
             </Container>
         </Link>
