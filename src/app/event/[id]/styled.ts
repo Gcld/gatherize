@@ -65,6 +65,8 @@ export const EventButtonsDiv = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    flex-wrap: wrap; 
+    gap: 8px; 
 `;
 
 export const EventContent = styled.div`
@@ -78,18 +80,25 @@ export const EventContent = styled.div`
 export const EventButton = styled.div`
     display: flex;
     flex-direction: row;
+    align-items: center;
     border-radius: 5px;
     background-color: var(--darkZaori);
-    padding: 5px;
-    justify-content: space-between;
+    padding: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
 
     .icon {
-        height: 19px;
-        width: 19px;
+        height: 18px;
+        width: 18px;
         color: var(--primaryDarkZaori);
         transition: all 0.3s ease;
+    }
+
+    h3 {
+        display: none; 
+        margin-left: 4px;
+        font-size: 14px;
+        color: white;
     }
 
     &:hover {
@@ -101,15 +110,43 @@ export const EventButton = styled.div`
             color: var(--darkZaori);
             transform: scale(1.1);
         }
+
+        h3 {
+            color: var(--darkZaori);
+        }
+    }
+
+    @media (min-width: 480px) {
+        h3 {
+            display: inline; 
+        }
     }
 
     @media (min-width: 768px) {
+        padding: 10px;
+
+        .icon {
+            height: 20px;
+            width: 20px;
+        }
+
+        h3 {
+            font-size: 16px;
+        }
+    }
+
+    @media (min-width: 1024px) {
         .icon {
             height: 22px;
             width: 22px;
         }
+
+        h3 {
+            font-size: 18px;
+        }
     }
 `;
+
 
 export const TitleAndDescriptionDiv = styled.div`
     display: flex;
