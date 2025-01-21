@@ -1,11 +1,11 @@
 import React from 'react';
 import { LuCircleUser, LuMapPin, LuCircleCheck, LuX, LuEye } from 'react-icons/lu';
-import Link from 'next/link';
 import { Event } from '@/types/event';
 import { useSubscription } from '@/contexts/SubscriptionContext';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import {
+    CardLink,
     Container,
     EventButton,
     EventCardPicture,
@@ -94,10 +94,10 @@ export default function EventCard({ event }: EventCardProps) {
     );
 
     return (
-        <Link href={`/event/${event.id}`} passHref>
+        <CardLink href={`/event/${event.id}`} passHref>
             <Container>
                 {cardContent}
             </Container>
-        </Link>
+        </CardLink>
     );
 }

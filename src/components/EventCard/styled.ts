@@ -1,9 +1,18 @@
+import Link from "next/link";
 import styled from "styled-components";
 
 interface EventButtonProps {
     $isSubscribed?: boolean;
     $isCreator?: boolean;
 }
+
+export const CardLink = styled(Link)`
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    width: 100%;
+    max-width: 400px;
+`;
 
 export const Container = styled.div`
     display: flex;
@@ -16,14 +25,14 @@ export const Container = styled.div`
     padding: 2px;
     gap: 8px;
     background-color: white;
-    max-width: 400px;
+    cursor: pointer;
 
     @media (min-width: 376px) and (max-width: 767.5px){
-        width: 70%;
+        width: 100%;
     }
 
     @media (min-width: 880px) and (max-width: 1023.5px){
-        width: 70%;
+        width: 100%;
     }
 
     @media (min-width: 768px) {
@@ -209,6 +218,7 @@ export const EventButton = styled.div<EventButtonProps>`
     };
     transition: background-color 0.3s ease;
     text-decoration: none;
+    cursor: pointer;
 
     .subscribeIcon {
         flex-shrink: 0; 
