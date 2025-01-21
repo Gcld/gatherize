@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { LuArrowLeft, LuCircleCheck, LuShare, LuX, LuClipboardPen, LuTrash2, LuUsers } from "react-icons/lu";
+import { LuArrowLeft, LuCircleCheck, LuShare, LuX, LuClipboardPen, LuTrash2, LuUsers, LuCircleAlert } from "react-icons/lu";
 import { useSubscription } from "@/contexts/SubscriptionContext";
 import Link from 'next/link';
 import { Event } from '@/types/event';
@@ -25,7 +25,8 @@ import {
     DashboardContainer,
     DashboardItem,
     ViewParticipantsButton,
-    UserInfoContainer
+    UserInfoContainer,
+    UnavailableButton
 } from "./styled";
 import { useRouter } from 'next/navigation';
 
@@ -106,6 +107,9 @@ export function EventDetail() {
 
 
     const eventDate = new Date(event.date);
+    const isPastEvent = eventDate < new Date();
+    const isFullyBooked = event.participants >= event.maxPeople;
+    const isUnavailable = isPastEvent || isFullyBooked;
     const isEventCreator = session?.user.id === event.creatorId;
 
     return (
@@ -149,7 +153,7 @@ export function EventDetail() {
                     </TextBlock>
                 </EventDateAndLocationDiv>
             </EventContent>
-            <EventDescriptionAndButtonDiv $isSubscribed={eventSubscribed}>
+            <EventDescriptionAndButtonDiv $isSubscribed={eventSubscribed} $isUnavailable={isUnavailable}>
                 <EventDescriptionDiv>
                     <TextBlock>
                         <h4>About event</h4>
@@ -175,6 +179,11 @@ export function EventDetail() {
                             <h1>View Participants</h1>
                         </ViewParticipantsButton>
                     </Link>
+                ) : isUnavailable ? (
+                    <UnavailableButton>
+                        <LuCircleAlert className="subscribeIcon" />
+                        <h1>{isPastEvent ? 'Past Event' : 'Fully Booked'}</h1>
+                    </UnavailableButton>
                 ) : (
                     <SubscribeButton
                         $isSubscribed={eventSubscribed}

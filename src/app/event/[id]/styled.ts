@@ -5,6 +5,11 @@ interface SubscribeButtonProps {
     $disabled?: boolean;
 }
 
+interface EventDescriptionAndButtonDivProps {
+    $isSubscribed: boolean;
+    $isUnavailable: boolean;
+}
+
 export const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -291,11 +296,17 @@ export const EventDateAndLocationDiv = styled.div`
     padding: 0 8px;
 `;
 
-export const EventDescriptionAndButtonDiv = styled.div<SubscribeButtonProps>`
+export const EventDescriptionAndButtonDiv = styled.div<EventDescriptionAndButtonDivProps>`
     width: 100%;
     display: flex;
     flex-direction: column;
-    background-color: ${props => props.$isSubscribed ? 'red' : 'var(--primaryDarkZaori)'};
+    background-color: ${props => 
+        props.$isUnavailable
+            ? 'var(--grayZaori)'
+            : props.$isSubscribed
+                ? 'red'
+                : 'var(--primaryDarkZaori)'
+    };
 `;
 
 export const EventDescriptionDiv = styled.div`
@@ -416,6 +427,45 @@ export const ViewParticipantsButton = styled.div`
         h1 {
         font-size: 32px;
         line-height: 110%;
+        }
+    }
+`;
+
+export const UnavailableButton = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 10vh;
+    background-color: var(--grayZaori);
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    padding: 8px;
+    cursor: not-allowed;
+
+    .subscribeIcon {
+        height: 24px;
+        width: 24px;
+        color: white;
+    }
+
+    h1 {
+        font-size: 24px;
+        font-weight: bold;
+        color: white;
+        line-height: 120%;
+    }
+
+    @media (min-width: 768px) {
+        height: 10vh;
+        .subscribeIcon {
+            height: 32px;
+            width: 32px;
+        }
+
+        h1 {
+            font-size: 32px;
+            line-height: 110%;
         }
     }
 `;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { LuCircleUser, LuMapPin, LuCircleCheck, LuX, LuEye } from 'react-icons/lu';
+import { LuCircleUser, LuMapPin, LuCircleCheck, LuX, LuEye, LuCircleAlert } from 'react-icons/lu';
 import { Event } from '@/types/event';
 import { useSubscription } from '@/contexts/SubscriptionContext';
 import { useSession } from 'next-auth/react';
@@ -14,6 +14,7 @@ import {
     EventInfo,
     EventLocation,
     Participants,
+    UnavailableButton,
     Users
 } from './styled';
 
@@ -41,6 +42,9 @@ export default function EventCard({ event }: EventCardProps) {
     const eventSubscribed = isSubscribed(event.id);
     const eventDate = new Date(event.date);
     const isEventCreator = session?.user.id === event.creatorId;
+    const isPastEvent = eventDate < new Date();
+    const isFullyBooked = event.participants >= event.maxPeople;
+    const isUnavailable = isPastEvent || isFullyBooked;
 
     const cardContent = (
         <>
@@ -76,6 +80,11 @@ export default function EventCard({ event }: EventCardProps) {
                     <LuEye className='subscribeIcon' aria-hidden='true' />
                     <h2>View My Event</h2>
                 </EventButton>
+            ) : isUnavailable ? (
+                <UnavailableButton>
+                    <LuCircleAlert className='subscribeIcon' aria-hidden='true' />
+                    <h2>{isPastEvent ? 'Past Event' : 'Fully Booked'}</h2>
+                </UnavailableButton>
             ) : (
                 <EventButton
                     onClick={handleSubscribe}
