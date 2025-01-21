@@ -77,3 +77,19 @@ export const ModalButton = styled.button`
         }
     }
 `;
+
+export const ClearFilterButton = styled(ModalButton)`
+    color: var(--primaryDarkZaori);
+    font-weight: bold;
+    border-top: 1px solid var(--primaryLightZaori);
+    margin-top: 8px;
+    padding-top: 16px;
+
+    .icon {
+        color: var(--primaryDarkZaori);
+    }
+
+    &:hover {
+        background-color: rgba(252, 205, 18, 0.1);
+    }
+`;
