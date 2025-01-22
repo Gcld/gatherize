@@ -18,6 +18,7 @@ import {
     DesktopMenu,
     MenuButton
 } from './styled';
+import UserInfoModal from '../UserInfoModal';
 
 interface HeaderProps {
     showSearchAndFilter?: boolean;
@@ -27,6 +28,7 @@ export default function Header({ showSearchAndFilter = false }: HeaderProps) {
     const { data: session, status } = useSession();
     const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+    const [isUserInfoModalOpen, setIsUserInfoModalOpen] = useState(false);
     const { width } = useWindowSize();
     const filterButtonRef = useRef<HTMLDivElement>(null);
 
@@ -70,6 +72,10 @@ export default function Header({ showSearchAndFilter = false }: HeaderProps) {
         setIsFilterModalOpen(false);
     };
 
+    const toggleUserInfoModal = () => {
+        setIsUserInfoModalOpen(!isUserInfoModalOpen);
+    };
+
     return (
         <Container>
             <LogoAndMenu>
@@ -77,12 +83,10 @@ export default function Header({ showSearchAndFilter = false }: HeaderProps) {
                 <DesktopMenu>
                     {status === 'authenticated' && session ? (
                         <>
-                            <Link href="/profile" passHref>
-                                <MenuButton>
-                                    <LuUser className="icon" />
-                                    Profile
-                                </MenuButton>
-                            </Link>
+                            <MenuButton onClick={toggleUserInfoModal}>
+                                <LuUser className="icon" />
+                                Profile
+                            </MenuButton>
                             <MenuButton onClick={() => signOut()}>
                                 <LuLogOut className="icon" />
                                 Logout
@@ -134,6 +138,17 @@ export default function Header({ showSearchAndFilter = false }: HeaderProps) {
                 </SearchAndFilter>
             )}
             <MenuModal isOpen={isMenuModalOpen} onClose={() => setIsMenuModalOpen(false)} />
+            {session && session.user && (
+                <UserInfoModal
+                    isOpen={isUserInfoModalOpen}
+                    onClose={() => setIsUserInfoModalOpen(false)}
+                    user={{
+                        name: session.user.name || '',
+                        email: session.user.email || '',
+                        role: session.user.role || '',
+                    }}
+                />
+            )}
         </Container>
     );
 }

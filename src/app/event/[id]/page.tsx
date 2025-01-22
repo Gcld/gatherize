@@ -25,7 +25,6 @@ import {
     DashboardContainer,
     DashboardItem,
     ViewParticipantsButton,
-    UserInfoContainer,
     UnavailableButton
 } from "./styled";
 import { useRouter } from 'next/navigation';
@@ -99,30 +98,6 @@ export function EventDetail() {
     if (!event) {
         return <div>Loading...</div>;
     }
-
-    const renderUserInfo = () => {
-        switch (status) {
-            case "authenticated":
-                return session?.user ? (
-                    <>
-                        <h2>User Information:</h2>
-                        <p>Name: {session.user.name}</p>
-                        <p>Email: {session.user.email}</p>
-                        <p>Role: {session.user.role}</p>
-                    </>
-                ) : null;
-            case "loading":
-                return <p>Loading user information...</p>;
-            case "unauthenticated":
-            default:
-                return (
-                    <>
-                        <h2>Not Logged In</h2>
-                        <p>Please <Link href="/login">log in</Link> to see your user information and interact with events.</p>
-                    </>
-                );
-        }
-    };
 
 
     const eventDate = new Date(event.date);
@@ -239,9 +214,6 @@ export function EventDetail() {
                 onClose={() => setIsDeleteModalOpen(false)}
                 onConfirm={handleConfirmDelete}
             />
-            <UserInfoContainer>
-                {renderUserInfo()}
-            </UserInfoContainer>
         </Container>
     )
 }

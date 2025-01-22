@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 import EventCardContainer from "../EventCardContainer";
 import EventsFrame from "../EventsFrame";
-import { Container, UserInfoContainer, ContentWrapper } from "./styled";
+import { Container, ContentWrapper } from "./styled";
 import { useState, useEffect } from "react";
 import CreateEventModal from "../CreateEventModal";
 import { LuPlus } from "react-icons/lu";
@@ -15,6 +15,7 @@ export default function Content() {
     const [isCreateEventModalOpen, setIsCreateEventModalOpen] = useState(false);
     const [events, setEvents] = useState<GatherizeEvent[]>([]);
     const [filteredEvents, setFilteredEvents] = useState<GatherizeEvent[]>([]);
+
 
     useEffect(() => {
         if (session?.user.role === 'admin') {
@@ -83,14 +84,6 @@ export default function Content() {
         <Container>
             <ContentWrapper>
                 <EventsFrame events={filteredEvents} setEvents={setFilteredEvents} />
-                {session && session.user && (
-                    <UserInfoContainer>
-                        <h2>User Information:</h2>
-                        <p>Name: {session.user.name}</p>
-                        <p>Email: {session.user.email}</p>
-                        <p>Role: {session.user.role}</p>
-                    </UserInfoContainer>
-                )}
                 {isAdmin && (
                     <CreateEventButton onClick={handleCreateEvent}>
                         <LuPlus className="icon" />
