@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 import EventCardContainer from "../EventCardContainer";
 import EventsFrame from "../EventsFrame";
-import { Container, UserInfoContainer } from "./styled";
+import { Container, UserInfoContainer, ContentWrapper } from "./styled";
 import { useState, useEffect } from "react";
 import CreateEventModal from "../CreateEventModal";
 import { LuPlus } from "react-icons/lu";
@@ -38,7 +38,7 @@ export default function Content() {
     }, []);
 
     useEffect(() => {
-        const handleFilter = (event: CustomEvent<'upcoming' | 'availableSpots' | 'myEvents'>) => {
+        const handleFilter = (event: CustomEvent<'upcoming' | 'availableSpots' | 'myEvents' | null>) => {
             const filterType = event.detail;
             let filtered: GatherizeEvent[];
 
@@ -53,6 +53,9 @@ export default function Content() {
                     break;
                 case 'myEvents':
                     filtered = events.filter(event => event.creatorId === session?.user.id);
+                    break;
+                case null:
+                    filtered = events;
                     break;
                 default:
                     filtered = events;
@@ -78,22 +81,24 @@ export default function Content() {
 
     return (
         <Container>
-            <EventsFrame events={filteredEvents} setEvents={setFilteredEvents} />
-            {session && session.user && (
-                <UserInfoContainer>
-                    <h2>User Information:</h2>
-                    <p>Name: {session.user.name}</p>
-                    <p>Email: {session.user.email}</p>
-                    <p>Role: {session.user.role}</p>
-                </UserInfoContainer>
-            )}
-            {isAdmin && (
-                <CreateEventButton onClick={handleCreateEvent}>
-                    <LuPlus className="icon" />
-                    <span>Create Event</span>
-                </CreateEventButton>
-            )}
-            <EventCardContainer isAdmin={isAdmin} events={filteredEvents} />
+            <ContentWrapper>
+                <EventsFrame events={filteredEvents} setEvents={setFilteredEvents} />
+                {session && session.user && (
+                    <UserInfoContainer>
+                        <h2>User Information:</h2>
+                        <p>Name: {session.user.name}</p>
+                        <p>Email: {session.user.email}</p>
+                        <p>Role: {session.user.role}</p>
+                    </UserInfoContainer>
+                )}
+                {isAdmin && (
+                    <CreateEventButton onClick={handleCreateEvent}>
+                        <LuPlus className="icon" />
+                        <span>Create Event</span>
+                    </CreateEventButton>
+                )}
+                <EventCardContainer isAdmin={isAdmin} events={filteredEvents} />
+            </ContentWrapper>
             {isAdmin && (
                 <CreateEventModal
                     isOpen={isCreateEventModalOpen}
