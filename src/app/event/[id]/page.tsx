@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { Event } from '@/types/event';
 import { SessionProvider, useSession } from "next-auth/react";
 import Header from "@/components/Header";
-import { fetchEventById } from '@/utils/api';
+import { deleteEvent, fetchEventById } from '@/utils/api';
 import {
     Container,
     EventButton,
@@ -29,6 +29,7 @@ import {
     UnavailableButton
 } from "./styled";
 import { useRouter } from 'next/navigation';
+import EditEventModal from '@/components/EditEventModal';
 
 export function EventDetail() {
     const { data: session, status } = useSession();
@@ -39,6 +40,9 @@ export function EventDetail() {
     const { toggleSubscription, isSubscribed } = useSubscription();
     const eventId = typeof params.id === 'string' ? parseInt(params.id) : -1;
     const eventSubscribed = isSubscribed(eventId);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
 
     useEffect(() => {
         async function loadEvent() {
@@ -65,12 +69,22 @@ export function EventDetail() {
             router.push('/login');
         }
     };
-    const handleEditClick = () => {
-        console.log('Edit event clicked');
+    const handleEditEvent = () => {
+        setIsEditModalOpen(true);
     };
 
     const handleDeleteClick = () => {
-        console.log('Delete event clicked');
+        setIsDeleteModalOpen(true);
+    };
+
+    const handleConfirmDelete = async () => {
+        try {
+            await deleteEvent(eventId);
+            router.push('/');
+        } catch (error) {
+            console.error('Failed to delete event:', error);
+        }
+        setIsDeleteModalOpen(false);
     };
 
     if (error) {
@@ -120,19 +134,21 @@ export function EventDetail() {
             <EventPicture>
                 <EventButtonsDiv>
                     <Link href="/" passHref><EventButton><LuArrowLeft className="icon" /></EventButton></Link>
-                    {isEventCreator && (
-                        <>
-                            <EventButton onClick={handleEditClick}>
-                                <LuClipboardPen className="icon" />
-                                <h3>Edit Event</h3>
-                            </EventButton>
-                            <EventButton onClick={handleDeleteClick}>
-                                <LuTrash2 className="icon" />
-                                <h3>Delete Event</h3>
-                            </EventButton>
-                        </>
-                    )}
-                    <EventButton><LuShare className="icon" /></EventButton>
+                    <div className='spacer'>
+                        {isEventCreator && (
+                            <>
+                                <EventButton onClick={handleEditEvent}>
+                                    <LuClipboardPen className="icon" />
+                                    <h3>Edit Event</h3>
+                                </EventButton>
+                                <EventButton onClick={isDeleteModalOpen ? handleConfirmDelete : handleDeleteClick}>
+                                    <LuTrash2 className="icon" />
+                                    <h3>Delete Event</h3>
+                                </EventButton>
+                            </>
+                        )}
+                        <EventButton><LuShare className="icon" /></EventButton>
+                    </div>
                 </EventButtonsDiv>
             </EventPicture>
             <EventContent>
@@ -207,6 +223,16 @@ export function EventDetail() {
                     </SubscribeButton>
                 )}
             </EventDescriptionAndButtonDiv>
+            <EditEventModal
+                isOpen={isEditModalOpen}
+                onClose={() => setIsEditModalOpen(false)}
+                eventData={{
+                    name: event.name,
+                    description: event.description,
+                    date: event.date,
+                    address: event.address,
+                    maxPeople: event.maxPeople
+                }} />
             <UserInfoContainer>
                 {renderUserInfo()}
             </UserInfoContainer>

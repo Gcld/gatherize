@@ -35,3 +35,23 @@ export async function fetchEventById(id: number) {
         throw error;
     }
 }
+
+export async function deleteEvent(id: number) {
+    try {
+        console.log(`Deleting event with id: ${id}`);
+        const response = await fetch(`/api/event/${id}`, {
+            method: 'DELETE',
+        });
+        console.log(`Response status: ${response.status}`);
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error(`Error response: ${errorText}`);
+            throw new Error(`Failed to delete event: ${response.statusText}`);
+        }
+        console.log('Event deleted successfully');
+        return true;
+    } catch (error) {
+        console.error('Error deleting event:', error);
+        throw error;
+    }
+}

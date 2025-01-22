@@ -72,6 +72,12 @@ export const EventButtonsDiv = styled.div`
     justify-content: space-between;
     flex-wrap: wrap; 
     gap: 8px; 
+
+    .spacer{
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+    }
 `;
 
 export const EventContent = styled.div`

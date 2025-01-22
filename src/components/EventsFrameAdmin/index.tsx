@@ -16,7 +16,6 @@ export default function EventsFrameAdmin() {
     };
 
     const handleSort = (sortType: 'alphabetical' | 'recent' | 'participants') => {
-        // Implementação futura da lógica de ordenação
         console.log('Sorting by:', sortType);
     };
 
