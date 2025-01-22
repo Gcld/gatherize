@@ -14,20 +14,17 @@ import {
     TextAreaWrapper
 } from '../CreateEventModal/styled';
 import { fetchCepData } from '@/utils/cepUtils';
+import { GatherizeEvent } from '@/types/event';
+import { updateEvent } from '@/utils/api';
 
 interface EditEventModalProps {
     isOpen: boolean;
     onClose: () => void;
-    eventData: {
-        name: string;
-        description: string;
-        date: string;
-        address: string;
-        maxPeople: number;
-    };
+    eventData: GatherizeEvent;
+    onEventUpdated: (updatedEvent: GatherizeEvent) => void;
 }
 
-const EditEventModal: React.FC<EditEventModalProps> = ({ isOpen, onClose, eventData }) => {
+const EditEventModal: React.FC<EditEventModalProps> = ({ isOpen, onClose, eventData, onEventUpdated }) => {
     const [name, setName] = useState(eventData.name);
     const [description, setDescription] = useState(eventData.description);
     const [date, setDate] = useState(eventData.date);
@@ -47,11 +44,27 @@ const EditEventModal: React.FC<EditEventModalProps> = ({ isOpen, onClose, eventD
 
     if (!isOpen) return null;
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Updated event data:', { name, description, date, cep, address, city, state, maxPeople });
-        onClose();
+        try {
+            const updatedEventData: Partial<Omit<GatherizeEvent, 'id' | 'participants' | 'creatorId'>> = {
+                name,
+                description,
+                date,
+                cep,
+                address,
+                city,
+                state,
+                maxPeople,
+            };
+            const updatedEvent = await updateEvent(eventData.id, updatedEventData);
+            onEventUpdated(updatedEvent);
+            onClose();
+        } catch (error) {
+            console.error('Failed to update event:', error);
+        }
     };
+
 
     const handleIncrement = () => setMaxPeople(prev => prev + 1);
     const handleDecrement = () => setMaxPeople(prev => Math.max(1, prev - 1));

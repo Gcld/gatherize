@@ -7,14 +7,14 @@ import CreateEventModal from "../CreateEventModal";
 import { LuPlus } from "react-icons/lu";
 import { CreateEventButton } from "../EventsFrameAdmin/styled";
 import { fetchEvents } from '@/utils/api';
-import { Event } from '@/types/event';
+import { GatherizeEvent } from '@/types/event';
 
 export default function Content() {
     const { data: session, status } = useSession();
     const [isAdmin, setIsAdmin] = useState(false);
     const [isCreateEventModalOpen, setIsCreateEventModalOpen] = useState(false);
-    const [events, setEvents] = useState<Event[]>([]);
-    const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
+    const [events, setEvents] = useState<GatherizeEvent[]>([]);
+    const [filteredEvents, setFilteredEvents] = useState<GatherizeEvent[]>([]);
 
     useEffect(() => {
         if (session?.user.role === 'admin') {
@@ -40,7 +40,7 @@ export default function Content() {
     useEffect(() => {
         const handleFilter = (event: CustomEvent<'upcoming' | 'availableSpots' | 'myEvents'>) => {
             const filterType = event.detail;
-            let filtered: Event[];
+            let filtered: GatherizeEvent[];
 
             switch (filterType) {
                 case 'upcoming':

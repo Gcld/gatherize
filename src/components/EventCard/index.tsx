@@ -1,6 +1,6 @@
 import React from 'react';
 import { LuCircleUser, LuMapPin, LuCircleCheck, LuX, LuEye, LuCircleAlert } from 'react-icons/lu';
-import { Event } from '@/types/event';
+import { GatherizeEvent } from '@/types/event';
 import { useSubscription } from '@/contexts/SubscriptionContext';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -19,7 +19,7 @@ import {
 } from './styled';
 
 interface EventCardProps {
-    event: Event;
+    event: GatherizeEvent;
     isAdmin?: boolean;
 }
 

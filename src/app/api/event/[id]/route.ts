@@ -23,3 +23,17 @@ export async function DELETE(request: NextRequest) {
     events.splice(eventIndex, 1);
     return NextResponse.json({ message: 'Event deleted successfully' });
 }
+
+export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+    const id = parseInt(params.id);
+    const eventIndex = events.findIndex(e => e.id === id);
+
+    if (eventIndex === -1) {
+        return NextResponse.json({ error: 'Event not found' }, { status: 404 });
+    }
+
+    const updatedEventData = await request.json();
+    events[eventIndex] = { ...events[eventIndex], ...updatedEventData };
+
+    return NextResponse.json(events[eventIndex]);
+}

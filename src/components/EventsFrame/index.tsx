@@ -2,11 +2,11 @@ import React, { useState, useRef } from 'react';
 import { MdArrowDropDown } from "react-icons/md";
 import { Container } from "./styled";
 import SortModal from '../SortModal';
-import { Event } from '@/types/event';
+import { GatherizeEvent } from '@/types/event';
 
 interface EventsFrameProps {
-    events: Event[];
-    setEvents: React.Dispatch<React.SetStateAction<Event[]>>;
+    events: GatherizeEvent[];
+    setEvents: React.Dispatch<React.SetStateAction<GatherizeEvent[]>>;
 }
 
 export default function EventsFrame({ events, setEvents }: EventsFrameProps) {
@@ -19,7 +19,7 @@ export default function EventsFrame({ events, setEvents }: EventsFrameProps) {
     };
 
     const handleSort = (sortType: 'alphabetical' | 'recent' | 'participants') => {
-        let sorted: Event[];
+        let sorted: GatherizeEvent[];
         switch (sortType) {
             case 'alphabetical':
                 sorted = [...events].sort((a, b) => a.name.localeCompare(b.name));

@@ -1,10 +1,10 @@
 import React from 'react';
 import EventCard from "../EventCard";
 import { Container } from "./styled";
-import { Event } from '@/types/event';
+import { GatherizeEvent } from '@/types/event';
 
 interface EventCardContainerProps {
-    events: Event[];
+    events: GatherizeEvent[];
     isAdmin: boolean;
 }
 

@@ -1,3 +1,6 @@
+import { GatherizeEvent } from "@/types/event";
+
+
 export async function fetchEvents() {
     try {
         console.log('Fetching events...');
@@ -52,6 +55,31 @@ export async function deleteEvent(id: number) {
         return true;
     } catch (error) {
         console.error('Error deleting event:', error);
+        throw error;
+    }
+}
+
+export async function updateEvent(id: number, updatedEventData: Partial<Omit<GatherizeEvent, 'id' | 'participants' | 'creatorId'>>) {
+    try {
+        console.log(`Updating event with id: ${id}`);
+        const response = await fetch(`/api/event/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedEventData),
+        });
+        console.log(`Response status: ${response.status}`);
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error(`Error response: ${errorText}`);
+            throw new Error(`Failed to update event: ${response.statusText}`);
+        }
+        const data = await response.json();
+        console.log('Updated event:', data);
+        return data as GatherizeEvent;
+    } catch (error) {
+        console.error('Error updating event:', error);
         throw error;
     }
 }

@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import { LuArrowLeft, LuCircleCheck, LuShare, LuX, LuClipboardPen, LuTrash2, LuUsers, LuCircleAlert } from "react-icons/lu";
 import { useSubscription } from "@/contexts/SubscriptionContext";
 import Link from 'next/link';
-import { Event } from '@/types/event';
+import { GatherizeEvent } from '@/types/event';
 import { SessionProvider, useSession } from "next-auth/react";
 import Header from "@/components/Header";
 import { deleteEvent, fetchEventById } from '@/utils/api';
@@ -36,7 +36,7 @@ export function EventDetail() {
     const { data: session, status } = useSession();
     const params = useParams();
     const router = useRouter();
-    const [event, setEvent] = useState<Event | null>(null);
+    const [event, setEvent] = useState<GatherizeEvent | null>(null);
     const [error, setError] = useState<string | null>(null);
     const { toggleSubscription, isSubscribed } = useSubscription();
     const eventId = typeof params.id === 'string' ? parseInt(params.id) : -1;
@@ -76,6 +76,10 @@ export function EventDetail() {
 
     const handleDeleteClick = () => {
         setIsDeleteModalOpen(true);
+    };
+
+    const handleEventUpdated = (updatedEvent: GatherizeEvent) => {
+        setEvent(updatedEvent);
     };
 
     const handleConfirmDelete = async () => {
@@ -227,13 +231,9 @@ export function EventDetail() {
             <EditEventModal
                 isOpen={isEditModalOpen}
                 onClose={() => setIsEditModalOpen(false)}
-                eventData={{
-                    name: event.name,
-                    description: event.description,
-                    date: event.date,
-                    address: event.address,
-                    maxPeople: event.maxPeople
-                }} />
+                eventData={event}
+                onEventUpdated={handleEventUpdated}
+            />
             <DeleteEventModal
                 isOpen={isDeleteModalOpen}
                 onClose={() => setIsDeleteModalOpen(false)}
