@@ -30,6 +30,7 @@ import {
 } from "./styled";
 import { useRouter } from 'next/navigation';
 import EditEventModal from '@/components/EditEventModal';
+import DeleteEventModal from '@/components/DeleteEventModal';
 
 export function EventDetail() {
     const { data: session, status } = useSession();
@@ -141,7 +142,7 @@ export function EventDetail() {
                                     <LuClipboardPen className="icon" />
                                     <h3>Edit Event</h3>
                                 </EventButton>
-                                <EventButton onClick={isDeleteModalOpen ? handleConfirmDelete : handleDeleteClick}>
+                                <EventButton onClick={handleDeleteClick}>
                                     <LuTrash2 className="icon" />
                                     <h3>Delete Event</h3>
                                 </EventButton>
@@ -233,6 +234,11 @@ export function EventDetail() {
                     address: event.address,
                     maxPeople: event.maxPeople
                 }} />
+            <DeleteEventModal
+                isOpen={isDeleteModalOpen}
+                onClose={() => setIsDeleteModalOpen(false)}
+                onConfirm={handleConfirmDelete}
+            />
             <UserInfoContainer>
                 {renderUserInfo()}
             </UserInfoContainer>

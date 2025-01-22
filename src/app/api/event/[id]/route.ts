@@ -11,3 +11,15 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(event);
 }
+
+export async function DELETE(request: NextRequest) {
+    const id = parseInt(request.nextUrl.pathname.split('/').pop() || '');
+    const eventIndex = events.findIndex(e => e.id === id);
+
+    if (eventIndex === -1) {
+        return NextResponse.json({ error: 'Event not found' }, { status: 404 });
+    }
+
+    events.splice(eventIndex, 1);
+    return NextResponse.json({ message: 'Event deleted successfully' });
+}
