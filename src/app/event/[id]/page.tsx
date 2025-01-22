@@ -30,6 +30,7 @@ import {
 import { useRouter } from 'next/navigation';
 import EditEventModal from '@/components/EditEventModal';
 import DeleteEventModal from '@/components/DeleteEventModal';
+import { toast } from 'react-toastify';
 
 export function EventDetail() {
     const { data: session, status } = useSession();
@@ -65,6 +66,25 @@ export function EventDetail() {
         }
         if (status === "authenticated") {
             toggleSubscription(eventId);
+            if (eventSubscribed) {
+                toast.success('Successfully unsubscribed from the event!', {
+                    position: "top-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+            } else {
+                toast.success('Successfully subscribed to the event!', {
+                    position: "top-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+            }
         } else {
             router.push('/login');
         }
@@ -79,17 +99,42 @@ export function EventDetail() {
 
     const handleEventUpdated = (updatedEvent: GatherizeEvent) => {
         setEvent(updatedEvent);
+        toast.success('Event updated successfully!', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
     };
 
     const handleConfirmDelete = async () => {
         try {
             await deleteEvent(eventId);
+            toast.success('Event deleted successfully!', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
             router.push('/');
         } catch (error) {
             console.error('Failed to delete event:', error);
+            toast.error('Failed to delete event. Please try again.', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
         }
         setIsDeleteModalOpen(false);
     };
+
 
     if (error) {
         return <div>Error: {error}</div>;

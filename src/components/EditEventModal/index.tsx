@@ -16,6 +16,7 @@ import {
 import { fetchCepData } from '@/utils/cepUtils';
 import { GatherizeEvent } from '@/types/event';
 import { updateEvent } from '@/utils/api';
+import { toast } from 'react-toastify';
 
 interface EditEventModalProps {
     isOpen: boolean;
@@ -62,6 +63,14 @@ const EditEventModal: React.FC<EditEventModalProps> = ({ isOpen, onClose, eventD
             onClose();
         } catch (error) {
             console.error('Failed to update event:', error);
+            toast.error('Failed to update event. Please try again.', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
         }
     };
 

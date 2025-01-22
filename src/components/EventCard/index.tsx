@@ -17,6 +17,7 @@ import {
     UnavailableButton,
     Users
 } from './styled';
+import { toast } from 'react-toastify';
 
 interface EventCardProps {
     event: GatherizeEvent;
@@ -36,6 +37,25 @@ export default function EventCard({ event }: EventCardProps) {
             router.push('/login');
         } else {
             toggleSubscription(event.id);
+            if (eventSubscribed) {
+                toast.success('Successfully unsubscribed from the event!', {
+                    position: "top-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+            } else {
+                toast.success('Successfully subscribed to the event!', {
+                    position: "top-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+            }
         }
     };
 
