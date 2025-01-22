@@ -164,7 +164,7 @@ export function EventDetail() {
                 <EventDateAndLocationDiv>
                     <TextBlock>
                         <h5>Date:</h5>
-                        <h6>{eventDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}</h6>
+                        <h6>{eventDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' })}</h6>
                         <h6>{eventDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</h6>
                     </TextBlock>
                     <TextBlock>
