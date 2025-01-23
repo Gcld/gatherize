@@ -31,6 +31,7 @@ export default function Header({ showSearchAndFilter = false }: HeaderProps) {
     const [isUserInfoModalOpen, setIsUserInfoModalOpen] = useState(false);
     const { width } = useWindowSize();
     const filterButtonRef = useRef<HTMLDivElement>(null);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         if (width && width >= 1024) {
@@ -76,6 +77,14 @@ export default function Header({ showSearchAndFilter = false }: HeaderProps) {
         setIsUserInfoModalOpen(!isUserInfoModalOpen);
     };
 
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setSearchTerm(value);
+        if (typeof window !== 'undefined') {
+            window.dispatchEvent(new CustomEvent('searchEvents', { detail: value }));
+        }
+    };
+
     return (
         <Container>
             <LogoAndMenu>
@@ -118,6 +127,8 @@ export default function Header({ showSearchAndFilter = false }: HeaderProps) {
                             id="searchbar"
                             placeholder="Search event"
                             aria-label="Search for events"
+                            value={searchTerm}
+                            onChange={handleSearch}
                         />
                     </SearchDiv>
                     <FilterButton

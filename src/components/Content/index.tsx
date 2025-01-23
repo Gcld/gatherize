@@ -15,6 +15,7 @@ export default function Content() {
     const [isCreateEventModalOpen, setIsCreateEventModalOpen] = useState(false);
     const [events, setEvents] = useState<GatherizeEvent[]>([]);
     const [filteredEvents, setFilteredEvents] = useState<GatherizeEvent[]>([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
 
     useEffect(() => {
@@ -37,6 +38,26 @@ export default function Content() {
         }
         loadEvents();
     }, []);
+
+    useEffect(() => {
+        const handleSearch = (event: CustomEvent<string>) => {
+            setSearchTerm(event.detail);
+        };
+
+        window.addEventListener('searchEvents', handleSearch as EventListener);
+
+        return () => {
+            window.removeEventListener('searchEvents', handleSearch as EventListener);
+        };
+    }, []);
+
+    useEffect(() => {
+        const filtered = events.filter(event => 
+            event.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            event.description.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredEvents(filtered);
+    }, [searchTerm, events]);
 
     useEffect(() => {
         const handleFilter = (event: CustomEvent<'upcoming' | 'availableSpots' | 'myEvents' | null>) => {

@@ -28,6 +28,10 @@ export default function EventCardContainer({ events, isAdmin }: EventCardContain
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [events]);
+
     const indexOfLastEvent = currentPage * eventsPerPage;
     const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
     const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent);
@@ -47,17 +51,19 @@ export default function EventCardContainer({ events, isAdmin }: EventCardContain
                     <div>No events available</div>
                 )}
             </Container>
-            <PaginationContainer>
-                {Array.from({ length: totalPages }, (_, i) => (
-                    <PageButton
-                        key={i + 1}
-                        onClick={() => paginate(i + 1)}
-                        $isActive={currentPage === i + 1}
-                    >
-                        {i + 1}
-                    </PageButton>
-                ))}
-            </PaginationContainer>
+            {totalPages > 1 && (
+                <PaginationContainer>
+                    {Array.from({ length: totalPages }, (_, i) => (
+                        <PageButton
+                            key={i + 1}
+                            onClick={() => paginate(i + 1)}
+                            $isActive={currentPage === i + 1}
+                        >
+                            {i + 1}
+                        </PageButton>
+                    ))}
+                </PaginationContainer>
+            )}
         </>
     );
 }
