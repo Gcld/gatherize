@@ -108,3 +108,28 @@ export async function createEvent(eventData: Omit<GatherizeEvent, 'id' | 'partic
         throw error;
     }
 }
+
+export async function updateEventSubscription(id: number, action: 'subscribe' | 'unsubscribe') {
+    try {
+        console.log(`Updating subscription for event with id: ${id}`);
+        const response = await fetch(`/api/event/${id}/subscribe`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ action }),
+        });
+        console.log(`Response status: ${response.status}`);
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error(`Error response: ${errorText}`);
+            throw new Error(`Failed to update subscription: ${response.statusText}`);
+        }
+        const data = await response.json();
+        console.log('Updated event:', data);
+        return data as GatherizeEvent;
+    } catch (error) {
+        console.error('Error updating subscription:', error);
+        throw error;
+    }
+}

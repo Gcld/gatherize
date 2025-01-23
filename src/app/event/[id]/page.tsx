@@ -60,30 +60,22 @@ export function EventDetail() {
         loadEvent();
     }, [eventId]);
 
-    const handleSubscribe = (e?: React.MouseEvent) => {
+    const handleSubscribe = async (e?: React.MouseEvent) => {
         if (e) {
             e.stopPropagation();
         }
-        if (status === "authenticated") {
-            toggleSubscription(eventId);
-            if (eventSubscribed) {
-                toast.success('Successfully unsubscribed from the event!', {
-                    position: "top-right",
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                });
-            } else {
-                toast.success('Successfully subscribed to the event!', {
-                    position: "top-right",
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                });
+        if (status === "authenticated" && event) {
+            try {
+                const updatedEvent = await toggleSubscription(event);
+                setEvent(updatedEvent);
+                if (eventSubscribed) {
+                    toast.success('Successfully unsubscribed from the event!');
+                } else {
+                    toast.success('Successfully subscribed to the event!');
+                }
+            } catch (error) {
+                console.error('Failed to update subscription:', error);
+                toast.error('Failed to update subscription. Please try again.');
             }
         } else {
             router.push('/login');

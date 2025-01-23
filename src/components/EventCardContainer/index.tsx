@@ -6,9 +6,10 @@ import { GatherizeEvent } from '@/types/event';
 interface EventCardContainerProps {
     events: GatherizeEvent[];
     isAdmin: boolean;
+    onEventUpdated: (updatedEvent: GatherizeEvent) => void;
 }
 
-export default function EventCardContainer({ events, isAdmin }: EventCardContainerProps) {
+export default function EventCardContainer({ events, isAdmin, onEventUpdated }: EventCardContainerProps) {
     const [currentPage, setCurrentPage] = useState(1);
     const [eventsPerPage, setEventsPerPage] = useState(8);
 
@@ -45,7 +46,12 @@ export default function EventCardContainer({ events, isAdmin }: EventCardContain
             <Container>
                 {currentEvents.length > 0 ? (
                     currentEvents.map((event) => (
-                        <EventCard key={event.id} event={event} isAdmin={isAdmin} />
+                        <EventCard 
+                            key={event.id} 
+                            event={event} 
+                            isAdmin={isAdmin} 
+                            onEventUpdated={onEventUpdated}
+                        />
                     ))
                 ) : (
                     <div>No events available</div>

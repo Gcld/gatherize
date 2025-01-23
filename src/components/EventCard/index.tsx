@@ -22,39 +22,31 @@ import { toast } from 'react-toastify';
 interface EventCardProps {
     event: GatherizeEvent;
     isAdmin?: boolean;
+    onEventUpdated: (updatedEvent: GatherizeEvent) => void;
 }
 
-export default function EventCard({ event }: EventCardProps) {
-    console.log('Event data in EventCard:', event);
+export default function EventCard({ event, onEventUpdated }: EventCardProps) {
     const { toggleSubscription, isSubscribed } = useSubscription();
     const { data: session } = useSession();
     const router = useRouter();
 
-    const handleSubscribe = (e: React.MouseEvent) => {
+    const handleSubscribe = async (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
         if (!session) {
             router.push('/login');
         } else {
-            toggleSubscription(event.id);
-            if (eventSubscribed) {
-                toast.success('Successfully unsubscribed from the event!', {
-                    position: "top-right",
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                });
-            } else {
-                toast.success('Successfully subscribed to the event!', {
-                    position: "top-right",
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                });
+            try {
+                const updatedEvent = await toggleSubscription(event);
+                onEventUpdated(updatedEvent);
+                if (isSubscribed(event.id)) {
+                    toast.success('Successfully unsubscribed from the event!');
+                } else {
+                    toast.success('Successfully subscribed to the event!');
+                }
+            } catch (error) {
+                console.error('Failed to update subscription:', error);
+                toast.error('Failed to update subscription. Please try again.');
             }
         }
     };

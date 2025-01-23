@@ -1,10 +1,10 @@
-'use client';
-
 import React, { createContext, useState, useContext, ReactNode } from 'react';
+import { updateEventSubscription } from '@/utils/api';
+import { GatherizeEvent } from '@/types/event';
 
 interface SubscriptionContextType {
     subscribedEvents: { [eventId: number]: boolean };
-    toggleSubscription: (eventId: number) => void;
+    toggleSubscription: (event: GatherizeEvent) => Promise<GatherizeEvent>;
     isSubscribed: (eventId: number) => boolean;
 }
 
@@ -13,11 +13,14 @@ const SubscriptionContext = createContext<SubscriptionContextType | undefined>(u
 export const SubscriptionProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [subscribedEvents, setSubscribedEvents] = useState<{ [eventId: number]: boolean }>({});
 
-    const toggleSubscription = (eventId: number) => {
+    const toggleSubscription = async (event: GatherizeEvent) => {
+        const action = subscribedEvents[event.id] ? 'unsubscribe' : 'subscribe';
+        const updatedEvent = await updateEventSubscription(event.id, action);
         setSubscribedEvents(prev => ({
             ...prev,
-            [eventId]: !prev[eventId]
+            [event.id]: !prev[event.id]
         }));
+        return updatedEvent;
     };
 
     const isSubscribed = (eventId: number) => {

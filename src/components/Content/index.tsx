@@ -106,6 +106,11 @@ export default function Content() {
         setFilteredEvents(prevEvents => [...prevEvents, newEvent]);
     };
 
+    const handleEventUpdated = (updatedEvent: GatherizeEvent) => {
+        setEvents(prevEvents => prevEvents.map(event => event.id === updatedEvent.id ? updatedEvent : event));
+        setFilteredEvents(prevEvents => prevEvents.map(event => event.id === updatedEvent.id ? updatedEvent : event));
+    };
+
     return (
         <Container>
             <ContentWrapper>
@@ -116,7 +121,11 @@ export default function Content() {
                         <span>Create Event</span>
                     </CreateEventButton>
                 )}
-                <EventCardContainer isAdmin={isAdmin} events={filteredEvents} />
+                <EventCardContainer 
+                    isAdmin={isAdmin} 
+                    events={filteredEvents} 
+                    onEventUpdated={handleEventUpdated}
+                />
             </ContentWrapper>
             {isAdmin && (
                 <CreateEventModal
