@@ -101,6 +101,11 @@ export default function Content() {
         return <div>Loading...</div>;
     }
 
+    const handleEventCreated = (newEvent: GatherizeEvent) => {
+        setEvents(prevEvents => [...prevEvents, newEvent]);
+        setFilteredEvents(prevEvents => [...prevEvents, newEvent]);
+    };
+
     return (
         <Container>
             <ContentWrapper>
@@ -117,6 +122,7 @@ export default function Content() {
                 <CreateEventModal
                     isOpen={isCreateEventModalOpen}
                     onClose={() => setIsCreateEventModalOpen(false)}
+                    onEventCreated={handleEventCreated}
                 />
             )}
         </Container>

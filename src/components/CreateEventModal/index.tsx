@@ -14,13 +14,19 @@ import {
     TextAreaWrapper
 } from './styled';
 import { fetchCepData } from '@/utils/cepUtils';
+import { GatherizeEvent } from '@/types/event';
+import { toast } from 'react-toastify';
+import { createEvent } from '@/utils/api';
+import { useSession } from 'next-auth/react';
 
 interface CreateEventModalProps {
     isOpen: boolean;
     onClose: () => void;
+    onEventCreated: (newEvent: GatherizeEvent) => void;
 }
 
-const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose }) => {
+const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose, onEventCreated }) => {
+    const { data: session } = useSession();
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [date, setDate] = useState('');
@@ -32,11 +38,33 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose }) 
 
     if (!isOpen) return null;
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log({ name, description, date, cep, address, city, state, maxPeople });
-        onClose();
+        if (!session || !session.user.id) {
+            toast.error('You must be logged in to create an event.');
+            return;
+        }
+        try {
+            const newEvent = await createEvent({
+                name,
+                description,
+                date,
+                cep,
+                address,
+                city,
+                state,
+                maxPeople,
+                creatorId: session.user.id,
+            });
+            onEventCreated(newEvent);
+            toast.success('Event created successfully!');
+            onClose();
+        } catch (error) {
+            console.error('Failed to create event:', error);
+            toast.error('Failed to create event. Please try again.');
+        }
     };
+
 
     const handleIncrement = () => setMaxPeople(prev => prev + 1);
     const handleDecrement = () => setMaxPeople(prev => Math.max(1, prev - 1));
@@ -52,7 +80,7 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose }) 
                 setCity(cepData.localidade);
                 setState(cepData.uf);
             }
-        } 
+        }
     };
 
     return (
