@@ -1,9 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { events } from '@/data/events';
 
-export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
-    const id = parseInt(params.id);
-    const eventIndex = events.findIndex(e => e.id === id);
+export async function POST(request: NextRequest) {
+    const id = request.nextUrl.pathname.split('/').slice(-2)[0];
+    const numericId = id ? parseInt(id) : null;
+
+    if (numericId === null || isNaN(numericId)) {
+        return NextResponse.json({ error: 'Invalid event ID' }, { status: 400 });
+    }
+
+    const eventIndex = events.findIndex(e => e.id === numericId);
 
     if (eventIndex === -1) {
         return NextResponse.json({ error: 'Event not found' }, { status: 404 });

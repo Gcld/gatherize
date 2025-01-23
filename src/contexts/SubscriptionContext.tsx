@@ -15,12 +15,17 @@ export const SubscriptionProvider: React.FC<{ children: ReactNode }> = ({ childr
 
     const toggleSubscription = async (event: GatherizeEvent) => {
         const action = subscribedEvents[event.id] ? 'unsubscribe' : 'subscribe';
-        const updatedEvent = await updateEventSubscription(event.id, action);
-        setSubscribedEvents(prev => ({
-            ...prev,
-            [event.id]: !prev[event.id]
-        }));
-        return updatedEvent;
+        try {
+            const updatedEvent = await updateEventSubscription(event.id, action);
+            setSubscribedEvents(prev => ({
+                ...prev,
+                [event.id]: !prev[event.id]
+            }));
+            return updatedEvent;
+        } catch (error) {
+            console.error('Error toggling subscription:', error);
+            throw error;
+        }
     };
 
     const isSubscribed = (eventId: number) => {
