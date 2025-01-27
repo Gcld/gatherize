@@ -30,6 +30,7 @@ import {
 import { useRouter } from 'next/navigation';
 import EditEventModal from '@/components/EditEventModal';
 import DeleteEventModal from '@/components/DeleteEventModal';
+import ShareModal from '@/components/ShareModal';
 import { toast } from 'react-toastify';
 
 export function EventDetail() {
@@ -43,6 +44,7 @@ export function EventDetail() {
     const eventSubscribed = isSubscribed(eventId);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
 
     useEffect(() => {
@@ -99,6 +101,10 @@ export function EventDetail() {
             pauseOnHover: true,
             draggable: true,
         });
+    };
+
+    const handleShareClick = () => {
+        setIsShareModalOpen(true);
     };
 
     const handleConfirmDelete = async () => {
@@ -164,7 +170,10 @@ export function EventDetail() {
                                 </EventButton>
                             </>
                         )}
-                        <EventButton><LuShare className="icon" /></EventButton>
+                        <EventButton onClick={handleShareClick}>
+                            <LuShare className="icon" />
+                            <h3>Share</h3>
+                        </EventButton>
                     </div>
                 </EventButtonsDiv>
             </EventPicture>
@@ -251,10 +260,15 @@ export function EventDetail() {
                 onClose={() => setIsDeleteModalOpen(false)}
                 onConfirm={handleConfirmDelete}
             />
+            <ShareModal
+                isOpen={isShareModalOpen}
+                onClose={() => setIsShareModalOpen(false)}
+                eventUrl={`${window.location.origin}/event/${event.id}`}
+                eventName={event.name}
+            />
         </Container>
-    )
+    );
 }
-
 export default function EventDetailWrapper() {
     return (
         <SessionProvider>
