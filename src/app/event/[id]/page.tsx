@@ -45,6 +45,17 @@ export function EventDetail() {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+    const [shareCount, setShareCount] = useState(0);
+
+    useEffect(() => {
+        if (event) {
+            setShareCount(event.shareCount);
+        }
+    }, [event]);
+
+    const handleShare = () => {
+        setShareCount(prevCount => prevCount + 1);
+    };
 
 
     useEffect(() => {
@@ -211,6 +222,10 @@ export function EventDetail() {
                                 <h4>Maximum capacity:</h4>
                                 <p>{event.maxPeople}</p>
                             </DashboardItem>
+                            <DashboardItem>
+                                <h4>Shares:</h4>
+                                <p>{shareCount}</p>
+                            </DashboardItem>
                         </DashboardContainer>
                     )}
                 </EventDescriptionDiv>
@@ -265,6 +280,8 @@ export function EventDetail() {
                 onClose={() => setIsShareModalOpen(false)}
                 eventUrl={`${window.location.origin}/event/${event.id}`}
                 eventName={event.name}
+                eventId={event.id}
+                onShare={handleShare}
             />
         </Container>
     );

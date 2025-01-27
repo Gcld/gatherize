@@ -19,6 +19,7 @@ export const events: GatherizeEvent[] = [
             { id: 'user5', name: 'Emma Brown' },
         ],
         creatorId: '1',
+        shareCount: 5,
     },
     {
         id: 2,
@@ -38,6 +39,7 @@ export const events: GatherizeEvent[] = [
             { id: 'user10', name: 'Daniel Anderson' },
         ],
         creatorId: '3',
+        shareCount: 3,
     },
     {
         id: 3,
@@ -56,6 +58,7 @@ export const events: GatherizeEvent[] = [
             { id: 'user14', name: 'Liam Rodriguez' },
         ],
         creatorId: '1',
+        shareCount: 40,
     },
     {
         id: 4,
@@ -73,6 +76,7 @@ export const events: GatherizeEvent[] = [
             { id: 'user17', name: 'Mia Gonzalez' },
         ],
         creatorId: '5',
+        shareCount: 10,
     },
     {
         id: 5,
@@ -91,6 +95,7 @@ export const events: GatherizeEvent[] = [
             { id: 'user21', name: 'Amelia Clark' },
         ],
         creatorId: '6',
+        shareCount: 20,
     },
     {
         id: 6,
@@ -108,6 +113,7 @@ export const events: GatherizeEvent[] = [
             { id: 'user24', name: 'Lucas Kim' },
         ],
         creatorId: '1',
+        shareCount: 15,
     },
     {
         id: 7,
@@ -126,6 +132,7 @@ export const events: GatherizeEvent[] = [
             { id: 'user28', name: 'Victoria Thompson' },
         ],
         creatorId: '7',
+        shareCount: 8,
     },
     {
         id: 8,
@@ -143,6 +150,8 @@ export const events: GatherizeEvent[] = [
             { id: 'user31', name: 'Christopher Lee' },
         ],
         creatorId: '1',
+        shareCount: 12,
+
     },
     {
         id: 9,
@@ -160,6 +169,7 @@ export const events: GatherizeEvent[] = [
             { id: 'user34', name: 'Chloe Martin' },
         ],
         creatorId: '1',
+        shareCount: 2,
     },
     {
         id: 10,
@@ -178,6 +188,7 @@ export const events: GatherizeEvent[] = [
             { id: 'user38', name: 'Lily Rodriguez' },
         ],
         creatorId: '3',
+        shareCount: 100,
     },
     {
         id: 11,
@@ -195,6 +206,7 @@ export const events: GatherizeEvent[] = [
             { id: 'user41', name: 'Ryan Martinez' },
         ],
         creatorId: '5',
+        shareCount: 30,
     },
     {
         id: 12,
@@ -212,6 +224,7 @@ export const events: GatherizeEvent[] = [
             { id: 'user44', name: 'Hannah Lee' },
         ],
         creatorId: '3',
+        shareCount: 25,
     },
     {
         id: 13,
@@ -229,6 +242,7 @@ export const events: GatherizeEvent[] = [
             { id: 'user47', name: 'Jacob Thompson' },
         ],
         creatorId: '7',
+        shareCount: 15,
     },
     {
         id: 14,
@@ -246,6 +260,7 @@ export const events: GatherizeEvent[] = [
             { id: 'user50', name: 'Avery Martin' },
         ],
         creatorId: '1',
+        shareCount: 18,
     },
     {
         id: 15,
@@ -263,6 +278,7 @@ export const events: GatherizeEvent[] = [
             { id: 'user53', name: 'Aria Thompson' },
         ],
         creatorId: '6',
+        shareCount: 10,
     },
     {
         id: 16,
@@ -280,6 +296,7 @@ export const events: GatherizeEvent[] = [
             { id: 'user56', name: 'Oscar Wilson' },
         ],
         creatorId: '7',
+        shareCount: 5,
     },
     {
         id: 17,
@@ -297,6 +314,7 @@ export const events: GatherizeEvent[] = [
             { id: 'user59', name: 'Nora Lee' },
         ],
         creatorId: '1',
+        shareCount: 10,
     },
     {
         id: 18,
@@ -314,6 +332,7 @@ export const events: GatherizeEvent[] = [
             { id: 'user62', name: 'Hugo Martin' },
         ],
         creatorId: '3',
+        shareCount: 20,
     },
     {
         id: 19,
@@ -331,6 +350,7 @@ export const events: GatherizeEvent[] = [
             { id: 'user65', name: 'Nova Wilson' },
         ],
         creatorId: '6',
+        shareCount: 8,
     },
     {
         id: 20,
@@ -348,5 +368,6 @@ export const events: GatherizeEvent[] = [
             { id: 'user68', name: 'Kai Thompson' },
         ],
         creatorId: '5',
+        shareCount: 5,
     },
 ];

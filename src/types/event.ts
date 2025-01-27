@@ -13,4 +13,5 @@ export interface GatherizeEvent {
         name: string;
     }[];
     creatorId: string;
+    shareCount: number;
 }

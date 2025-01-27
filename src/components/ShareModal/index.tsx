@@ -8,24 +8,45 @@ interface ShareModalProps {
     onClose: () => void;
     eventUrl: string;
     eventName: string;
+    eventId: number;
+    onShare: () => void;
 }
 
-const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, eventUrl, eventName }) => {
+type SharePlatform = 'facebook' | 'twitter' | 'linkedin' | 'email';
+
+const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, eventUrl, eventName, eventId, onShare }) => {
     if (!isOpen) return null;
 
     const encodedUrl = encodeURIComponent(eventUrl);
     const encodedName = encodeURIComponent(eventName);
 
-    const shareUrls = {
+    const shareUrls: Record<SharePlatform, string> = {
         facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
         twitter: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedName}`,
         linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${encodedName}`,
         email: `mailto:?subject=${encodedName}&body=Check out this event: ${encodedUrl}`
     };
 
-    const copyToClipboard = () => {
-        navigator.clipboard.writeText(eventUrl);
-        toast.success('Link copied to clipboard!');
+    const handleShare = async (platform: SharePlatform) => {
+        try {
+            await fetch(`/api/event/${eventId}/share`, { method: 'POST' });
+            onShare();
+            window.open(shareUrls[platform], '_blank');
+        } catch (error) {
+            console.error('Error sharing event:', error);
+        }
+    };
+
+    const copyToClipboard = async () => {
+        try {
+            await navigator.clipboard.writeText(eventUrl);
+            await fetch(`/api/event/${eventId}/share`, { method: 'POST' });
+            onShare();
+            toast.success('Link copied to clipboard!');
+        } catch (error) {
+            console.error('Error copying to clipboard:', error);
+            toast.error('Failed to copy link');
+        }
     };
 
     return (
@@ -35,16 +56,16 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, eventUrl, even
                     <LuX />
                 </CloseButton>
                 <h2>Share this event</h2>
-                <ShareButton onClick={() => window.open(shareUrls.facebook, '_blank')}>
+                <ShareButton onClick={() => handleShare('facebook')}>
                     <LuFacebook /> Share on Facebook
                 </ShareButton>
-                <ShareButton onClick={() => window.open(shareUrls.twitter, '_blank')}>
+                <ShareButton onClick={() => handleShare('twitter')}>
                     <LuTwitter /> Share on Twitter
                 </ShareButton>
-                <ShareButton onClick={() => window.open(shareUrls.linkedin, '_blank')}>
+                <ShareButton onClick={() => handleShare('linkedin')}>
                     <LuLinkedin /> Share on LinkedIn
                 </ShareButton>
-                <ShareButton onClick={() => window.open(shareUrls.email)}>
+                <ShareButton onClick={() => handleShare('email')}>
                     <LuMail /> Share via Email
                 </ShareButton>
                 <ShareButton onClick={copyToClipboard}>
