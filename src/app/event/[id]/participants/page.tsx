@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { LuArrowLeft, LuShare, LuDownload } from 'react-icons/lu';
 import Link from 'next/link';
 import {
@@ -23,7 +23,6 @@ import { saveAs } from 'file-saver';
 import Papa from 'papaparse';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-
 interface AutoTableOptions {
     head: string[][];
     body: (string | number)[][];
@@ -37,8 +36,9 @@ declare module 'jspdf' {
 }
 
 export default function EventParticipants() {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     const params = useParams();
+    const router = useRouter();
     const [event, setEvent] = useState<GatherizeEvent | null>(null);
     const [error, setError] = useState<string | null>(null);
 
@@ -78,6 +78,10 @@ export default function EventParticipants() {
         }
     };
 
+    if (status === "loading") {
+        return <div>Loading...</div>;
+    }
+
     if (error) {
         return <div>Error: {error}</div>;
     }
@@ -86,8 +90,14 @@ export default function EventParticipants() {
         return <div>Loading...</div>;
     }
 
-    if (!session || session.user.id !== event.creatorId) {
-        return <div>You don&apos;t have permission to view this page.</div>;
+    if (!session) {
+        router.push('/login');
+        return null;
+    }
+
+    if (session.user.id !== event.creatorId) {
+        router.push('/denied');
+        return null;
     }
 
     return (
