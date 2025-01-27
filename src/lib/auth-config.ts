@@ -1,5 +1,5 @@
-import { eventsUser1, eventsUser2 } from "@/utils/eventsData";
-import { GatherizeEvent, NextAuthOptions, User } from "next-auth";
+import { users } from "@/data/users";
+import { NextAuthOptions } from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
 
 export const auth: NextAuthOptions = {
@@ -11,28 +11,21 @@ export const auth: NextAuthOptions = {
                 password: { label: 'Password', type: 'password' },
             },
             async authorize(credentials) {
-                const user: User = {
-                    id: '1',
-                    name: 'Gabriel Lima',
-                    email: 'user@email.com',
-                    password: '123',
-                    role: 'admin',
-                    events: eventsUser1,
+                if (!credentials?.email || !credentials?.password) {
+                    return null;
                 }
-                const user2: User = {
-                    id: '2',
-                    name: 'Monkey D. Luffy',
-                    email: 'kingofthepiratesmeat123@email.com',
-                    password: '123',
-                    role: 'user',
-                    events: eventsUser2,
+
+                const user = users.find(user => user.email === credentials.email);
+
+                if (user && user.password === credentials.password) {
+                    return {
+                        id: user.id,
+                        name: user.name,
+                        email: user.email,
+                        role: user.role,
+                    };
                 }
-                if (credentials?.email === user.email && credentials?.password === user.password) {
-                    return user;
-                }
-                if (credentials?.email === user2.email && credentials?.password === user2.password) {
-                    return user2;
-                }
+
                 return null;
             }
         })
@@ -44,7 +37,6 @@ export const auth: NextAuthOptions = {
                 token.email = user.email;
                 token.name = user.name;
                 token.role = user.role;
-                token.events = user.events;
             }
             return token;
         },
@@ -54,7 +46,6 @@ export const auth: NextAuthOptions = {
                 session.user.email = token.email as string;
                 session.user.name = token.name as string;
                 session.user.role = token.role as string;
-                session.user.events = token.events as GatherizeEvent[]; 
             }
             return session;
         }
@@ -65,10 +56,6 @@ export const auth: NextAuthOptions = {
     },
     session: {
         strategy: "jwt",
-    },
-    events: {
-        signOut: async () => {
-        },
     },
     secret: process.env.NEXTAUTH_SECRET,
 }

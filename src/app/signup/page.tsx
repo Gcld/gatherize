@@ -1,17 +1,66 @@
 'use client'
 
 import React, { useState } from 'react';
-import { LuArrowLeft, LuCalendar, LuLock, LuMail, LuUser, LuUserPen, LuX } from "react-icons/lu";
-import { Container, InputBox, InputWrapper, SignInButton, SignInput, SignUpDivReturn, UserTypeButton, UserTypeButtonDiv, UserTypeDiv } from "./styled";
+import { LuArrowLeft, LuCheck, LuLock, LuMail, LuUser, LuUserPen } from "react-icons/lu";
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import { Container, InputBox } from '../login/styled';
+import { InputWrapper, SignInButton, SignInput, SignUpDivReturn, UserTypeButton, UserTypeButtonDiv, UserTypeDiv } from './styled';
 
 type UserType = 'user' | 'creator' | null;
 
-export default function Login() {
+export default function SignUp() {
+    const [fullName, setFullName] = useState('');
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [selectedUserType, setSelectedUserType] = useState<UserType>(null);
+    const router = useRouter();
 
     const handleUserTypeClick = (type: UserType) => {
         setSelectedUserType(type === selectedUserType ? null : type);
+    };
+
+    const handleSignUp = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (password !== confirmPassword) {
+            toast.error("Passwords don't match");
+            return;
+        }
+
+        if (!selectedUserType) {
+            toast.error("Please select a user type");
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/auth/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: fullName,
+                    email,
+                    password,
+                    role: selectedUserType,
+                }),
+            });
+
+            if (response.ok) {
+                toast.success('Account created successfully');
+                router.push('/login');
+            } else {
+                const data = await response.json();
+                toast.error(data.error || 'Failed to create account');
+            }
+        } catch (error) {
+            console.error('Error during sign up:', error);
+            toast.error('An error occurred during sign up');
+        }
     };
 
     return (
@@ -22,53 +71,53 @@ export default function Login() {
                     <h1>Sign Up</h1>
                 </SignUpDivReturn>
                 <h4>Let us help you gatherize with your friends</h4>
-                <InputWrapper>
-                    <LuUserPen className='icon' />
-                    <SignInput type="text" placeholder="Full Name" />
-                </InputWrapper>
-                <InputWrapper>
-                    <LuUser className='icon' />
-                    <SignInput type="text" placeholder="Username" />
-                </InputWrapper>
-                <InputWrapper>
-                    <LuCalendar className='icon' />
-                    <SignInput type="date" placeholder="dd/mm/aaaa" />
-                </InputWrapper>
-                <InputWrapper>
-                    <LuMail className='icon' />
-                    <SignInput type="text" placeholder="Email" />
-                </InputWrapper>
-                <InputWrapper>
-                    <LuLock className='icon'/>
-                    <SignInput type="password" placeholder="Password" />
-                </InputWrapper>
-                <InputWrapper>
-                    <LuLock className='icon' />
-                    <SignInput type="password" placeholder="Confirm Password" />
-                </InputWrapper>
-                <UserTypeDiv>
-                    <UserTypeButtonDiv>
-                        <UserTypeButton
-                            onClick={() => handleUserTypeClick('user')}
-                            $isSelected={selectedUserType === 'user'}
-                        >
-                            {selectedUserType === 'user' && <LuX size={14} color="var(--primaryDarkZaori)" />}
-                        </UserTypeButton>
-                        <h4>User</h4>
-                    </UserTypeButtonDiv>
-                    <UserTypeButtonDiv>
-                        <UserTypeButton
-                            onClick={() => handleUserTypeClick('creator')}
-                            $isSelected={selectedUserType === 'creator'}
-                        >
-                            {selectedUserType === 'creator' && <LuX size={14} color="var(--primaryDarkZaori)" />}
-                        </UserTypeButton>
-                        <h4>Creator</h4>
-                    </UserTypeButtonDiv>
-                </UserTypeDiv>
-                <SignInButton>
-                    <h3>Create Account</h3>
-                </SignInButton>
+                <form onSubmit={handleSignUp}>
+                    <InputWrapper>
+                        <LuUserPen className='icon' />
+                        <SignInput type="text" placeholder="Full Name" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
+                    </InputWrapper>
+                    <InputWrapper>
+                        <LuUser className='icon' />
+                        <SignInput type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} required />
+                    </InputWrapper>
+                    <InputWrapper>
+                        <LuMail className='icon' />
+                        <SignInput type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    </InputWrapper>
+                    <InputWrapper>
+                        <LuLock className='icon'/>
+                        <SignInput type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    </InputWrapper>
+                    <InputWrapper>
+                        <LuLock className='icon' />
+                        <SignInput type="password" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+                    </InputWrapper>
+                    <UserTypeDiv>
+                        <UserTypeButtonDiv>
+                            <UserTypeButton
+                                type="button"
+                                onClick={() => handleUserTypeClick('user')}
+                                $isSelected={selectedUserType === 'user'}
+                            >
+                                {selectedUserType === 'user' && <LuCheck size={14} />}
+                            </UserTypeButton>
+                            <h4>User</h4>
+                        </UserTypeButtonDiv>
+                        <UserTypeButtonDiv>
+                            <UserTypeButton
+                                type="button"
+                                onClick={() => handleUserTypeClick('creator')}
+                                $isSelected={selectedUserType === 'creator'}
+                            >
+                                {selectedUserType === 'creator' && <LuCheck size={14} />}
+                            </UserTypeButton>
+                            <h4>Creator</h4>
+                        </UserTypeButtonDiv>
+                    </UserTypeDiv>
+                    <SignInButton type="submit">
+                        Create Account
+                    </SignInButton>
+                </form>
             </InputBox>
         </Container>
     );
