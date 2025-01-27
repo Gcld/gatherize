@@ -15,12 +15,21 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Event not found' }, { status: 404 });
     }
 
-    const { action } = await request.json();
+    const { action, userId, userName } = await request.json();
 
     if (action === 'subscribe') {
-        events[eventIndex].participants += 1;
+        if (events[eventIndex].participants.length < events[eventIndex].maxPeople) {
+            events[eventIndex].participants.push({ id: userId, name: userName });
+        } else {
+            return NextResponse.json({ error: 'Event is full' }, { status: 400 });
+        }
     } else if (action === 'unsubscribe') {
-        events[eventIndex].participants = Math.max(0, events[eventIndex].participants - 1);
+        const participantIndex = events[eventIndex].participants.findIndex(p => p.id === userId);
+        if (participantIndex !== -1) {
+            events[eventIndex].participants.splice(participantIndex, 1);
+        } else {
+            return NextResponse.json({ error: 'Participant not found' }, { status: 400 });
+        }
     } else {
         return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
     }

@@ -55,7 +55,7 @@ export default function EventCard({ event, onEventUpdated }: EventCardProps) {
     const eventDate = new Date(event.date);
     const isEventCreator = session?.user.id === event.creatorId;
     const isPastEvent = eventDate < new Date();
-    const isFullyBooked = event.participants >= event.maxPeople;
+    const isFullyBooked = event.participants.length >= event.maxPeople;
     const isUnavailable = isPastEvent || isFullyBooked;
 
     const cardContent = (
@@ -80,7 +80,7 @@ export default function EventCard({ event, onEventUpdated }: EventCardProps) {
                         <LuCircleUser size={16} color='black' aria-hidden='true' />
                     </Users>
                     <Participants>
-                        <h3>{event?.participants || 0} participants</h3>
+                        <h3>{event?.participants.length || 0} participants</h3>
                     </Participants>
                 </EventInfo>
             </EventContent>

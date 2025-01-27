@@ -28,7 +28,7 @@ export default function EventsFrame({ events, setEvents }: EventsFrameProps) {
                 sorted = [...events].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
                 break;
             case 'participants':
-                sorted = [...events].sort((a, b) => b.participants - a.participants);
+                sorted = [...events].sort((a, b) => b.participants.length - a.participants.length);
                 break;
             default:
                 sorted = events;

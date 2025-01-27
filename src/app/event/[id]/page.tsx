@@ -139,7 +139,7 @@ export function EventDetail() {
 
     const eventDate = new Date(event.date);
     const isPastEvent = eventDate < new Date();
-    const isFullyBooked = event.participants >= event.maxPeople;
+    const isFullyBooked = event.participants.length >= event.maxPeople;
     const isUnavailable = isPastEvent || isFullyBooked;
     const isEventCreator = session?.user.id === event.creatorId;
 
@@ -196,7 +196,7 @@ export function EventDetail() {
                         <DashboardContainer>
                             <DashboardItem>
                                 <h4>Subscribed participants:</h4>
-                                <p>{event.participants}</p>
+                                <p>{event.participants.length}</p>
                             </DashboardItem>
                             <DashboardItem>
                                 <h4>Maximum capacity:</h4>
@@ -206,7 +206,7 @@ export function EventDetail() {
                     )}
                 </EventDescriptionDiv>
                 {isEventCreator ? (
-                    <Link href={`/event/${event.id}/admin/participants`} passHref style={{ textDecoration: 'none' }}>
+                    <Link href={`/event/${event.id}/participants`} passHref style={{ textDecoration: 'none' }}>
                         <ViewParticipantsButton>
                             <LuUsers className='participantsIcon' />
                             <h1>View Participants</h1>

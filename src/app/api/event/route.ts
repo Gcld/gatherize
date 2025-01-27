@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     const createdEvent: GatherizeEvent = {
         ...newEvent,
         id,
-        participants: 0,
+        participants: [],
     };
 
     events.push(createdEvent);

@@ -52,7 +52,7 @@ export default function Content() {
     }, []);
 
     useEffect(() => {
-        const filtered = events.filter(event => 
+        const filtered = events.filter(event =>
             event.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             event.description.toLowerCase().includes(searchTerm.toLowerCase())
         );
@@ -71,7 +71,7 @@ export default function Content() {
                         .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
                     break;
                 case 'availableSpots':
-                    filtered = events.filter(event => event.participants < event.maxPeople);
+                    filtered = events.filter(event => event.participants.length < event.maxPeople);
                     break;
                 case 'myEvents':
                     filtered = events.filter(event => event.creatorId === session?.user.id);
@@ -121,9 +121,9 @@ export default function Content() {
                         <span>Create Event</span>
                     </CreateEventButton>
                 )}
-                <EventCardContainer 
-                    isAdmin={isAdmin} 
-                    events={filteredEvents} 
+                <EventCardContainer
+                    isAdmin={isAdmin}
+                    events={filteredEvents}
                     onEventUpdated={handleEventUpdated}
                 />
             </ContentWrapper>

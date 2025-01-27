@@ -8,6 +8,9 @@ export interface GatherizeEvent {
     city: string;
     state: string;
     maxPeople: number;
-    participants: number;
+    participants: {
+        id: string;
+        name: string;
+    }[];
     creatorId: string;
 }

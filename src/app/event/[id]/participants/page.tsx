@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
-import { LuArrowLeft, LuShare } from 'react-icons/lu';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+import { LuArrowLeft, LuShare, LuDownload } from 'react-icons/lu';
 import Link from 'next/link';
 import {
     Container,
@@ -15,30 +16,85 @@ import {
     DownloadButton,
     DownloadButtonsDiv,
 } from './styled';
+import { fetchEventById } from '@/utils/api';
+import { GatherizeEvent } from '@/types/event';
+import { useSession } from 'next-auth/react';
+import { saveAs } from 'file-saver';
+import Papa from 'papaparse';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+
+interface AutoTableOptions {
+    head: string[][];
+    body: (string | number)[][];
+    [key: string]: unknown;
+}
+
+declare module 'jspdf' {
+    interface jsPDF {
+        autoTable: (options: AutoTableOptions) => jsPDF;
+    }
+}
 
 export default function EventParticipants() {
-    const participants = [
-        'Jane Cooper',
-        'Wade Warren',
-        'Cameron Williamson',
-        'Jacob Jones',
-    ];
+    const { data: session } = useSession();
+    const params = useParams();
+    const [event, setEvent] = useState<GatherizeEvent | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
-    const handleDownloadPDF = () => {
-        console.log('Download PDF clicked');
-        // Implementação futura para download de PDF
-    };
+    useEffect(() => {
+        async function loadEvent() {
+            const eventId = typeof params.id === 'string' ? parseInt(params.id) : -1;
+            if (eventId !== -1) {
+                try {
+                    const eventData = await fetchEventById(eventId);
+                    setEvent(eventData);
+                } catch (error) {
+                    console.error('Error loading event:', error);
+                    setError('Failed to load event. Please try again later.');
+                }
+            }
+        }
+        loadEvent();
+    }, [params.id]);
 
     const handleDownloadCSV = () => {
-        console.log('Download CSV clicked');
-        // Implementação futura para download de CSV
+        if (event) {
+            const csv = Papa.unparse(event.participants);
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            saveAs(blob, `${event.name}_participants.csv`);
+        }
     };
+
+    const handleDownloadPDF = () => {
+        if (event) {
+            const doc = new jsPDF();
+            doc.text(`Participants for ${event.name}`, 10, 10);
+            doc.autoTable({
+                head: [['Name', 'ID']],
+                body: event.participants.map(p => [p.name, p.id]),
+            });
+            doc.save(`${event.name}_participants.pdf`);
+        }
+    };
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+    if (!event) {
+        return <div>Loading...</div>;
+    }
+
+    if (!session || session.user.id !== event.creatorId) {
+        return <div>You don&apos;t have permission to view this page.</div>;
+    }
 
     return (
         <Container>
             <EventPicture>
                 <EventButtonsDiv>
-                    <Link href="/event/1/admin" passHref>
+                    <Link href={`/event/${event.id}`} passHref>
                         <EventButton>
                             <LuArrowLeft className="icon" />
                         </EventButton>
@@ -50,17 +106,23 @@ export default function EventParticipants() {
             </EventPicture>
             <EventContent>
                 <TitleAndDescriptionDiv>
-                    <h1>Headline 1</h1>
-                    <h4>Description event</h4>
+                    <h1>{event.name}</h1>
+                    <h4>{event.description}</h4>
                 </TitleAndDescriptionDiv>
                 <ParticipantsList>
-                    {participants.map((participant, index) => (
-                        <Participant key={index}>{participant}</Participant>
+                    {event.participants.map((participant, index) => (
+                        <Participant key={index}>{participant.name}</Participant>
                     ))}
                 </ParticipantsList>
                 <DownloadButtonsDiv>
-                    <DownloadButton onClick={handleDownloadPDF}>Download PDF</DownloadButton>
-                    <DownloadButton onClick={handleDownloadCSV}>Download CSV</DownloadButton>
+                    <DownloadButton onClick={handleDownloadPDF}>
+                        <LuDownload className="icon" />
+                        Download PDF
+                    </DownloadButton>
+                    <DownloadButton onClick={handleDownloadCSV}>
+                        <LuDownload className="icon" />
+                        Download CSV
+                    </DownloadButton>
                 </DownloadButtonsDiv>
             </EventContent>
         </Container>
