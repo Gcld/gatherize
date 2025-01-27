@@ -140,33 +140,58 @@ export const Participant = styled.div`
 
 export const DownloadButtonsDiv = styled.div`
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    padding: 10px 0px;
+    justify-content: center;
+    gap: 16px;
+    padding: 20px 0;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+        justify-content: space-around;
+    }
 `;
 
 export const DownloadButton = styled.button`
-    padding: 12px;
-    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 250px;
+    padding: 12px 20px;
     background-color: var(--primaryDarkZaori);
     color: var(--darkZaori);
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    .icon {
+        margin-right: 10px;
+        font-size: 20px;
+    }
 
     &:hover {
         background-color: var(--darkZaori);
         color: var(--primaryDarkZaori);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     @media (min-width: 768px) {
-        font-size: 16px;
+        width: auto;
+        font-size: 18px;
     }
 
     @media (min-width: 1024px) {
-        font-size: 18px;
+        font-size: 20px;
     }
 `;
