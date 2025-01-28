@@ -372,8 +372,8 @@ let events: GatherizeEvent[] = [
     },
 ];
 
-export function getEvents() {
-    return events;
+export function getEvents(): GatherizeEvent[] {
+    return [...events];
 }
 
 export function addEvent(event: GatherizeEvent) {

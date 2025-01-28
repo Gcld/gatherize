@@ -25,12 +25,15 @@ export async function fetchEventById(id: number) {
         console.log(`Fetching event with id: ${id}`);
         const response = await fetch(`/api/event/${id}`);
         console.log(`Response status: ${response.status}`);
+        const responseText = await response.text();
+        console.log(`Response text: ${responseText}`);
+        
         if (!response.ok) {
-            const errorText = await response.text();
-            console.error(`Error response: ${errorText}`);
+            console.error(`Error response: ${responseText}`);
             throw new Error(`Failed to fetch event: ${response.statusText}`);
         }
-        const data = await response.json();
+        
+        const data = JSON.parse(responseText);
         console.log('Fetched event:', data);
         return data;
     } catch (error) {
@@ -84,7 +87,7 @@ export async function updateEvent(id: number, updatedEventData: Partial<Omit<Gat
     }
 }
 
-export async function createEvent(eventData: Omit<GatherizeEvent, 'id' | 'participants'>) {
+export async function createEvent(eventData: Omit<GatherizeEvent, 'id' | 'participants' | 'shareCount'>) {
     try {
         console.log('Creating new event...');
         const response = await fetch('/api/event', {

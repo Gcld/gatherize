@@ -15,9 +15,12 @@ export async function POST(request: NextRequest) {
         ...newEvent,
         id,
         participants: [],
+        shareCount: 0,
     };
 
     addEvent(createdEvent);
+    console.log('Event added:', createdEvent);
+    console.log('All events after adding:', getEvents());
 
     return NextResponse.json(createdEvent, { status: 201 });
 }
