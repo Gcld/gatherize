@@ -361,7 +361,7 @@ export const events: GatherizeEvent[] = [
         address: 'Forte dos Reis Magos',
         city: 'Natal',
         state: 'RN',
-        maxPeople: 150,
+        maxPeople: 4,
         participants: [
             { id: 'user66', name: 'Atlas Brown' },
             { id: 'user67', name: 'Cora Martinez' },

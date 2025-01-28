@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { Container, InputBox } from '../login/styled';
 import { InputWrapper, SignInButton, SignInput, SignUpDivReturn, UserTypeButton, UserTypeButtonDiv, UserTypeDiv } from './styled';
 
-type UserType = 'user' | 'creator' | null;
+type UserType = 'user' | 'admin' | null;
 
 export default function SignUp() {
     const [fullName, setFullName] = useState('');
@@ -106,12 +106,12 @@ export default function SignUp() {
                         <UserTypeButtonDiv>
                             <UserTypeButton
                                 type="button"
-                                onClick={() => handleUserTypeClick('creator')}
-                                $isSelected={selectedUserType === 'creator'}
+                                onClick={() => handleUserTypeClick('admin')}
+                                $isSelected={selectedUserType === 'admin'}
                             >
-                                {selectedUserType === 'creator' && <LuCheck size={14} />}
+                                {selectedUserType === 'admin' && <LuCheck size={14} />}
                             </UserTypeButton>
-                            <h4>Creator</h4>
+                            <h4>Admin</h4>
                         </UserTypeButtonDiv>
                     </UserTypeDiv>
                     <SignInButton type="submit">
