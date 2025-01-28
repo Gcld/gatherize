@@ -1,6 +1,6 @@
 import { GatherizeEvent } from '@/types/event';
 
-export const events: GatherizeEvent[] = [
+let events: GatherizeEvent[] = [
     {
         id: 1,
         name: 'Tech Conference 2025',
@@ -371,3 +371,22 @@ export const events: GatherizeEvent[] = [
         shareCount: 5,
     },
 ];
+
+export function getEvents() {
+    return events;
+}
+
+export function addEvent(event: GatherizeEvent) {
+    events.push(event);
+}
+
+export function updateEvent(updatedEvent: GatherizeEvent) {
+    const index = events.findIndex(e => e.id === updatedEvent.id);
+    if (index !== -1) {
+        events[index] = updatedEvent;
+    }
+}
+
+export function deleteEventById(id: number) {
+    events = events.filter(e => e.id !== id);
+}

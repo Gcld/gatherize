@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { events } from '@/data/events';
+import { getEvents, updateEvent, deleteEventById } from '@/data/events';
 
 export async function GET(request: NextRequest) {
     const id = parseInt(request.nextUrl.pathname.split('/').pop() || '');
-    const event = events.find(e => e.id === id);
+    const event = getEvents().find(e => e.id === id);
 
     if (!event) {
         return NextResponse.json({ error: 'Event not found' }, { status: 404 });
@@ -14,18 +14,19 @@ export async function GET(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
     const id = parseInt(request.nextUrl.pathname.split('/').pop() || '');
-    const eventIndex = events.findIndex(e => e.id === id);
+    const eventIndex = getEvents().findIndex(e => e.id === id);
 
     if (eventIndex === -1) {
         return NextResponse.json({ error: 'Event not found' }, { status: 404 });
     }
 
-    events.splice(eventIndex, 1);
+    deleteEventById(id);
     return NextResponse.json({ message: 'Event deleted successfully' });
 }
 
 export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
     const id = parseInt(params.id);
+    const events = getEvents();
     const eventIndex = events.findIndex(e => e.id === id);
 
     if (eventIndex === -1) {
@@ -33,7 +34,8 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
     }
 
     const updatedEventData = await request.json();
-    events[eventIndex] = { ...events[eventIndex], ...updatedEventData };
+    const updatedEvent = { ...events[eventIndex], ...updatedEventData };
+    updateEvent(updatedEvent);
 
-    return NextResponse.json(events[eventIndex]);
+    return NextResponse.json(updatedEvent);
 }
