@@ -1,11 +1,37 @@
 'use client';
 
-import React from 'react';
-import { LuArrowLeft, LuCalendar, LuMail, LuLock, LuUser, LuPenTool, LuCircleUser } from 'react-icons/lu';
+import React, { useEffect, useState } from 'react';
+import { LuArrowLeft, LuMail, LuLock, LuUser, LuCircleUser } from 'react-icons/lu';
 import Link from 'next/link';
-import { BackButton, Container, EditButton, Header, InfoInput, InputsDiv, InputWrapper, ProfileHeader } from './styled';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { BackButton, Container, Header, InfoInput, InputsDiv, InputWrapper, ProfileHeader } from './styled';
 
 export default function Profile() {
+    const { data: session, status } = useSession();
+    const router = useRouter();
+    const [userData, setUserData] = useState({
+        name: '',
+        email: '',
+        role: '',
+    });
+
+    useEffect(() => {
+        if (status === 'unauthenticated') {
+            router.push('/login');
+        } else if (status === 'authenticated' && session.user) {
+            setUserData({
+                name: session.user.name || '',
+                email: session.user.email || '',
+                role: session.user.role || '',
+            });
+        }
+    }, [status, session, router]);
+
+    if (status === 'loading') {
+        return <div>Loading...</div>;
+    }
+
     return (
         <Container>
             <Header>
@@ -16,33 +42,23 @@ export default function Profile() {
                 </Link>
                 <ProfileHeader>
                     <LuCircleUser className="profileIcon" />
-                    <h1>Gabriel Lima</h1>
+                    <h1>{userData.name}</h1>
                 </ProfileHeader>
             </Header>
             <InputsDiv>
                 <InputWrapper>
                     <LuUser className="icon" />
-                    <InfoInput type="text" defaultValue="gabriel.lima" readOnly />
-                </InputWrapper>
-                <InputWrapper>
-                    <LuCalendar className="icon" />
-                    <InfoInput type="text" defaultValue="DD/MM/YYYY" readOnly />
+                    <InfoInput type="text" value={userData.name} readOnly />
                 </InputWrapper>
                 <InputWrapper>
                     <LuMail className="icon" />
-                    <InfoInput type="email" defaultValue="gabriel.lima.712@ufrn.edu.br" readOnly />
+                    <InfoInput type="email" value={userData.email} readOnly />
                 </InputWrapper>
                 <InputWrapper>
                     <LuLock className="icon" />
-                    <InfoInput type="password" defaultValue="***********" readOnly />
+                    <InfoInput type="text" value={userData.role} readOnly />
                 </InputWrapper>
             </InputsDiv>
-            <Link href="/profile/edit" passHref style={{ textDecoration: 'none', width: '100%', maxWidth: '600px' }}>
-                <EditButton>
-                    <LuPenTool className="icon" />
-                    <h3>Edit Info</h3>
-                </EditButton>
-            </Link>
         </Container>
     );
 }

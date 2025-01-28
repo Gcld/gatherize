@@ -3,7 +3,6 @@ import { LuX, LuUser, LuMail, LuShield } from "react-icons/lu";
 import { useRouter } from 'next/navigation';
 import { CloseButton, ModalContent, ModalOverlay, UserInfo, ViewProfileButton } from './styled';
 
-
 interface UserInfoModalProps {
     isOpen: boolean;
     onClose: () => void;
