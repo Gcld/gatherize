@@ -2,6 +2,7 @@ import React from 'react';
 import { LuFacebook, LuTwitter, LuLinkedin, LuMail, LuCopy, LuX } from 'react-icons/lu';
 import { ModalOverlay, ModalContent, ShareButton, CloseButton } from './styled';
 import { toast } from 'react-toastify';
+import { api } from '@/service/service';
 
 interface ShareModalProps {
     isOpen: boolean;
@@ -29,7 +30,7 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, eventUrl, even
 
     const handleShare = async (platform: SharePlatform) => {
         try {
-            await fetch(`/api/event/${eventId}/share`, { method: 'POST' });
+            await api.post(`/event/${eventId}/share`);
             onShare();
             window.open(shareUrls[platform], '_blank');
         } catch (error) {
@@ -40,7 +41,7 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, eventUrl, even
     const copyToClipboard = async () => {
         try {
             await navigator.clipboard.writeText(eventUrl);
-            await fetch(`/api/event/${eventId}/share`, { method: 'POST' });
+            await api.post(`/event/${eventId}/share`);
             onShare();
             toast.success('Link copied to clipboard!');
         } catch (error) {

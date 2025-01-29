@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { Container, InputBox } from '../login/styled';
 import { InputWrapper, SignInButton, SignInput, SignUpDivReturn, UserTypeButton, UserTypeButtonDiv, UserTypeDiv } from './styled';
+import { api } from '@/service/service';
 
 type UserType = 'user' | 'admin' | null;
 
@@ -37,29 +38,22 @@ export default function SignUp() {
         }
 
         try {
-            const response = await fetch('/api/auth/signup', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: fullName,
-                    email,
-                    password,
-                    role: selectedUserType,
-                }),
+            const response = await api.post('/auth/signup', {
+                name: fullName,
+                email,
+                password,
+                role: selectedUserType,
             });
-
-            if (response.ok) {
+    
+            if (response.status === 201) {
                 toast.success('Account created successfully');
                 router.push('/login');
             } else {
-                const data = await response.json();
-                toast.error(data.error || 'Failed to create account');
+                toast.error(response.data.error || 'Failed to create account');
             }
         } catch (error) {
-            console.error('Error during sign up:', error);
-            toast.error('An error occurred during sign up');
+            console.error('Error creating account:', error);
+            toast.error('Failed to create account. Please try again.');
         }
     };
 

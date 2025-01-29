@@ -55,7 +55,6 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose, on
                 state,
                 maxPeople,
                 creatorId: session.user.id,
-                shareCount: 0,
             });
             onEventCreated(newEvent);
             toast.success('Event created successfully!');
