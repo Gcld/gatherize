@@ -63,9 +63,9 @@ export function EventDetail() {
         async function loadEvent() {
             if (eventId !== -1) {
                 try {
-                    console.log('Fetching event with ID:', eventId);
+                    // console.log('Fetching event with ID:', eventId);
                     const eventData = await fetchEventById(eventId);
-                    console.log('Fetched event data:', eventData);
+                    // console.log('Fetched event data:', eventData);
                     setEvent(eventData);
                 } catch (error) {
                     console.error('Error loading event:', error);
