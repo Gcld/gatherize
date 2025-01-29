@@ -1,6 +1,6 @@
 import { GatherizeEvent } from '@/types/event';
 
-let events: GatherizeEvent[] = [
+export let events: GatherizeEvent[] = [
     {
         id: 1,
         name: 'Tech Conference 2025',
