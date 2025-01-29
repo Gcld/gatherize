@@ -238,58 +238,80 @@ export const TextBlock = styled.div`
     }
 `;
 
-export const DashboardContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 16px;
-    background-color: var(--darkZaori);
-    border-radius: 10px;
-    margin: 16px 0;
-
-    @media (min-width: 768px) {
-        flex-direction: row;
-        justify-content: space-between;
-        margin: 16px;
-    }
+export const DashboardTitle = styled.h3`
+    font-size: 1.5rem;
+    color: var(--primaryDarkZaori);
+    margin: 2rem 0 1rem;
+    text-align: center;
 `;
 
-export const DashboardItem = styled.div`
+export const DashboardContainer = styled.div`
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+`;
+
+export const DashboardItem = styled.div<{ $highlight?: boolean }>`
+    background-color: ${props => props.$highlight ? 'rgba(252, 205, 18, 0.2)' : 'rgba(252, 205, 18, 0.1)'};
+    border-radius: 12px;
+    padding: 1.25rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 4px;
+    transition: transform 0.2s ease;
+
+    &:hover {
+        transform: translateY(-5px);
+    }
+
+    .dashboardIcon {
+        font-size: 2rem;
+        color: var(--primaryDarkZaori);
+        margin-bottom: 0.75rem;
+    }
 
     h4 {
-        font-size: 14px;
-        font-weight: bold;
-        color: var(--primaryLightZaori);
+        font-size: 1rem;
+        color: var(--darkZaori);
+        margin-bottom: 0.5rem;
+        font-weight: 600;
     }
 
     p {
-        font-size: 12px;
-        font-weight: normal;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--primaryDarkZaori);
+        margin-bottom: 0.5rem;
+    }
+
+    span {
+        font-size: 0.875rem;
         color: var(--grayZaori);
+        font-weight: 500;
     }
 
-    @media (min-width: 768px) {
+    @media (max-width: 768px) {
+        padding: 1rem;
+        
+        .dashboardIcon {
+            font-size: 1.5rem;
+        }
+
         h4 {
-            font-size: 16px;
+            font-size: 0.875rem;
         }
 
         p {
-            font-size: 14px;
-        }
-    }
-
-    @media (min-width: 1024px) {
-        h4 {
-            font-size: 18px;
+            font-size: 1.25rem;
         }
 
-        p {
-            font-size: 16px;
+        span {
+            font-size: 0.75rem;
         }
     }
 `;

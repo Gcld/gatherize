@@ -38,7 +38,7 @@ export let events: GatherizeEvent[] = [
             { id: 'user9', name: 'Olivia Taylor' },
             { id: 'user10', name: 'Daniel Anderson' },
         ],
-        creatorId: '3',
+        creatorId: '8',
         shareCount: 3,
     },
     {
@@ -187,7 +187,7 @@ export let events: GatherizeEvent[] = [
             { id: 'user37', name: 'David Garcia' },
             { id: 'user38', name: 'Lily Rodriguez' },
         ],
-        creatorId: '3',
+        creatorId: '8',
         shareCount: 100,
     },
     {
@@ -223,7 +223,7 @@ export let events: GatherizeEvent[] = [
             { id: 'user43', name: 'Thomas Davis' },
             { id: 'user44', name: 'Hannah Lee' },
         ],
-        creatorId: '3',
+        creatorId: '8',
         shareCount: 25,
     },
     {
@@ -331,7 +331,7 @@ export let events: GatherizeEvent[] = [
             { id: 'user61', name: 'Ivy Thompson' },
             { id: 'user62', name: 'Hugo Martin' },
         ],
-        creatorId: '3',
+        creatorId: '8',
         shareCount: 20,
     },
     {

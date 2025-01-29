@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { LuArrowLeft, LuCircleCheck, LuShare, LuX, LuClipboardPen, LuTrash2, LuUsers, LuCircleAlert } from "react-icons/lu";
+import { LuArrowLeft, LuCircleCheck, LuShare, LuX, LuClipboardPen, LuTrash2, LuUsers, LuCircleAlert, LuTrendingUp, LuPercent, LuCalendarClock, LuActivity } from "react-icons/lu";
 import { useSubscription } from "@/contexts/SubscriptionContext";
 import Link from 'next/link';
 import { GatherizeEvent } from '@/types/event';
@@ -25,7 +25,8 @@ import {
     DashboardContainer,
     DashboardItem,
     ViewParticipantsButton,
-    UnavailableButton
+    UnavailableButton,
+    DashboardTitle
 } from "./styled";
 import { useRouter } from 'next/navigation';
 import EditEventModal from '@/components/EditEventModal';
@@ -162,6 +163,61 @@ export function EventDetail() {
     const isUnavailable = isPastEvent || isFullyBooked;
     const isEventCreator = session?.user.id === event.creatorId;
 
+    const calculateDailySubscriptionRate = () => {
+        if (!event) return { rate: 0, trend: 0 };
+        const creationDate = new Date(event.date);
+        const currentDate = new Date();
+        const daysSinceCreation = Math.max(1, Math.ceil((currentDate.getTime() - creationDate.getTime()) / (1000 * 3600 * 24)));
+        const rate = event.participants.length / daysSinceCreation;
+        
+        return {
+            rate: rate.toFixed(2),
+            trend: rate > 1 ? 'high' : rate > 0.5 ? 'medium' : 'low'
+        };
+    };
+
+    const calculateEventMetrics = () => {
+        if (!event) return {
+            occupancyRate: 0,
+            daysUntilEvent: 0,
+            registrationProgress: 0,
+            isNearingCapacity: false
+        };
+
+        const occupancyRate = (event.participants.length / event.maxPeople) * 100;
+        const daysUntilEvent = Math.ceil((new Date(event.date).getTime() - new Date().getTime()) / (1000 * 3600 * 24));
+        const registrationProgress = (event.participants.length / event.maxPeople) * 100;
+        const isNearingCapacity = occupancyRate >= 80;
+
+        return {
+            occupancyRate: occupancyRate.toFixed(2),
+            daysUntilEvent,
+            registrationProgress: registrationProgress.toFixed(2),
+            isNearingCapacity
+        };
+    };
+
+    const getEngagementScore = () => {
+        if (!event) return { score: 0, level: 'low' };
+        
+        const shareWeight = 0.3;
+        const participationWeight = 0.7;
+        
+        const shareScore = (event.shareCount / 100) * shareWeight;
+        const participationScore = (event.participants.length / event.maxPeople) * participationWeight;
+        const totalScore = (shareScore + participationScore) * 100;
+
+        return {
+            score: totalScore.toFixed(2),
+            level: totalScore > 70 ? 'high' : totalScore > 40 ? 'medium' : 'low'
+        };
+    };
+
+    const metrics = calculateEventMetrics();
+    const subscriptionRate = calculateDailySubscriptionRate();
+    const engagement = getEngagementScore();
+
+
     return (
         <Container>
             <DesktopOnly>
@@ -215,20 +271,52 @@ export function EventDetail() {
                         <h6>{event.description}</h6>
                     </TextBlock>
                     {isEventCreator && (
-                        <DashboardContainer>
-                            <DashboardItem>
-                                <h4>Subscribed participants:</h4>
-                                <p>{event.participants.length}</p>
-                            </DashboardItem>
-                            <DashboardItem>
-                                <h4>Maximum capacity:</h4>
-                                <p>{event.maxPeople}</p>
-                            </DashboardItem>
-                            <DashboardItem>
-                                <h4>Shares:</h4>
-                                <p>{shareCount}</p>
-                            </DashboardItem>
-                        </DashboardContainer>
+                        <>
+                            <DashboardTitle>Event metrics</DashboardTitle>
+                            <DashboardContainer>
+                                <DashboardItem $highlight={event.participants.length === event.maxPeople}>
+                                    <LuUsers className="dashboardIcon" />
+                                    <h4>Subscribed Participants</h4>
+                                    <p>{event.participants.length} / {event.maxPeople}</p>
+                                    <span>{metrics.registrationProgress}% full</span>
+                                </DashboardItem>
+
+                                <DashboardItem>
+                                    <LuTrendingUp className="dashboardIcon" />
+                                    <h4>Daily subsciption rate</h4>
+                                    <p>{subscriptionRate.rate} Subscription/day</p>
+                                    <span>Tendency: {subscriptionRate.trend}</span>
+                                </DashboardItem>
+
+                                <DashboardItem $highlight={metrics.isNearingCapacity}>
+                                    <LuPercent className="dashboardIcon" />
+                                    <h4>Ocuppation Rate</h4>
+                                    <p>{metrics.occupancyRate}%</p>
+                                    <span>{metrics.isNearingCapacity ? 'Almost full!' : 'Vacancys available'}</span>
+                                </DashboardItem>
+
+                                <DashboardItem>
+                                    <LuCalendarClock className="dashboardIcon" />
+                                    <h4>Days until event</h4>
+                                    <p>{metrics.daysUntilEvent} days</p>
+                                    <span>{metrics.daysUntilEvent <= 7 ? 'Next!' : 'Soon'}</span>
+                                </DashboardItem>
+
+                                <DashboardItem>
+                                    <LuActivity className="dashboardIcon" />
+                                    <h4>Engagement</h4>
+                                    <p>{engagement.score}%</p>
+                                    <span>Level: {engagement.level}</span>
+                                </DashboardItem>
+
+                                <DashboardItem>
+                                    <LuShare className="dashboardIcon" />
+                                    <h4>Shares</h4>
+                                    <p>{shareCount}</p>
+                                    <span>Expanded reach</span>
+                                </DashboardItem>
+                            </DashboardContainer>
+                        </>
                     )}
                 </EventDescriptionDiv>
                 {isEventCreator ? (
