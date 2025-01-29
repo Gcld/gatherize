@@ -195,3 +195,29 @@ export const DownloadButton = styled.button`
         font-size: 20px;
     }
 `;
+
+export const NoParticipantsMessage = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    
+    .icon {
+        font-size: 3rem;
+        color: var(--grayZaori);
+        margin-bottom: 1rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+        color: var(--darkZaori);
+        margin-bottom: 0.5rem;
+    }
+
+    p {
+        font-size: 1rem;
+        color: var(--grayZaori);
+    }
+`;

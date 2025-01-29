@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { LuArrowLeft, LuShare, LuDownload } from 'react-icons/lu';
+import { LuArrowLeft, LuShare, LuDownload, LuUserX } from 'react-icons/lu';
 import Link from 'next/link';
 import {
     Container,
@@ -15,6 +15,7 @@ import {
     Participant,
     DownloadButton,
     DownloadButtonsDiv,
+    NoParticipantsMessage,
 } from './styled';
 import { fetchEventById } from '@/utils/api';
 import { GatherizeEvent } from '@/types/event';
@@ -59,7 +60,7 @@ export default function EventParticipants() {
     }, [params.id]);
 
     const handleDownloadCSV = () => {
-        if (event) {
+        if (event && event.participants.length > 0) {
             const csv = Papa.unparse(event.participants);
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             saveAs(blob, `${event.name}_participants.csv`);
@@ -67,7 +68,7 @@ export default function EventParticipants() {
     };
 
     const handleDownloadPDF = () => {
-        if (event) {
+        if (event && event.participants.length > 0) {
             const doc = new jsPDF();
             doc.text(`Participants for ${event.name}`, 10, 10);
             doc.autoTable({
@@ -119,21 +120,31 @@ export default function EventParticipants() {
                     <h1>{event.name}</h1>
                     <h4>{event.description}</h4>
                 </TitleAndDescriptionDiv>
-                <ParticipantsList>
-                    {event.participants.map((participant, index) => (
-                        <Participant key={index}>{participant.name}</Participant>
-                    ))}
-                </ParticipantsList>
-                <DownloadButtonsDiv>
-                    <DownloadButton onClick={handleDownloadPDF}>
-                        <LuDownload className="icon" />
-                        Download PDF
-                    </DownloadButton>
-                    <DownloadButton onClick={handleDownloadCSV}>
-                        <LuDownload className="icon" />
-                        Download CSV
-                    </DownloadButton>
-                </DownloadButtonsDiv>
+                {event.participants.length > 0 ? (
+                    <>
+                        <ParticipantsList>
+                            {event.participants.map((participant, index) => (
+                                <Participant key={index}>{participant.name}</Participant>
+                            ))}
+                        </ParticipantsList>
+                        <DownloadButtonsDiv>
+                            <DownloadButton onClick={handleDownloadPDF}>
+                                <LuDownload className="icon" />
+                                Download PDF
+                            </DownloadButton>
+                            <DownloadButton onClick={handleDownloadCSV}>
+                                <LuDownload className="icon" />
+                                Download CSV
+                            </DownloadButton>
+                        </DownloadButtonsDiv>
+                    </>
+                ) : (
+                    <NoParticipantsMessage>
+                        <LuUserX className="icon" />
+                        <h3>No participants yet</h3>
+                        <p>Be the first to join this event!</p>
+                    </NoParticipantsMessage>
+                )}
             </EventContent>
         </Container>
     );
