@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { events } from '@/data/events';
 
-export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
-    const id = parseInt(params.id);
+export async function POST(request: NextRequest) {
+    const id = parseInt(request.nextUrl.pathname.split('/').slice(-2)[0]);
     const eventIndex = events.findIndex(e => e.id === id);
 
     if (eventIndex === -1) {
