@@ -1,6 +1,6 @@
-import { users } from "@/data/users";
 import { NextAuthOptions } from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
+import { users } from "@/data/users";
 
 export const auth: NextAuthOptions = {
     providers: [
@@ -18,12 +18,19 @@ export const auth: NextAuthOptions = {
                 const user = users.find(user => user.email === credentials.email);
 
                 if (user && user.password === credentials.password) {
-                    return {
+                    const userInfo = {
                         id: user.id,
                         name: user.name,
                         email: user.email,
                         role: user.role,
+                        dateOfBirth: user.dateOfBirth || new Date().toISOString().split('T')[0], 
                     };
+
+                    if (!userInfo.dateOfBirth || !Date.parse(userInfo.dateOfBirth)) {
+                        console.warn(`Data de nascimento inválida para o usuário ${userInfo.email}`);
+                    }
+
+                    return userInfo;
                 }
 
                 return null;
@@ -33,19 +40,27 @@ export const auth: NextAuthOptions = {
     callbacks: {
         jwt: ({ token, user }) => {
             if (user) {
-                token.id = user.id;
-                token.email = user.email;
-                token.name = user.name;
-                token.role = user.role;
+                token = {
+                    ...token,
+                    id: user.id,
+                    email: user.email,
+                    name: user.name,
+                    role: user.role,
+                    dateOfBirth: user.dateOfBirth,
+                };
             }
             return token;
         },
         session: ({ session, token }) => {
             if (token && session.user) {
-                session.user.id = token.id as string;
-                session.user.email = token.email as string;
-                session.user.name = token.name as string;
-                session.user.role = token.role as string;
+                session.user = {
+                    ...session.user,
+                    id: token.id as string,
+                    email: token.email as string,
+                    name: token.name as string,
+                    role: token.role as string,
+                    dateOfBirth: token.dateOfBirth as string,
+                };
             }
             return session;
         }
@@ -56,6 +71,7 @@ export const auth: NextAuthOptions = {
     },
     session: {
         strategy: "jwt",
+        maxAge: 30 * 24 * 60 * 60, 
     },
     secret: process.env.NEXTAUTH_SECRET,
-}
+};

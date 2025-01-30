@@ -7,6 +7,7 @@ declare module 'next-auth' {
         email: string;
         password?: string;
         role: string;
+        dateOfBirth: string;
         events?: GatherizeEvent[];
     }
 

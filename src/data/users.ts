@@ -8,6 +8,7 @@ export const users: User[] = [
         email: 'user@email.com',
         password: '123',
         role: 'admin',
+        dateOfBirth: '2002-12-09', 
         events: eventsUser1,
     },
     {
@@ -16,6 +17,7 @@ export const users: User[] = [
         email: 'kingofthepiratesmeat123@email.com',
         password: '123',
         role: 'user',
+        dateOfBirth: '1995-05-05', 
         events: eventsUser2,
     }
 ];

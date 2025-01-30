@@ -154,9 +154,10 @@ export default function Header({ showSearchAndFilter = false }: HeaderProps) {
                     isOpen={isUserInfoModalOpen}
                     onClose={() => setIsUserInfoModalOpen(false)}
                     user={{
-                        name: session.user.name || '',
-                        email: session.user.email || '',
-                        role: session.user.role || '',
+                        name: session.user.name || 'Usuário',
+                        email: session.user.email || 'email@exemplo.com',
+                        role: session.user.role || 'user',
+                        dateOfBirth: session.user.dateOfBirth || '2000-01-01', 
                     }}
                 />
             )}

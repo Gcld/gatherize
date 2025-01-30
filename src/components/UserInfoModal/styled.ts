@@ -77,3 +77,27 @@ export const ViewProfileButton = styled.button`
         background-color: var(--grayZaori);
     }
 `;
+
+// Adicione ao arquivo de estilos do modal
+
+export const DateInfo = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    div {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    small {
+        font-size: 12px;
+        color: var(--grayZaori);
+    }
+
+    .icon {
+        color: var(--primaryDarkZaori);
+        font-size: 20px;
+    }
+`;

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
-import { LuArrowLeft, LuCheck, LuLock, LuMail, LuUserPen } from "react-icons/lu";
+import { LuArrowLeft, LuCalendar, LuCheck, LuLock, LuMail, LuUserPen } from "react-icons/lu";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
@@ -16,6 +16,7 @@ export default function SignUp() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [dateOfBirth, setDateOfBirth] = useState('');
     const [selectedUserType, setSelectedUserType] = useState<UserType>(null);
     const router = useRouter();
 
@@ -41,9 +42,10 @@ export default function SignUp() {
                 name: fullName,
                 email,
                 password,
+                dateOfBirth,
                 role: selectedUserType,
             });
-    
+
             if (response.status === 201) {
                 toast.success('Account created successfully');
                 router.push('/login');
@@ -74,12 +76,21 @@ export default function SignUp() {
                         <SignInput type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                     </InputWrapper>
                     <InputWrapper>
-                        <LuLock className='icon'/>
+                        <LuLock className='icon' />
                         <SignInput type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </InputWrapper>
                     <InputWrapper>
                         <LuLock className='icon' />
                         <SignInput type="password" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+                    </InputWrapper>
+                    <InputWrapper>
+                        <LuCalendar className='icon' />
+                        <SignInput
+                            type="date"
+                            value={dateOfBirth}
+                            onChange={(e) => setDateOfBirth(e.target.value)}
+                            required
+                        />
                     </InputWrapper>
                     <UserTypeDiv>
                         <UserTypeButtonDiv>

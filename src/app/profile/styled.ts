@@ -164,3 +164,42 @@ export const InfoInput = styled.input`
         font-size: 20px;
     }
 `;
+
+export const LoadingSpinner = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: var(--primaryDarkZaori);
+    font-size: 1.2rem;
+`;
+
+export const ErrorMessage = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    gap: 1rem;
+    text-align: center;
+
+    p {
+        color: var(--primaryDarkZaori);
+        font-size: 1.1rem;
+    }
+
+    button {
+        padding: 0.8rem 1.5rem;
+        background-color: var(--primaryDarkZaori);
+        color: var(--darkZaori);
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    }
+`;
