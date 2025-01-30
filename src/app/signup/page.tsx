@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
-import { LuArrowLeft, LuCheck, LuLock, LuMail, LuUser, LuUserPen } from "react-icons/lu";
+import { LuArrowLeft, LuCheck, LuLock, LuMail, LuUserPen } from "react-icons/lu";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
@@ -13,7 +13,6 @@ type UserType = 'user' | 'admin' | null;
 
 export default function SignUp() {
     const [fullName, setFullName] = useState('');
-    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -69,10 +68,6 @@ export default function SignUp() {
                     <InputWrapper>
                         <LuUserPen className='icon' />
                         <SignInput type="text" placeholder="Full Name" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
-                    </InputWrapper>
-                    <InputWrapper>
-                        <LuUser className='icon' />
-                        <SignInput type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} required />
                     </InputWrapper>
                     <InputWrapper>
                         <LuMail className='icon' />
