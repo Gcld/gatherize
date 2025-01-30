@@ -30,6 +30,23 @@ export const ModalContent = styled.div`
     margin: auto;
     max-height: calc(100vh - 40px);
     overflow-y: auto;
+    max-height: 90vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primaryDarkZaori) var(--darkZaori);
+
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: var(--darkZaori);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--primaryDarkZaori);
+        border-radius: 4px;
+    }
 
     h2 {
         color: var(--primaryLightZaori);
@@ -297,6 +314,30 @@ export const NumberInputWrapper = styled.div`
     }
 `;
 
+export const FormGrid = styled.div`
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+
+    @media (min-width: 768px) {
+        grid-template-columns: 1fr 1fr;
+    }
+`;
+
+export const TimeInput = styled(Input)`
+    padding-right: 10px;
+`;
+
+export const NumberInput = styled(Input)`
+    appearance: textfield;
+    -moz-appearance: textfield;
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+`;
+
 export const SubmitButton = styled.button`
     padding: 12px;
     background-color: var(--primaryDarkZaori);
@@ -306,11 +347,18 @@ export const SubmitButton = styled.button`
     cursor: pointer;
     font-weight: bold;
     font-size: 16px;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
     width: 100%;
 
     &:hover {
         background-color: var(--grayZaori);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    &:active {
+        transform: translateY(0);
+        box-shadow: none;
     }
 
     @media (min-width: 768px) {

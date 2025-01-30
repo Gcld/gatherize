@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LuX, LuPlus, LuMinus, LuUser, LuCalendar, LuMapPin, LuPenTool, LuFileText } from "react-icons/lu";
+import { LuX, LuPlus, LuMinus, LuUser, LuCalendar, LuMapPin, LuPenTool, LuFileText, LuClock } from "react-icons/lu";
 import {
     ModalOverlay,
     ModalContent,
@@ -11,7 +11,10 @@ import {
     SubmitButton,
     Label,
     IconWrapper,
-    TextAreaWrapper
+    TextAreaWrapper,
+    FormGrid,
+    TimeInput,
+    NumberInput
 } from './styled';
 import { fetchCepData } from '@/utils/cepUtils';
 import { GatherizeEvent } from '@/types/event';
@@ -30,44 +33,34 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose, on
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [date, setDate] = useState('');
+    const [time, setTime] = useState('');
     const [cep, setCep] = useState('');
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
-    const [maxPeople, setMaxPeople] = useState(1);
+    const [maxPeople, setMaxPeople] = useState('');
 
     if (!isOpen) return null;
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!session || !session.user.id) {
-            toast.error('You must be logged in to create an event.');
-            return;
-        }
-        try {
-            const newEvent = await createEvent({
-                name,
-                description,
-                date,
-                cep,
-                address,
-                city,
-                state,
-                maxPeople,
-                creatorId: session.user.id,
-            });
-            onEventCreated(newEvent);
-            toast.success('Event created successfully!');
-            onClose();
-        } catch (error) {
-            console.error('Failed to create event:', error);
-            toast.error('Failed to create event. Please try again.');
+
+    const handleMaxPeopleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        if (value === '' || /^\d+$/.test(value)) {
+            setMaxPeople(value);
         }
     };
 
+    const handleIncrement = () => {
+        const currentValue = parseInt(maxPeople) || 0;
+        setMaxPeople((currentValue + 1).toString());
+    };
 
-    const handleIncrement = () => setMaxPeople(prev => prev + 1);
-    const handleDecrement = () => setMaxPeople(prev => Math.max(1, prev - 1));
+    const handleDecrement = () => {
+        const currentValue = parseInt(maxPeople) || 0;
+        if (currentValue > 1) {
+            setMaxPeople((currentValue - 1).toString());
+        }
+    };
 
     const handleCepChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const newCep = e.target.value.replace(/\D/g, '');
@@ -80,6 +73,34 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose, on
                 setCity(cepData.localidade);
                 setState(cepData.uf);
             }
+        }
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!session || !session.user.id) {
+            toast.error('You must be logged in to create an event.');
+            return;
+        }
+        const maxPeopleNumber = parseInt(maxPeople) || 1;
+        try {
+            const newEvent = await createEvent({
+                name,
+                description,
+                date: `${date}T${time}`,
+                cep,
+                address,
+                city,
+                state,
+                maxPeople: maxPeopleNumber,
+                creatorId: session.user.id,
+            });
+            onEventCreated(newEvent);
+            toast.success('Event created successfully!');
+            onClose();
+        } catch (error) {
+            console.error('Failed to create event:', error);
+            toast.error('Failed to create event. Please try again.');
         }
     };
 
@@ -101,6 +122,7 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose, on
                                 value={name}
                                 onChange={e => setName(e.target.value)}
                                 required
+                                placeholder="Enter event name"
                             />
                         </IconWrapper>
                     </InputGroup>
@@ -113,22 +135,38 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose, on
                                 value={description}
                                 onChange={e => setDescription(e.target.value)}
                                 required
+                                placeholder="Describe your event"
                             />
                         </TextAreaWrapper>
                     </InputGroup>
-                    <InputGroup>
-                        <Label htmlFor="date">Date</Label>
-                        <IconWrapper>
-                            <LuCalendar className="inputIcon" />
-                            <Input
-                                id="date"
-                                type="date"
-                                value={date}
-                                onChange={e => setDate(e.target.value)}
-                                required
-                            />
-                        </IconWrapper>
-                    </InputGroup>
+                    <FormGrid>
+                        <InputGroup>
+                            <Label htmlFor="date">Date</Label>
+                            <IconWrapper>
+                                <LuCalendar className="inputIcon" />
+                                <Input
+                                    id="date"
+                                    type="date"
+                                    value={date}
+                                    onChange={e => setDate(e.target.value)}
+                                    required
+                                />
+                            </IconWrapper>
+                        </InputGroup>
+                        <InputGroup>
+                            <Label htmlFor="time">Time</Label>
+                            <IconWrapper>
+                                <LuClock className="inputIcon" />
+                                <TimeInput
+                                    id="time"
+                                    type="time"
+                                    value={time}
+                                    onChange={e => setTime(e.target.value)}
+                                    required
+                                />
+                            </IconWrapper>
+                        </InputGroup>
+                    </FormGrid>
                     <InputGroup>
                         <Label htmlFor="cep">CEP</Label>
                         <IconWrapper>
@@ -140,6 +178,7 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose, on
                                 onChange={handleCepChange}
                                 maxLength={8}
                                 required
+                                placeholder="Enter CEP"
                             />
                         </IconWrapper>
                     </InputGroup>
@@ -153,35 +192,40 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose, on
                                 value={address}
                                 onChange={e => setAddress(e.target.value)}
                                 required
+                                placeholder="Enter address"
                             />
                         </IconWrapper>
                     </InputGroup>
-                    <InputGroup>
-                        <Label htmlFor="city">City</Label>
-                        <IconWrapper>
-                            <LuMapPin className="inputIcon" />
-                            <Input
-                                id="city"
-                                type="text"
-                                value={city}
-                                onChange={e => setCity(e.target.value)}
-                                required
-                            />
-                        </IconWrapper>
-                    </InputGroup>
-                    <InputGroup>
-                        <Label htmlFor="state">State</Label>
-                        <IconWrapper>
-                            <LuMapPin className="inputIcon" />
-                            <Input
-                                id="state"
-                                type="text"
-                                value={state}
-                                onChange={e => setState(e.target.value)}
-                                required
-                            />
-                        </IconWrapper>
-                    </InputGroup>
+                    <FormGrid>
+                        <InputGroup>
+                            <Label htmlFor="city">City</Label>
+                            <IconWrapper>
+                                <LuMapPin className="inputIcon" />
+                                <Input
+                                    id="city"
+                                    type="text"
+                                    value={city}
+                                    onChange={e => setCity(e.target.value)}
+                                    required
+                                    placeholder="Enter city"
+                                />
+                            </IconWrapper>
+                        </InputGroup>
+                        <InputGroup>
+                            <Label htmlFor="state">State</Label>
+                            <IconWrapper>
+                                <LuMapPin className="inputIcon" />
+                                <Input
+                                    id="state"
+                                    type="text"
+                                    value={state}
+                                    onChange={e => setState(e.target.value)}
+                                    required
+                                    placeholder="Enter state"
+                                />
+                            </IconWrapper>
+                        </InputGroup>
+                    </FormGrid>
                     <InputGroup>
                         <Label htmlFor="maxPeople">Maximum number of people</Label>
                         <NumberInputWrapper>
@@ -189,12 +233,14 @@ const CreateEventModal: React.FC<CreateEventModalProps> = ({ isOpen, onClose, on
                             <button type="button" onClick={handleDecrement}>
                                 <LuMinus className="buttonIcon" />
                             </button>
-                            <Input
+                            <NumberInput
                                 id="maxPeople"
-                                type="number"
+                                type="text"
+                                inputMode="numeric"
+                                pattern="\d*"
                                 value={maxPeople}
-                                onChange={e => setMaxPeople(Math.max(1, parseInt(e.target.value) || 1))}
-                                min="1"
+                                onChange={handleMaxPeopleChange}
+                                placeholder="Enter max people"
                                 required
                             />
                             <button type="button" onClick={handleIncrement}>
