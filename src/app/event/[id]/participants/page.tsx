@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { LuArrowLeft, LuShare, LuDownload, LuUserX } from 'react-icons/lu';
+import { LuArrowLeft, LuDownload, LuUserX, LuSearch, LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 import Link from 'next/link';
 import {
     Container,
@@ -16,6 +16,12 @@ import {
     DownloadButton,
     DownloadButtonsDiv,
     NoParticipantsMessage,
+    SearchInput,
+    SearchWrapper,
+    PaginationContainer,
+    PaginationButton,
+    ParticipantsContainer,
+    ParticipantsHeader
 } from './styled';
 import { fetchEventById } from '@/utils/api';
 import { GatherizeEvent } from '@/types/event';
@@ -24,6 +30,7 @@ import { saveAs } from 'file-saver';
 import Papa from 'papaparse';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+
 interface AutoTableOptions {
     head: string[][];
     body: (string | number)[][];
@@ -36,12 +43,17 @@ declare module 'jspdf' {
     }
 }
 
+const PARTICIPANTS_PER_PAGE = 20;
+
 export default function EventParticipants() {
     const { data: session, status } = useSession();
     const params = useParams();
     const router = useRouter();
     const [event, setEvent] = useState<GatherizeEvent | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [filteredParticipants, setFilteredParticipants] = useState<{ id: string; name: string }[]>([]);
 
     useEffect(() => {
         async function loadEvent() {
@@ -50,6 +62,7 @@ export default function EventParticipants() {
                 try {
                     const eventData = await fetchEventById(eventId);
                     setEvent(eventData);
+                    setFilteredParticipants(eventData.participants);
                 } catch (error) {
                     console.error('Error loading event:', error);
                     setError('Failed to load event. Please try again later.');
@@ -58,6 +71,16 @@ export default function EventParticipants() {
         }
         loadEvent();
     }, [params.id]);
+
+    useEffect(() => {
+        if (event) {
+            const filtered = event.participants.filter(participant =>
+                participant.name.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            setFilteredParticipants(filtered);
+            setCurrentPage(1);
+        }
+    }, [searchTerm, event]);
 
     const handleDownloadCSV = () => {
         if (event && event.participants.length > 0) {
@@ -78,6 +101,12 @@ export default function EventParticipants() {
             doc.save(`${event.name}_participants.pdf`);
         }
     };
+
+    const handlePageChange = (newPage: number) => {
+        setCurrentPage(newPage);
+        window.scrollTo(0, 0);
+    };
+
 
     if (status === "loading") {
         return <div>Loading...</div>;
@@ -101,6 +130,12 @@ export default function EventParticipants() {
         return null;
     }
 
+    const totalPages = Math.ceil(filteredParticipants.length / PARTICIPANTS_PER_PAGE);
+    const paginatedParticipants = filteredParticipants.slice(
+        (currentPage - 1) * PARTICIPANTS_PER_PAGE,
+        currentPage * PARTICIPANTS_PER_PAGE
+    );
+
     return (
         <Container>
             <EventPicture>
@@ -110,9 +145,6 @@ export default function EventParticipants() {
                             <LuArrowLeft className="icon" />
                         </EventButton>
                     </Link>
-                    <EventButton>
-                        <LuShare className="icon" />
-                    </EventButton>
                 </EventButtonsDiv>
             </EventPicture>
             <EventContent>
@@ -121,12 +153,42 @@ export default function EventParticipants() {
                     <h4>{event.description}</h4>
                 </TitleAndDescriptionDiv>
                 {event.participants.length > 0 ? (
-                    <>
+                    <ParticipantsContainer>
+                        <ParticipantsHeader>
+                            <h2>Participants</h2>
+                            <p>{filteredParticipants.length} total</p>
+                        </ParticipantsHeader>
+                        <SearchWrapper>
+                            <LuSearch className="searchIcon" />
+                            <SearchInput
+                                type="text"
+                                placeholder="Search participants"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                        </SearchWrapper>
                         <ParticipantsList>
-                            {event.participants.map((participant, index) => (
+                            {paginatedParticipants.map((participant, index) => (
                                 <Participant key={index}>{participant.name}</Participant>
                             ))}
                         </ParticipantsList>
+                        {totalPages > 1 && (
+                            <PaginationContainer>
+                                <PaginationButton
+                                    onClick={() => handlePageChange(currentPage - 1)}
+                                    disabled={currentPage === 1}
+                                >
+                                    <LuChevronLeft />
+                                </PaginationButton>
+                                <span>{currentPage} of {totalPages}</span>
+                                <PaginationButton
+                                    onClick={() => handlePageChange(currentPage + 1)}
+                                    disabled={currentPage === totalPages}
+                                >
+                                    <LuChevronRight />
+                                </PaginationButton>
+                            </PaginationContainer>
+                        )}
                         <DownloadButtonsDiv>
                             <DownloadButton onClick={handleDownloadPDF}>
                                 <LuDownload className="icon" />
@@ -137,7 +199,7 @@ export default function EventParticipants() {
                                 Download CSV
                             </DownloadButton>
                         </DownloadButtonsDiv>
-                    </>
+                    </ParticipantsContainer>
                 ) : (
                     <NoParticipantsMessage>
                         <LuUserX className="icon" />

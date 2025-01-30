@@ -5,150 +5,197 @@ export const Container = styled.div`
     flex-direction: column;
     width: 100%;
     min-height: 100vh;
-    justify-content: space-between;
-    gap: 24px;
-`;
-
-export const DesktopOnly = styled.div`
-    display: none;
-
-    @media (min-width: 1024px) {
-        display: block;
-    }
+    background-color: var(--background);
 `;
 
 export const EventPicture = styled.div`
     width: 100%;
-    height: 35vh;
+    height: 200px;
     background-color: var(--primaryLightZaori);
-    align-items: top;
-    padding: 10px 5px;
+    padding: 20px;
+
+    @media (min-width: 768px) {
+        height: 250px;
+    }
 `;
 
 export const EventButtonsDiv = styled.div`
     width: 100%;
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
 `;
 
-export const EventContent = styled.div`
-    height: 100%;
-    padding: 16px;
-
-    @media (min-width: 600px) {
-        min-height: 150px;
-    }
-`;
-
-export const EventButton = styled.div`
-    display: flex;
-    flex-direction: row;
-    border-radius: 5px;
+export const EventButton = styled.button`
     background-color: var(--darkZaori);
-    padding: 5px;
-    justify-content: space-between;
+    color: var(--primaryDarkZaori);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     transition: all 0.3s ease;
 
-    .icon {
-        height: 19px;
-        width: 19px;
-        color: var(--primaryDarkZaori);
-        transition: all 0.3s ease;
-    }
-
     &:hover {
         background-color: var(--primaryDarkZaori);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
-        .icon {
-            color: var(--darkZaori);
-            transform: scale(1.1);
-        }
+        color: var(--darkZaori);
     }
 
-    @media (min-width: 768px) {
-        .icon {
-            height: 22px;
-            width: 22px;
-        }
+    .icon {
+        font-size: 20px;
     }
 `;
 
+export const EventContent = styled.div`
+    padding: 20px;
+    flex-grow: 1;
+`;
+
 export const TitleAndDescriptionDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 8px;
-    padding: 8px 16px;
-    align-items: top center;
+    margin-bottom: 30px;
 
     h1 {
         font-size: 24px;
-        font-weight: bold;
-        color: white;
-        line-height: 120%;
+        color: var(--foreground);
+        margin-bottom: 10px;
     }
 
     h4 {
         font-size: 16px;
-        font-weight: normal;
         color: var(--grayZaori);
-        line-height: 130%;
     }
 
     @media (min-width: 768px) {
         h1 {
-            font-size: 48px;
-            line-height: 110%;
+            font-size: 32px;
         }
 
         h4 {
             font-size: 18px;
-            line-height: 120%;
         }
     }
 `;
 
-export const ParticipantsList = styled.div`
+export const ParticipantsContainer = styled.div`
+    background-color: var(--darkZaori);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+`;
+
+export const ParticipantsHeader = styled.div`
     display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin: 16px 0;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h2 {
+        font-size: 20px;
+        color: var(--primaryLightZaori);
+    }
+
+    p {
+        font-size: 14px;
+        color: var(--grayZaori);
+    }
+
+    @media (min-width: 768px) {
+        h2 {
+            font-size: 24px;
+        }
+
+        p {
+            font-size: 16px;
+        }
+    }
+`;
+
+export const SearchWrapper = styled.div`
+    position: relative;
+    margin-bottom: 20px;
+
+    .searchIcon {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--grayZaori);
+    }
+`;
+
+export const SearchInput = styled.input`
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    border: 1px solid var(--grayZaori);
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: var(--background);
+    color: var(--foreground);
+
+    &:focus {
+        outline: none;
+        border-color: var(--primaryDarkZaori);
+    }
+`;
+
+export const ParticipantsList = styled.div`
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
 `;
 
 export const Participant = styled.div`
     padding: 10px;
-    background-color: black;
-    color: var(--primaryLightZaori);
-    border: 1px solid var(--grayZaori);
+    background-color: var(--primaryLightZaori);
+    color: var(--darkZaori);
     border-radius: 5px;
     font-size: 14px;
     text-align: center;
-    cursor: default;
+`;
 
-    @media (min-width: 768px) {
-        font-size: 16px;
+export const PaginationContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px;
+
+    span {
+        color: var(--primaryLightZaori);
+    }
+`;
+
+export const PaginationButton = styled.button`
+    background-color: var(--primaryDarkZaori);
+    color: var(--darkZaori);
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover:not(:disabled) {
+        background-color: var(--grayZaori);
     }
 
-    @media (min-width: 1024px) {
-        font-size: 18px;
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
     }
 `;
 
 export const DownloadButtonsDiv = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    padding: 20px 0;
+    gap: 10px;
+    margin-top: 20px;
 
     @media (min-width: 768px) {
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: center;
     }
 `;
 
@@ -156,43 +203,21 @@ export const DownloadButton = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    max-width: 250px;
-    padding: 12px 20px;
     background-color: var(--primaryDarkZaori);
     color: var(--darkZaori);
     border: none;
-    border-radius: 8px;
-    font-weight: bold;
+    border-radius: 5px;
+    padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+        background-color: var(--grayZaori);
+    }
 
     .icon {
         margin-right: 10px;
-        font-size: 20px;
-    }
-
-    &:hover {
-        background-color: var(--darkZaori);
-        color: var(--primaryDarkZaori);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-    }
-
-    &:active {
-        transform: translateY(0);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    @media (min-width: 768px) {
-        width: auto;
-        font-size: 18px;
-    }
-
-    @media (min-width: 1024px) {
-        font-size: 20px;
     }
 `;
 
@@ -201,23 +226,23 @@ export const NoParticipantsMessage = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    height: 200px;
     text-align: center;
     
     .icon {
-        font-size: 3rem;
+        font-size: 48px;
         color: var(--grayZaori);
-        margin-bottom: 1rem;
+        margin-bottom: 20px;
     }
 
     h3 {
-        font-size: 1.5rem;
-        color: var(--darkZaori);
-        margin-bottom: 0.5rem;
+        font-size: 20px;
+        color: var(--foreground);
+        margin-bottom: 10px;
     }
 
     p {
-        font-size: 1rem;
+        font-size: 16px;
         color: var(--grayZaori);
     }
 `;
