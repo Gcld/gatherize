@@ -1,11 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getEvents, updateEvent, deleteEventById } from '@/data/events';
 
-export async function GET(
-    request: NextRequest,
-    { params }: { params: { id: string } }
-) {
-    const id = parseInt(params.id);
+export async function GET(request: NextRequest) {
+    const id = parseInt(request.nextUrl.pathname.split('/').pop() || '');
     const event = getEvents().find(e => e.id === id);
 
     if (!event) {
@@ -27,8 +24,8 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ message: 'Event deleted successfully' });
 }
 
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
-    const id = parseInt(params.id);
+export async function PATCH(request: NextRequest) {
+    const id = parseInt(request.nextUrl.pathname.split('/').pop() || '');
     const events = getEvents();
     const eventIndex = events.findIndex(e => e.id === id);
 
