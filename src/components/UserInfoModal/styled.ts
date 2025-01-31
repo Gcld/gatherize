@@ -78,8 +78,6 @@ export const ViewProfileButton = styled.button`
     }
 `;
 
-// Adicione ao arquivo de estilos do modal
-
 export const DateInfo = styled.div`
     display: flex;
     align-items: center;

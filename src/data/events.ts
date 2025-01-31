@@ -343,7 +343,7 @@ export let events: GatherizeEvent[] = [
         address: 'Centro de Exposições Verde',
         city: 'Natal',
         state: 'RN',
-        maxPeople: 400,
+        maxPeople: 3,
         participants: [
             { id: 'user63', name: 'Zara Johnson' },
             { id: 'user64', name: 'Finn Davis' },
