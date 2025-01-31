@@ -56,7 +56,7 @@ export default function EventCard({ event, onEventUpdated }: EventCardProps) {
     const isEventCreator = session?.user.id === event.creatorId;
     const isPastEvent = eventDate < new Date();
     const isFullyBooked = event.participants.length >= event.maxPeople;
-    const isUnavailable = isPastEvent || isFullyBooked;
+    const isUnavailable = isPastEvent || (isFullyBooked && !eventSubscribed);
 
     const cardContent = (
         <>
