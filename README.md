@@ -11,6 +11,7 @@ Gatherize é uma sofisticada plataforma de gerenciamento de eventos que permite 
 - [Rotas da API](#rotas-da-api)
 - [Autenticação](#autenticação)
 - [Funcionalidades Adicionais](#funcionalidades-adicionais)
+- [Usuários pré-definidos](#usuários-pré-definidos)
 - [Contribuindo](#contribuindo)
 - [Licença](#licença)
 
@@ -57,15 +58,15 @@ npm install
 3. Configure as variáveis de ambiente:
 - Crie um arquivo `.env` na raiz do projeto
 - Adicione a seguinte linha ao arquivo:
-  ```
-  NEXTAUTH_SECRET=[string aleatória]
-  ```
+NEXTAUTH_SECRET=[string aleatória]
+
 
 4. Execute o servidor de desenvolvimento:
 npm run dev
 
 
 5. Abra [http://localhost:3000](http://localhost:3000) no seu navegador
+
 
 ## Estrutura do Projeto
 
@@ -99,121 +100,132 @@ Além dos requisitos básicos, o Gatherize implementa as seguintes funcionalidad
 ### Infraestrutura e Performance
 
 1. API Local Personalizada
-   - Sistema completo de CRUD para eventos
-   - Endpoints otimizados para autenticação
-   - Rotas específicas para gerenciamento de inscrições
-   - Simulação de banco de dados em memória
+ - Sistema completo de CRUD para eventos
+ - Endpoints otimizados para autenticação
+ - Rotas específicas para gerenciamento de inscrições
+ - Simulação de banco de dados em memória
 
 2. Integração com Serviços Externos
-   - API ViaCEP para autopreenchimento inteligente de endereços
-   - Sistema de compartilhamento em redes sociais
+ - API ViaCEP para autopreenchimento inteligente de endereços
+ - Sistema de compartilhamento em redes sociais
 
 3. Otimização de Performance
-   - Hook personalizado `useWindowSize` para responsividade dinâmica
-   - Sistema de paginação eficiente (8 itens por página)
-   - Lazy loading de componentes pesados
-   - Caching de dados de eventos
+ - Hook personalizado `useWindowSize` para responsividade dinâmica
+ - Sistema de paginação eficiente (8 itens por página)
+ - Lazy loading de componentes pesados
+ - Caching de dados de eventos
 
 ### Experiência do Usuário
 
 4. Sistema de Notificações
-   - Toasts informativos para ações do usuário
-   - Feedback visual para operações de CRUD
-   - Mensagens de erro personalizadas
-   - Confirmações de ações importantes
+ - Toasts informativos para ações do usuário
+ - Feedback visual para operações de CRUD
+ - Mensagens de erro personalizadas
+ - Confirmações de ações importantes
 
 5. Interface Responsiva
-   - Menu burger adaptativo para mobile
-   - Layout fluido para diferentes tamanhos de tela
-   - Modais responsivos para criação/edição
-   - Componentes adaptáveis para desktop/mobile
+ - Menu burger adaptativo para mobile
+ - Layout fluido para diferentes tamanhos de tela
+ - Modais responsivos para criação/edição
+ - Componentes adaptáveis para desktop/mobile
 
 6. Gerenciamento de Eventos
-   - Sistema avançado de ordenação
-   - Filtros múltiplos e combináveis
-   - Opção de limpar filtros
-   - Tratamento especial para eventos passados/lotados
+ - Sistema avançado de ordenação
+ - Filtros múltiplos e combináveis
+ - Opção de limpar filtros
+ - Tratamento especial para eventos passados/lotados
 
 ### Analytics e Métricas
 
 7. Dashboard Detalhado
-   - Taxa de Inscrição Diária
-     * Cálculo baseado em períodos ativos
-     * Tendências de crescimento
-     * Previsões de lotação
+ - Taxa de Inscrição Diária
+   * Cálculo baseado em períodos ativos
+   * Tendências de crescimento
+   * Previsões de lotação
 
-   - Métricas de Ocupação
-     * Porcentagem atual de ocupação
-     * Alertas de lotação próxima
-     * Histórico de inscrições
+ - Métricas de Ocupação
+   * Porcentagem atual de ocupação
+   * Alertas de lotação próxima
+   * Histórico de inscrições
 
-   - Engajamento
-     * Score calculado por algoritmo próprio
-     * Fatores: compartilhamentos, inscrições, tempo
-     * Níveis: baixo, médio, alto
-     * Indicadores visuais de performance
+ - Engajamento
+   * Score calculado por algoritmo próprio
+   * Fatores: compartilhamentos, inscrições, tempo
+   * Níveis: baixo, médio, alto
+   * Indicadores visuais de performance
 
-   - Temporização
-     * Contagem regressiva para o evento
-     * Status de proximidade
-     * Alertas de eventos próximos
+ - Temporização
+   * Contagem regressiva para o evento
+   * Status de proximidade
+   * Alertas de eventos próximos
 
 ### Segurança e Autenticação
 
 8. Sistema Robusto de Autenticação
-   - Persistência de sessão via NextAuth.js
-   - Proteção de rotas administrativas
-   - Validação de permissões por função
-   - Tokens JWT seguros
+ - Persistência de sessão via NextAuth.js
+ - Proteção de rotas administrativas
+ - Validação de permissões por função
+ - Tokens JWT seguros
 
 9. Controle de Acesso
-   - Diferentes níveis de permissão
-   - Validação de proprietário de evento
-   - Proteção contra acessos não autorizados
-   - Middleware de autenticação
+ - Diferentes níveis de permissão
+ - Validação de proprietário de evento
+ - Proteção contra acessos não autorizados
+ - Middleware de autenticação
 
 ### Funcionalidades Específicas
 
 10. Gerenciamento de Capacidade
-    - Controle automático de lotação
-    - Lista de espera (quando aplicável)
-    - Notificações de vagas disponíveis
-    - Status visual de disponibilidade
+  - Controle automático de lotação
+  - Lista de espera (quando aplicável)
+  - Notificações de vagas disponíveis
+  - Status visual de disponibilidade
 
 11. Sistema de Compartilhamento
-    - Contagem de compartilhamentos
-    - Links personalizados
-    - Integração com redes sociais
-    - Métricas de alcance
+  - Contagem de compartilhamentos
+  - Links personalizados
+  - Integração com redes sociais
+  - Métricas de alcance
 
 12. Exportação de Dados
-    - Relatórios em PDF personalizados
-    - Exportação CSV com dados completos
-    - Filtros de exportação
-    - Formatação automática de dados
+  - Relatórios em PDF personalizados
+  - Exportação CSV com dados completos
+  - Filtros de exportação
+  - Formatação automática de dados
 
 ### Melhorias Técnicas
 
 13. Tratamento de Erros
-    - Sistema robusto de fallbacks
-    - Mensagens de erro amigáveis
-    - Recuperação automática de falhas
-    - Logs detalhados
+  - Sistema robusto de fallbacks
+  - Mensagens de erro amigáveis
+  - Recuperação automática de falhas
+  - Logs detalhados
 
 14. Otimização de Código
-    - Componentização eficiente
-    - Reutilização de estilos
-    - Context API para estado global
-    - Tipagem forte com TypeScript
+  - Componentização eficiente
+  - Reutilização de estilos
+  - Context API para estado global
+  - Tipagem forte com TypeScript
 
 15. UX/UI Aprimorada
-    - Feedback visual imediato
-    - Animações suaves
-    - Estados de loading
-    - Indicadores de progresso
+  - Feedback visual imediato
+  - Animações suaves
+  - Estados de loading
+  - Indicadores de progresso
 
 Estas funcionalidades adicionais transformam o Gatherize em uma plataforma robusta e profissional para gerenciamento de eventos, oferecendo uma experiência completa tanto para organizadores quanto para participantes.
 
+## Usuários pré-definidos
+
+Usuário 1:
+
+- Email: user@email.com
+- Senha: 123
+
+Usuário 2: 
+
+- Email: kingofthepiratesmeat123@email.com
+- Senha: 123 
 
 ## Licença
 
