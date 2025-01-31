@@ -66,7 +66,7 @@ export default function Header({ showSearchAndFilter = false }: HeaderProps) {
         setIsFilterModalOpen(!isFilterModalOpen);
     };
 
-    const handleFilter = (filterType: 'upcoming' | 'availableSpots' | 'myEvents' | null) => {
+    const handleFilter = (filterType: 'upcoming' | 'availableSpots' | 'myEvents' | 'subscribedEvents' | null) => {
         if (typeof window !== 'undefined') {
             window.dispatchEvent(new CustomEvent('filterEvents', { detail: filterType }));
         }

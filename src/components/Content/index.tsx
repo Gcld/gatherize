@@ -8,6 +8,7 @@ import { LuPlus } from "react-icons/lu";
 import { CreateEventButton } from "../EventsFrameAdmin/styled";
 import { fetchEvents } from '@/utils/api';
 import { GatherizeEvent } from '@/types/event';
+import { useSubscription } from "@/contexts/SubscriptionContext";
 
 export default function Content() {
     const { data: session, status } = useSession();
@@ -16,6 +17,7 @@ export default function Content() {
     const [events, setEvents] = useState<GatherizeEvent[]>([]);
     const [filteredEvents, setFilteredEvents] = useState<GatherizeEvent[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const { isSubscribed } = useSubscription();
 
 
     useEffect(() => {
@@ -60,7 +62,7 @@ export default function Content() {
     }, [searchTerm, events]);
 
     useEffect(() => {
-        const handleFilter = (event: CustomEvent<'upcoming' | 'availableSpots' | 'myEvents' | null>) => {
+        const handleFilter = (event: CustomEvent<'upcoming' | 'availableSpots' | 'myEvents' | 'subscribedEvents' | null>) => {
             const filterType = event.detail;
             let filtered: GatherizeEvent[];
 
@@ -75,6 +77,9 @@ export default function Content() {
                     break;
                 case 'myEvents':
                     filtered = events.filter(event => event.creatorId === session?.user.id);
+                    break;
+                case 'subscribedEvents':
+                    filtered = events.filter(event => isSubscribed(event.id));
                     break;
                 case null:
                     filtered = events;
@@ -91,7 +96,7 @@ export default function Content() {
         return () => {
             window.removeEventListener('filterEvents', handleFilter as EventListener);
         };
-    }, [events, session]);
+    }, [events, session, isSubscribed]);
 
     const handleCreateEvent = () => {
         setIsCreateEventModalOpen(true);

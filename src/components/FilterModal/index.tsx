@@ -1,17 +1,17 @@
 import React from 'react';
-import { LuCalendar, LuUsers, LuClipboardList, LuX } from "react-icons/lu";
+import { LuCalendar, LuUsers, LuClipboardList, LuX, LuStar } from "react-icons/lu";
 import { ModalContainer, ModalContent, ModalButton, ClearFilterButton } from './styled';
 
 interface FilterModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onFilter: (filterType: 'upcoming' | 'availableSpots' | 'myEvents' | null) => void;
+    onFilter: (filterType: 'upcoming' | 'availableSpots' | 'myEvents' | 'subscribedEvents' | null) => void;
 }
 
 const FilterModal: React.FC<FilterModalProps> = ({ isOpen, onClose, onFilter }) => {
     if (!isOpen) return null;
 
-    const handleFilter = (filterType: 'upcoming' | 'availableSpots' | 'myEvents' | null) => {
+    const handleFilter = (filterType: 'upcoming' | 'availableSpots' | 'myEvents' | 'subscribedEvents' | null) => {
         onFilter(filterType);
         onClose();
     };
@@ -31,6 +31,10 @@ const FilterModal: React.FC<FilterModalProps> = ({ isOpen, onClose, onFilter }) 
                     <ModalButton onClick={() => handleFilter('myEvents')}>
                         <LuClipboardList className='icon'/>
                         <span>My Events</span>
+                    </ModalButton>
+                    <ModalButton onClick={() => handleFilter('subscribedEvents')}>
+                        <LuStar className='icon'/>
+                        <span>Subscribed Events</span>
                     </ModalButton>
                     <ClearFilterButton onClick={() => handleFilter(null)}>
                         <LuX className='icon'/>
