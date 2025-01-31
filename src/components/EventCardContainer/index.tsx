@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import EventCard from "../EventCard";
 import { Container, PaginationContainer, PageButton } from "./styled";
 import { GatherizeEvent } from '@/types/event';
+import { useSubscription } from '@/contexts/SubscriptionContext';
 
 interface EventCardContainerProps {
     events: GatherizeEvent[];
@@ -12,6 +13,22 @@ interface EventCardContainerProps {
 export default function EventCardContainer({ events, isAdmin, onEventUpdated }: EventCardContainerProps) {
     const [currentPage, setCurrentPage] = useState(1);
     const [eventsPerPage, setEventsPerPage] = useState(8);
+    const [sortedEvents, setSortedEvents] = useState<GatherizeEvent[]>([]);
+    const { isSubscribed } = useSubscription();
+
+    const sortEvents = useCallback((eventsToSort: GatherizeEvent[]) => {
+        return [...eventsToSort].sort((a, b) => {
+            const aSubscribed = isSubscribed(a.id);
+            const bSubscribed = isSubscribed(b.id);
+            if (aSubscribed && !bSubscribed) return -1;
+            if (!aSubscribed && bSubscribed) return 1;
+            return 0;
+        });
+    }, [isSubscribed]);
+
+    useEffect(() => {
+        setSortedEvents(sortEvents(events));
+    }, [events, sortEvents]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -29,17 +46,21 @@ export default function EventCardContainer({ events, isAdmin, onEventUpdated }: 
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    useEffect(() => {
-        setCurrentPage(1);
-    }, [events]);
-
     const indexOfLastEvent = currentPage * eventsPerPage;
     const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
-    const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent);
+    const currentEvents = sortedEvents.slice(indexOfFirstEvent, indexOfLastEvent);
 
-    const totalPages = Math.ceil(events.length / eventsPerPage);
+    const totalPages = Math.ceil(sortedEvents.length / eventsPerPage);
 
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+    const handleEventUpdated = (updatedEvent: GatherizeEvent) => {
+        const updatedEvents = sortedEvents.map(event => 
+            event.id === updatedEvent.id ? updatedEvent : event
+        );
+        setSortedEvents(sortEvents(updatedEvents));
+        onEventUpdated(updatedEvent);
+    };
 
     return (
         <>
@@ -50,7 +71,7 @@ export default function EventCardContainer({ events, isAdmin, onEventUpdated }: 
                             key={event.id} 
                             event={event} 
                             isAdmin={isAdmin} 
-                            onEventUpdated={onEventUpdated}
+                            onEventUpdated={handleEventUpdated}
                         />
                     ))
                 ) : (
